@@ -11,6 +11,8 @@
 *.iml
 *.ipr
 *.cmd
+*.xml
+*mvnw*
 out/
 target/
 # Log file
