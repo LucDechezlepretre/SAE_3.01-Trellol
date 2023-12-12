@@ -11,7 +11,7 @@
 *.iml
 *.ipr
 out/
-
+target/
 # Log file
 *.log
 
