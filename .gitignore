@@ -13,6 +13,7 @@
 *.ipr
 *.cmd
 *.xml
+*.fxml
 *mvnw*
 out/
 target/
