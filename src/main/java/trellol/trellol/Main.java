@@ -52,4 +52,11 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    public static Model creation(){
+        Model model = new Model();
+        model.ajouterTache(new Tache("racine", "13/12/2023", 8, "Ceci est la racine", 0));
+
+        return model;
+    }
 }
