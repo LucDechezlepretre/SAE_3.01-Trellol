@@ -22,8 +22,8 @@ public class Tache {
     private int duree;
     private String description;
     private int importance;
-    private List<Tache> composants;
-    private List<Tache> antecedants;
+    private Tache enfant;
+    private Tache antecedant;
     public Tache(String nom, String date, int duree, String description, int importance){
         this.id = -1;
         try{
@@ -35,8 +35,6 @@ public class Tache {
         this.duree = duree;
         this.description = description;
         this.importance = importance;
-        this.composants = new ArrayList<Tache>();
-        this.antecedants = new ArrayList<Tache>();
     }
 
     public String getNom() {
@@ -86,107 +84,6 @@ public class Tache {
 
     public int getId() {
         return id;
-    }
-    public void ajouterAntecedentSQL(Tache antecedent)throws SQLException{
-        this.antecedants.add(antecedent);
-        DBConnection.setNomDB("Trellol");
-        Connection connection = DBConnection.getConnection();
-        String SQLPrep = "INSERT INTO DependanteDe(idTacheAutonome, idTacheDependante) VALUES (?, ?);";
-        PreparedStatement prep = connection.prepareStatement(SQLPrep);
-        prep.setInt(1, antecedent.getId());
-        prep.setInt(2, this.id);
-        prep.executeUpdate();
-    }
-
-    public void ajouterComposantSQL(Tache composant) throws SQLException{
-        this.composants.add(composant);
-        DBConnection.setNomDB("Trellol");
-        Connection connection = DBConnection.getConnection();
-        String SQLPrep = "INSERT INTO ComposeeDe(idTacheComposee, idTacheComposant) VALUES (?, ?);";
-        PreparedStatement prep = connection.prepareStatement(SQLPrep);
-        prep.setInt(1, this.id);
-        prep.setInt(2, composant.getId());
-        prep.executeUpdate();
-    }
-
-    public void save() throws SQLException {
-        if(this.id == -1){
-            this.saveNew();
-        }
-        else{
-            this.update();
-        }
-    }
-
-    private void update() throws SQLException {
-        DBConnection.setNomDB("Trellol");
-        Connection connection = DBConnection.getConnection();
-        String SQLprep = "update Tache set nom=?, dateDebut=?, duree=?, description=?, importance=? where id=?;";
-        PreparedStatement prep = connection.prepareStatement(SQLprep);
-        prep.setString(1, this.nom);
-        prep.setString(2, this.dateDebut.toString());
-        prep.setInt(3, this.duree);
-        prep.setString(4, this.description);
-        prep.setInt(5, this.importance);
-        prep.setInt(6, this.id);
-        prep.execute();
-    }
-
-    private void saveNew() throws SQLException {
-        DBConnection.setNomDB("Trellol");
-        Connection connection = DBConnection.getConnection();
-        String SQLPrep = "INSERT INTO Tache(nom, dateDebut, duree, description, importance) VALUES (?, ?, ?, ?, ?);";
-        PreparedStatement prep;
-        // l'option RETURN_GENERATED_KEYS permet de recuperer l'id (car
-        // auto-increment)
-        prep = connection.prepareStatement(SQLPrep, Statement.RETURN_GENERATED_KEYS);
-        prep.setString(1, this.nom);
-        prep.setString(2, this.dateDebut.toString());
-        prep.setInt(3, this.duree);
-        prep.setString(4, this.description);
-        prep.setInt(5, this.importance);
-        prep.executeUpdate();
-        ResultSet res = prep.getGeneratedKeys();
-        if (res.next()) {
-            this.id = (res.getInt(1));
-        }
-    }
-    public void delete() throws SQLException{
-        DBConnection.setNomDB("Trellol");
-        Connection connection = DBConnection.getConnection();
-
-        String SQLsuppressionComposant = "DELETE FROM ComposeeDe WHERE ComposeeDe.idTacheComposee = ?";
-        PreparedStatement prep;
-        prep = connection.prepareStatement(SQLsuppressionComposant);
-        prep.setInt(1, this.id);
-        prep.executeUpdate();
-
-        String SQLsuppressionAntecedant = "DELETE FROM DependanteDe WHERE DependanteDe.idTacheDependante = ?";
-        prep = connection.prepareStatement(SQLsuppressionAntecedant);
-        prep.setInt(1, this.id);
-        prep.executeUpdate();
-
-        String sql = "DELETE FROM Tache WHERE id = ?";
-        // l'option RETURN_GENERATED_KEYS permet de recuperer l'id (car
-        // auto-increment)
-        prep = connection.prepareStatement(sql);
-        prep.setInt(1, this.id);
-        prep.executeUpdate();
-        this.id = -1;
-    }
-    public static Tache findById(int id) throws SQLException{
-        DBConnection.setNomDB("Trellol");
-        Connection connection = DBConnection.getConnection();
-        String sql = "SELECT nom, dateDebut, duree, description, importance FROM Tache WHERE id = ?";
-        PreparedStatement prep = connection.prepareStatement(sql);
-        prep.setInt(1, id);
-        ResultSet res = prep.executeQuery();
-        Tache t = null;
-        if(res.next()){
-            t = new Tache(res.getString("nom"), res.getString("dateDebut"), res.getInt("duree"), res.getString("description"), res.getInt("importance"));
-            t.id = id;
-        }
-        return t;
     }
 
 }
