@@ -10,17 +10,16 @@ public class Tache {
 
     // Création d'un objet SimpleDateFormat avec le format spécifié
     public static SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-    private int id;
     private String nom;
 
     private Date dateDebut;
     private int duree;
     private String description;
     private int importance;
-    private Tache enfant;
+    private Tache parent;
     private Tache antecedant;
     public Tache(String nom, String date, int duree, String description, int importance){
-        this.id = -1;
+        this.nom = nom;
         try{
             this.dateDebut = Tache.dateFormat.parse(date);
         } catch (ParseException e) {
@@ -77,8 +76,19 @@ public class Tache {
         this.importance = importance;
     }
 
-    public int getId() {
-        return id;
+    public Tache getParent() {
+        return parent;
     }
 
+    public void setParent(Tache parent) {
+        this.parent = parent;
+    }
+
+    public Tache getAntecedant() {
+        return antecedant;
+    }
+
+    public void setAntecedant(Tache antecedant) {
+        this.antecedant = antecedant;
+    }
 }
