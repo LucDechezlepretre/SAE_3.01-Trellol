@@ -87,6 +87,27 @@ public class Tache {
     public int getId() {
         return id;
     }
+    public void ajouterAntecedent(Tache antecedent)throws SQLException{
+        this.antecedants.add(antecedent);
+        DBConnection.setNomDB("Trellol");
+        Connection connection = DBConnection.getConnection();
+        String SQLPrep = "INSERT INTO DependanteDe(idTacheAutonome, idTacheDependante) VALUES (?, ?);";
+        PreparedStatement prep = connection.prepareStatement(SQLPrep);
+        prep.setInt(1, antecedent.getId());
+        prep.setInt(2, this.id);
+        prep.executeUpdate();
+    }
+
+    public void ajouterComposant(Tache composant) throws SQLException{
+        this.composants.add(composant);
+        DBConnection.setNomDB("Trellol");
+        Connection connection = DBConnection.getConnection();
+        String SQLPrep = "INSERT INTO ComposeeDe(idTacheComposee, idTacheComposant) VALUES (?, ?);";
+        PreparedStatement prep = connection.prepareStatement(SQLPrep);
+        prep.setInt(1, this.id);
+        prep.setInt(2, composant.getId());
+        prep.executeUpdate();
+    }
 
     public void save() throws SQLException {
         if(this.id == -1){
@@ -138,10 +159,12 @@ public class Tache {
         PreparedStatement prep;
         prep = connection.prepareStatement(SQLsuppressionComposant);
         prep.setInt(1, this.id);
+        prep.executeUpdate();
 
         String SQLsuppressionAntecedant = "DELETE FROM DependanteDe WHERE DependanteDe.idTacheDependante = ?";
         prep = connection.prepareStatement(SQLsuppressionAntecedant);
         prep.setInt(1, this.id);
+        prep.executeUpdate();
 
         String sql = "DELETE FROM Tache WHERE id = ?";
         // l'option RETURN_GENERATED_KEYS permet de recuperer l'id (car
@@ -154,6 +177,15 @@ public class Tache {
     public static Tache findById(int id) throws SQLException{
         DBConnection.setNomDB("Trellol");
         Connection connection = DBConnection.getConnection();
-
+        String sql = "SELECT nom, dateDebut, duree, description, importance FROM Tache WHERE id = ?";
+        PreparedStatement prep = connection.prepareStatement(sql);
+        prep.setInt(1, id);
+        ResultSet res = prep.executeQuery();
+        Tache t = null;
+        if(res.next()){
+            t = new Tache(res.getString("nom"), res.getString("dateDebut"), res.getInt("duree"), res.getString("description"), res.getInt("importance"));
+            t.id = id;
+        }
+        return t;
     }
 }
