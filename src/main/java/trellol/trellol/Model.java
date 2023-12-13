@@ -179,6 +179,32 @@ public class Model implements Sujet {
 				archive.add(enfant);
 			}
 		}
+	}
+	// Fonction utilitaire pour créer un TreeItem à partir d'une tâche
+	private TreeItem<Tache> createTreeItem(Tache tache) {
+		TreeItem<Tache> treeItem = new TreeItem<>(tache);
+		return treeItem;
+	}
+	private void ajouterTacheRecursivement(TreeItem<Tache> parentItem, Tache tache){
+		if(this.getEnfant(tache).size() == 0){
+			return;
+		}
+		for(Tache enfant : this.getEnfant(tache)){
+			// Crée un nouvel élément de TreeItem pour la tâche
+			TreeItem<Tache> childItem = createTreeItem(enfant);
 
+			// Ajoute l'élément enfant à l'élément parent
+			parentItem.getChildren().add(childItem);
+
+			// Appelle récursivement la fonction pour ajouter des sous-tâches à cet élément enfant
+			ajouterTacheRecursivement(childItem, enfant);
+		}
+	}
+	public TreeView<Tache> affichageListe(){
+		TreeItem<Tache> racine = createTreeItem(this.ensTache.get(0));
+		ajouterTacheRecursivement(racine, this.ensTache.get(0));
+		// Crée le TreeView avec l'élément racine
+		TreeView<Tache> treeView = new TreeView<>(racine);
+		return treeView;
 	}
 }

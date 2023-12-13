@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -23,7 +24,7 @@ public class Affichage extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //CREATION DU MODELE
-        Model modele=new Model();
+        Model m = creationModel();
 
         //Affichage
         VBox racine=new VBox(10);
@@ -67,12 +68,13 @@ public class Affichage extends Application {
 
         ///CREATION DE LA BOX D'AFFICHAGE DES TACHES
         VueBureau bureau=new VueBureau();
-        EventHandler controllerDrop=new ControlleurDropTache(modele);
+        EventHandler controllerDrop=new ControlleurDropTache(m);
+        TreeView liste = m.affichageListe();
 
         bureau.setOnDragDropped(controllerDrop);
 
         ///Ajout à la racine///
-        racine.getChildren().addAll(header, gauche);
+        racine.getChildren().addAll(header, gauche, liste);
 
         Scene scene = new Scene(racine);
         stage.setTitle("Hello!");
@@ -82,8 +84,6 @@ public class Affichage extends Application {
 
     public static void main(String[] args)
     {
-        Model m = creationModel();
-        System.out.println(m);
         launch();
     }
 
