@@ -1,9 +1,27 @@
 package trellol.trellol;
 
-public class Affichage {// extends Application {
-    /*
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class Affichage extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
+
         VBox racine=new VBox(10);
         racine.setPadding(new Insets(0, 10, 0, 10));
         HBox header=new HBox(25);
@@ -42,6 +60,10 @@ public class Affichage {// extends Application {
         gauche.setAlignment(Pos.BOTTOM_LEFT);
         gauche.getChildren().addAll(bModif, bAjoutTache);
 
+
+        ///CREATION DE LA BOX D'AFFICHAGE DES TACHES
+        VueBureau bureau=new VueBureau();
+
         ///Ajout à la racine///
         racine.getChildren().addAll(header, gauche);
 
@@ -50,7 +72,7 @@ public class Affichage {// extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    */
+
     public static void main(String[] args)
     {
         Model m = creationModel();
@@ -73,4 +95,5 @@ public class Affichage {// extends Application {
         model.ajouterTache(luc);
         return model;
     }
+
 }
