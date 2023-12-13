@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Tache {
     // Format de la date souhaité
-    public static String pattern = "dd/MM/yyyy";
+    public final static String pattern = "dd/MM/yyyy";
 
     // Création d'un objet SimpleDateFormat avec le format spécifié
     public static SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
