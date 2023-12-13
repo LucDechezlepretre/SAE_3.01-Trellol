@@ -110,10 +110,18 @@ public class ListeTache {
         if(this.id==-1){ //On verifie que c'est bien une ListeTache pas deja dans la bd
             Connection connect = DBConnection.getConnection();
             String SQLPrep = "INSERT INTO ListeTache(nom) VALUES(?);";
-            PreparedStatement statement = connect.prepareStatement(SQLPrep);
+            PreparedStatement statement = connect.prepareStatement(SQLPrep, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, this.nom);
 
-            statement.execute();
+            statement.executeUpdate();
+
+            int autoInc = -1;
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
+                autoInc = rs.getInt("id");
+            }
+
+            this.id=autoInc;
         }
     }
 
@@ -131,7 +139,7 @@ public class ListeTache {
 
         statement.setInt(1, t.getId());
         statement.setInt(2, this.id);
-        statement.execute();
+        statement.executeUpdate();
     }
 
     /**
@@ -148,6 +156,6 @@ public class ListeTache {
 
         statement.setInt(1, t.getId());
         statement.setInt(2, this.id);
-        statement.execute();
+        statement.executeUpdate();
     }
 }
