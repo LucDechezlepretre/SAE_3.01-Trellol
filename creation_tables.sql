@@ -7,7 +7,7 @@ CREATE TABLE User(id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 CREATE TABLE Tache(idTache INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                   nom varchar(40),
                   dateDebut date,
-                  dateFin date,
+                  duree int,
                   description varchar(256),
                   importance int);
 
