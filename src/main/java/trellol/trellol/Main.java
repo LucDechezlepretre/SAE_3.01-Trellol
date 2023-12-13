@@ -18,7 +18,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Pane racine=new Pane();
+        VBox racine=new VBox(10);
         HBox header=new HBox(25);
 
         //BOUTONS DE VUE
@@ -26,8 +26,8 @@ public class Main extends Application {
         Button bVueListe=new Button("Vue Liste");
 
         //TITRE
-        Label titre=new Label("Trellol");
-        Font font = Font.font("Arial", FontWeight.BOLD, 16);
+        Label titre=new Label("TRELLOL");
+        Font font = Font.font("Arial", FontWeight.BOLD, 35);
         titre.setFont(font);
 
         //BOUTONS GANTT HISTORIQUE ARCHIVE
@@ -37,13 +37,23 @@ public class Main extends Application {
 
 
         ///Ajout au header///
-        header.getChildren().addAll(bVueBureau, bVueListe, titre, bGantt, bArchive, bHistorique);
         header.setAlignment(Pos.CENTER);
+        header.getChildren().addAll(bVueBureau, bVueListe, titre, bGantt, bArchive, bHistorique);
+
+
+        ///CREATION DE LA BOX A GAUCHE
+        VBox gauche=new VBox(5);
+
+        Button bModif=new Button("Modifier");
+        Button bAjoutTache=new Button("Ajouter tache");
+
+        gauche.getChildren().addAll(bModif, bAjoutTache);
+        gauche.setAlignment(Pos.BOTTOM_LEFT);
 
         ///Ajout à la racine///
-        racine.getChildren().addAll(header);
+        racine.getChildren().addAll(header, gauche);
 
-        Scene scene = new Scene(racine, 960, 540);
+        Scene scene = new Scene(racine);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
