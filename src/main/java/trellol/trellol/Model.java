@@ -91,6 +91,13 @@ public class Model implements Sujet {
 		tache.setAntecedant(null);
 	}
 
+	public void deplacerTache(Tache tache, Tache parent) {
+		int index = ensTache.indexOf(tache);
+		Tache t = ensTache.get(index);
+		t.setParent(parent);
+		ensTache.set(index, t);
+	}
+
 	public void afficherHistorique() {
 		System.out.println(historique);
 	}
