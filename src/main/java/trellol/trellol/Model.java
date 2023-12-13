@@ -16,7 +16,7 @@ public class Model implements Sujet {
 	private Historique historique;
 	private List<Tache> ensTache;
 
-	public Model(Tache t){
+	public Model(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
 	}
@@ -42,9 +42,6 @@ public class Model implements Sujet {
 			}
 		}
 		return racine;
-	}
-	public void ajouterEnfant(Tache parent, Tache enfant){
-		
 	}
 
 
@@ -94,7 +91,19 @@ public class Model implements Sujet {
 		tache.setAntecedant(null);
 	}
 
+	public void deplacerTache(Tache tache, Tache parent) {
+		int index = ensTache.indexOf(tache);
+		Tache t = ensTache.get(index);
+		t.setParent(parent);
+		ensTache.set(index, t);
+	}
+
 	public void afficherHistorique() {
 		System.out.println(historique);
 	}
+
+	public void ajouterTache(Tache tache) {
+		this.ensTache.add(tache);
+	}
+	p
 }

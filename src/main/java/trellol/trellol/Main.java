@@ -62,4 +62,15 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    public static Model creationModel(){
+        Model model = new Model();
+        Tache racine = new Tache("racine", "13/12/2023", 8, "Ceci est la racine", 0);
+        model.ajouterTache(racine);
+        Tache racine2 = new Tache("racine2", "13/12/2023", 8, "Ceci est la racine", 0);
+        model.ajouterTache(racine2);
+        Tache tache = new Tache("tache", "13/12/2023", 8, "Ceci est la racine", 0);
+        model.ajouterTache(tache);
+        return model;
+    }
 }
