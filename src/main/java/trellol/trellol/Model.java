@@ -4,6 +4,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -79,6 +80,7 @@ public class Model implements Sujet {
 		}
 	}
 
+
 	public void archiverTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_ARCHIVE);
 	}
@@ -94,10 +96,44 @@ public class Model implements Sujet {
 	}
 
 	public void deplacerTache(Tache tache, Tache parent) {
+		Tache ancienParent = tache.getParent();
 		int index = ensTache.indexOf(tache);
 		Tache t = ensTache.get(index);
 		t.setParent(parent);
 		ensTache.set(index, t);
+		mettreAJourParent(parent);
+		mettreAJourParent(ancienParent);
+	}
+
+	public void mettreAJourParent(Tache parent) {
+		Boolean parentModifie = false;
+		Date datemin = new Date(9999,12,31);
+		int priomax = 0;
+		int dureeTotale = 0;
+		for (Tache enfant : this.getEnfant(parent)) {
+			if (datemin.after(enfant.getDateDebut())) {
+				datemin = enfant.getDateDebut();
+			}
+			if (priomax < enfant.getImportance()) {
+				priomax = enfant.getImportance();
+			}
+			dureeTotale += enfant.getDuree();
+		}
+		if (!parent.getDateDebut().equals(datemin)) {
+			parent.setDateDebut(datemin.toString());
+			parentModifie = true;
+		}
+		if (parent.getImportance() != priomax) {
+			parent.setImportance(priomax);
+			parentModifie = true;
+		}
+		if (parent.getDuree() != dureeTotale) {
+			parent.setDuree(dureeTotale);
+			parentModifie = true;
+		}
+		if (parentModifie) {
+			this.mettreAJourParent(parent.getParent());
+		}
 	}
 
 	public void afficherHistorique() {
@@ -105,7 +141,14 @@ public class Model implements Sujet {
 	}
 
 	public void ajouterTache(Tache tache) {
-		this.ensTache.add(tache);
+		if (ensTache.size() == 0 && tache.getParent() == null) {
+			ensTache.add(tache);
+		} else if (tache.getParent() != null) {
+			ensTache.add(tache);
+			mettreAJourParent(tache.getParent());
+		}else{
+			System.out.println("Impossible d'ajouter la tache");
+		}
 	}
 
 	@Override
