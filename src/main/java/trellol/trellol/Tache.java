@@ -119,6 +119,6 @@ public class Tache {
 
     @Override
     public String toString() {
-        return "Tache{" + nom + '\''  + duree + '}';
+        return "Tache{" + nom + ' '  + duree + '}';
     }
 }

@@ -30,8 +30,9 @@ public class Model implements Sujet {
 
 	public List<Tache> getEnfant(Tache tache){
 		List<Tache> enfants = new ArrayList<Tache>();
-		for(Tache t : this.ensTache){
-			if(t.getParent()  == tache){
+		for(int i = 1; i < this.ensTache.size(); i++){
+			Tache t = this.ensTache.get(i);
+			if (t.getParent().equals(tache)) {
 				enfants.add(t);
 			}
 		}
@@ -112,10 +113,14 @@ public class Model implements Sujet {
 		return afficherTache(this.ensTache.get(0), 0);
 	}
 	private String afficherTache(Tache t, int profondeur){
-		String res = "";
-		for(int i = 0; i < profondeur; i++){
-			res += " ";
+		StringBuilder res = new StringBuilder();
+		for (int i = 0; i < profondeur; i++) {
+			res.append("| ");
 		}
-
+		res.append(t+"\n");
+		for(Tache enfant : this.getEnfant(t)){
+			res.append(afficherTache(enfant, profondeur+1));
+		}
+		return res.toString();
 	}
 }

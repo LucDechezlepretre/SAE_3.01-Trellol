@@ -15,7 +15,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Main extends Application {
+public class Main{// extends Application {
+    /*
     @Override
     public void start(Stage stage) throws IOException {
         VBox racine=new VBox(10);
@@ -64,19 +65,27 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-    public static void main(String[] args) {
-        launch();
+    */
+    public static void main(String[] args)
+    {
+        Model m = creationModel();
+        System.out.println(m);
+        //launch();
     }
 
     public static Model creationModel(){
         Model model = new Model();
         Tache racine = new Tache("racine", "13/12/2023", 8, "Ceci est la racine", 0);
         model.ajouterTache(racine);
-        Tache racine2 = new Tache("racine2", "13/12/2023", 8, "Ceci est la racine", 0);
+        Tache racine2 = new Tache("racine2", "13/12/2023", 7, "Ceci est la racine 2 ", 0);
+        racine2.setParent(racine);
         model.ajouterTache(racine2);
-        Tache tache = new Tache("tache", "13/12/2023", 8, "Ceci est la racine", 0);
+        Tache tache = new Tache("tache", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
+        tache.setParent(racine);
         model.ajouterTache(tache);
+        Tache luc = new Tache("tacheLuc", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
+        luc.setParent(tache);
+        model.ajouterTache(luc);
         return model;
     }
 }
