@@ -106,33 +106,35 @@ public class Model implements Sujet {
 	}
 
 	public void mettreAJourParent(Tache parent) {
-		Boolean parentModifie = false;
-		Date datemin = new Date(9999,12,31);
-		int priomax = 0;
-		int dureeTotale = 0;
-		for (Tache enfant : this.getEnfant(parent)) {
-			if (datemin.after(enfant.getDateDebut())) {
-				datemin = enfant.getDateDebut();
+		if (parent != null) {
+			Boolean parentModifie = false;
+			Date datemin = new Date(9999, 12, 31);
+			int priomax = 0;
+			int dureeTotale = 0;
+			for (Tache enfant : this.getEnfant(parent)) {
+				if (datemin.after(enfant.getDateDebut())) {
+					datemin = enfant.getDateDebut();
+				}
+				if (priomax < enfant.getImportance()) {
+					priomax = enfant.getImportance();
+				}
+				dureeTotale += enfant.getDuree();
 			}
-			if (priomax < enfant.getImportance()) {
-				priomax = enfant.getImportance();
+			if (!parent.getDateDebut().equals(datemin)) {
+				parent.setDateDebut(datemin.toString());
+				parentModifie = true;
 			}
-			dureeTotale += enfant.getDuree();
-		}
-		if (!parent.getDateDebut().equals(datemin)) {
-			parent.setDateDebut(datemin.toString());
-			parentModifie = true;
-		}
-		if (parent.getImportance() != priomax) {
-			parent.setImportance(priomax);
-			parentModifie = true;
-		}
-		if (parent.getDuree() != dureeTotale) {
-			parent.setDuree(dureeTotale);
-			parentModifie = true;
-		}
-		if (parentModifie) {
-			this.mettreAJourParent(parent.getParent());
+			if (parent.getImportance() != priomax) {
+				parent.setImportance(priomax);
+				parentModifie = true;
+			}
+			if (parent.getDuree() != dureeTotale) {
+				parent.setDuree(dureeTotale);
+				parentModifie = true;
+			}
+			if (parentModifie) {
+				this.mettreAJourParent(parent.getParent());
+			}
 		}
 	}
 
@@ -165,5 +167,18 @@ public class Model implements Sujet {
 			res.append(afficherTache(enfant, profondeur+1));
 		}
 		return res.toString();
+	}
+
+	/**
+	 * Recupère la liste des tâches archivé, mais dans le diagramme c'est void alors jsp ce qu'on en fait
+	 */
+	public void ouvrirArchive() {
+		ArrayList<Tache> archive = new ArrayList<Tache>();
+		for (Tache enfant : this.ensTache) {
+			if (enfant.getEtat().equals(Tache.ETAT_ARCHIVE)) {
+				archive.add(enfant);
+			}
+		}
+
 	}
 }
