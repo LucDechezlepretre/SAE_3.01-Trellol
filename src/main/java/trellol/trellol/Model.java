@@ -44,9 +44,7 @@ public class Model implements Sujet {
 		return racine;
 	}
 	public void ajouterEnfant(Tache parent, Tache enfant){
-		if(this.ensTache.contains(enfant)){
-
-		}
+		
 	}
 
 
@@ -99,5 +97,4 @@ public class Model implements Sujet {
 	public void afficherHistorique() {
 		System.out.println(historique);
 	}
-
 }
