@@ -1,7 +1,5 @@
 package trellol.trellol;
 
-import BD.DBConnection;
-
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
