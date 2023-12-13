@@ -39,6 +39,18 @@ public class Model implements Sujet {
 		}
 		return enfants;
 	}
+	public Tache getRacine(){
+		Tache racine = null;
+		for(Tache t: this.ensTache){
+			if(t.getParent() == null){
+				racine = t;
+			}
+		}
+		return racine;
+	}
+	public void ajouterEnfant(Tache parent, Tache enfant){
+
+	}
 
 
 	/**
