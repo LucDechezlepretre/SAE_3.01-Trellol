@@ -16,8 +16,7 @@ public class Model implements Sujet {
 	 */
 	private ArrayList<Observateur> observateurs;
 
-	private Historique h;
-	private Tache ensTache;
+	private Historique historique;
 	private List<Tache> ensTache;
 
 
@@ -102,7 +101,7 @@ public class Model implements Sujet {
 	}
 
 	public void afficherHistorique() {
-		System.out.println(h);
+		System.out.println(historique);
 	}
 
 }
