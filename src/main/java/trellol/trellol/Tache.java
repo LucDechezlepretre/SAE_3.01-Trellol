@@ -1,4 +1,4 @@
-package trellol.trellol;
+package main.java.trellol.trellol;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
