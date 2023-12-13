@@ -105,5 +105,5 @@ public class Model implements Sujet {
 	public void ajouterTache(Tache tache) {
 		this.ensTache.add(tache);
 	}
-
+	p
 }
