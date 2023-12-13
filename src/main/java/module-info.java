@@ -4,6 +4,5 @@ module trellol.trellol {
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
-    requires java.sql;
     exports trellol.trellol;
 }
