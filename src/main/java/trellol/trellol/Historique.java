@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Historique {
     private ArrayList<String> actions;
 
-    public Historique(String action, Tache tache){
+    public Historique(){
         this.actions = new ArrayList<String>();
     }
 
@@ -17,9 +17,11 @@ public class Historique {
         return this.actions;
     }
 
-    public void toStringHistorique(){
-        for (String action : this.actions){
-            System.out.println(action);
+    public String toString(){
+        String affiche = "";
+        for (String action : this.actions) {
+            affiche += action + "\n";
         }
+        return affiche;
     }
 }
