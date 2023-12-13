@@ -1,7 +1,6 @@
 
 package trellol.trellol;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -10,18 +9,12 @@ import java.util.List;
  *
  */
 public class Model implements Sujet {
-
 	/**
 	 * Liste des observateurs
 	 */
 	private ArrayList<Observateur> observateurs;
-
-	private Historique h;
-	private Tache ensTache;
+	private Historique historique;
 	private List<Tache> ensTache;
-
-
-	//private Historique historique;
 
 	public Model(Tache t){
 		this.observateurs = new ArrayList<Observateur> ();
@@ -51,7 +44,9 @@ public class Model implements Sujet {
 		return racine;
 	}
 	public void ajouterEnfant(Tache parent, Tache enfant){
+		if(this.ensTache.contains(enfant)){
 
+		}
 	}
 
 
@@ -102,7 +97,7 @@ public class Model implements Sujet {
 	}
 
 	public void afficherHistorique() {
-		System.out.println(h);
+		System.out.println(historique);
 	}
 
 }
