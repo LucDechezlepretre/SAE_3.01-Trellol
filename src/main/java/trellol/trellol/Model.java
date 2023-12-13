@@ -87,15 +87,15 @@ public class Model implements Sujet {
 	//public void deplacer(int,int,int,int) {}
 
 	public void archiverTache(Tache tache) {
-		tache.setEtat("Archive");
+		tache.setEtat(Tache.ETAT_ARCHIVE);
 	}
 
 	public void desarchiverTache(Tache tache) {
-		tache.setEtat("NonArchive");
+		tache.setEtat(Tache.ETAT_NON_ARCHIVE);
 	}
 
 	public void suppressionTache(Tache tache) {
-		tache.setEtat("Supprime");
+		tache.setEtat(Tache.ETAT_SUPPRIME);
 		tache.setParent(null);
 		tache.setAntecedant(null);
 	}
