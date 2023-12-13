@@ -4,6 +4,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -11,11 +14,18 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        HBox racine=new HBox();
-        Button b=new Button("HIHI");
-        racine.getChildren().add(b);
+        Pane racine=new Pane();
+        HBox header=new HBox(25);
 
-        Scene scene = new Scene(racine);
+        Button bVueBureau=new Button("Vue Bureau");
+        Button bVueListe=new Button("Vue Liste");
+        Text titre=new Text("Trellol");
+
+        header.getChildren().addAll(bVueBureau, bVueListe, titre);
+
+        racine.getChildren().addAll(header);
+
+        Scene scene = new Scene(racine, 960, 540);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
