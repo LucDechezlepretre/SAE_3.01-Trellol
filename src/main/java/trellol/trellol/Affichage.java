@@ -1,6 +1,7 @@
 package trellol.trellol;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -66,7 +67,9 @@ public class Affichage extends Application {
 
         ///CREATION DE LA BOX D'AFFICHAGE DES TACHES
         VueBureau bureau=new VueBureau();
-        bureau.setOnDragDropped(new ControlleurDropTache(modele));
+        EventHandler controllerDrop=new ControlleurDropTache(modele);
+
+        bureau.setOnDragDropped(controllerDrop);
 
         ///Ajout à la racine///
         racine.getChildren().addAll(header, gauche);
