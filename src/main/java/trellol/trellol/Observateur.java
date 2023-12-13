@@ -1,4 +1,4 @@
-package main.java.trellol.trellol;
+package trellol.trellol;
 
 /**
  * Interface pour les differents observateurs de Sujet

@@ -1,5 +1,5 @@
 
-package main.java.trellol.trellol;
+package trellol.trellol;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -65,6 +65,11 @@ public class Model implements Sujet {
 	//public void deplacer(int,int,int,int) {}
 
 	public void archiverTache(Tache tache) {
-
+		tache.setEtat("Archive");
 	}
+
+	public void desarchiverTache(Tache tache) {
+		tache.setEtat("NonArchive");
+	}
+
 }
