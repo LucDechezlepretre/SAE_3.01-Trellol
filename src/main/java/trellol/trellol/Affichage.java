@@ -21,7 +21,10 @@ public class Affichage extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        //CREATION DU MODELE
+        Model modele=new Model();
 
+        //Affichage
         VBox racine=new VBox(10);
         racine.setPadding(new Insets(0, 10, 0, 10));
         HBox header=new HBox(25);
@@ -77,7 +80,7 @@ public class Affichage extends Application {
     {
         Model m = creationModel();
         System.out.println(m);
-        //launch();
+        launch();
     }
 
     public static Model creationModel(){
