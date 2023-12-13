@@ -87,7 +87,7 @@ public class Tache {
     public int getId() {
         return id;
     }
-    public void ajouterAntecedent(Tache antecedent)throws SQLException{
+    public void ajouterAntecedentSQL(Tache antecedent)throws SQLException{
         this.antecedants.add(antecedent);
         DBConnection.setNomDB("Trellol");
         Connection connection = DBConnection.getConnection();
@@ -98,7 +98,7 @@ public class Tache {
         prep.executeUpdate();
     }
 
-    public void ajouterComposant(Tache composant) throws SQLException{
+    public void ajouterComposantSQL(Tache composant) throws SQLException{
         this.composants.add(composant);
         DBConnection.setNomDB("Trellol");
         Connection connection = DBConnection.getConnection();
@@ -188,4 +188,5 @@ public class Tache {
         }
         return t;
     }
+
 }
