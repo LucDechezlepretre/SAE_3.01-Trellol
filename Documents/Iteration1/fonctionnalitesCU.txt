@@ -1,1 +1,26 @@
-creation des classes : DBConnection, Utilisateur, Tache, ListeTache, Modele
+Nous avons premièrement revu certaines parties de notre conception, car de nouvelles informations nous sont
+parvenues concernant le cahier des charges de l'application.
+
+Nous avons ensuite mis en place le fonctionnement interne de l'application :
+- creation des classes : Tache, Model, Historique, Importance
+
+Puis, nous avons commencé la mise en place de l'interface de l'application
+
+Nous n'avons pas de fonctionnalités complètes d'opérationnelles, mais nous pouvons manuellement créer et gérer
+tâches dans le code, ces options ne sont simplement pas encore accessible depuis l'application JavaFX
+
+Nous avons travaillé sur la conception tous ensemble avant de se répartir le travail de programmation :
+
+DECHEZLEPRETRE Luc a travaillé sur la mise en place de la récursivité des tâches dans le modèle,
+puis sur l'affichage récursif de ces tâches
+
+FONTANEZ Antoine a travaillé sur des classes qui ont été retirées du à des changements dans les consignes que
+nous avons reçues, avant de s'occuper de l'affichage en JavaFX
+
+SLIMANI Robin a commencé par coder les tests unitaires pour le modèle puis la gestion de l'historique ainsi que
+quelques méthodes du modèle
+
+DESPAQUIS Liam a travaillé sur la gestion des tâches dans le modèle et l'évolution des tâches parentes lorsque
+sa liste d'enfant évolue, ainsi que la complétion de la gestion de l'historique
+
+Pour les diagrammes séquence, nous avons fait ceux qui nous semblaient les plus judicieux ou ceux dont nous sommes le plus fier.
