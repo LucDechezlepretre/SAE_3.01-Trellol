@@ -83,6 +83,11 @@ public class Tache {
     public void setImportance(int importance) {
         this.importance = importance;
     }
+
+    public int getId() {
+        return id;
+    }
+
     public void save() throws SQLException {
         if(this.id == -1){
             this.saveNew();
@@ -149,7 +154,6 @@ public class Tache {
     public static Tache findById(int id) throws SQLException{
         DBConnection.setNomDB("Trellol");
         Connection connection = DBConnection.getConnection();
-
 
     }
 }
