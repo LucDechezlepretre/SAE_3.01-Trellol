@@ -1,7 +1,6 @@
 
 package trellol.trellol;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -10,17 +9,12 @@ import java.util.List;
  *
  */
 public class Model implements Sujet {
-
 	/**
 	 * Liste des observateurs
 	 */
 	private ArrayList<Observateur> observateurs;
-
 	private Historique historique;
 	private List<Tache> ensTache;
-
-
-	//private Historique historique;
 
 	public Model(Tache t){
 		this.observateurs = new ArrayList<Observateur> ();
@@ -50,7 +44,7 @@ public class Model implements Sujet {
 		return racine;
 	}
 	public void ajouterEnfant(Tache parent, Tache enfant){
-
+		
 	}
 
 
@@ -87,15 +81,15 @@ public class Model implements Sujet {
 	//public void deplacer(int,int,int,int) {}
 
 	public void archiverTache(Tache tache) {
-		tache.setEtat("Archive");
+		tache.setEtat(Tache.ETAT_ARCHIVE);
 	}
 
 	public void desarchiverTache(Tache tache) {
-		tache.setEtat("NonArchive");
+		tache.setEtat(Tache.ETAT_NON_ARCHIVE);
 	}
 
 	public void suppressionTache(Tache tache) {
-		tache.setEtat("Supprime");
+		tache.setEtat(Tache.ETAT_SUPPRIME);
 		tache.setParent(null);
 		tache.setAntecedant(null);
 	}
@@ -103,5 +97,4 @@ public class Model implements Sujet {
 	public void afficherHistorique() {
 		System.out.println(historique);
 	}
-
 }
