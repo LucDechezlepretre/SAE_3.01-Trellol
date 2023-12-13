@@ -1,5 +1,8 @@
 
 package trellol.trellol;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,5 +107,17 @@ public class Model implements Sujet {
 
 	public void ajouterTache(Tache tache) {
 		this.ensTache.add(tache);
+	}
+
+	@Override
+	public String toString() {
+		return afficherTache(this.ensTache.get(0), 0);
+	}
+	private String afficherTache(Tache t, int profondeur){
+		String res = "";
+		for(int i = 0; i < profondeur; i++){
+			res += " ";
+		}
+
 	}
 }
