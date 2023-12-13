@@ -53,7 +53,7 @@ public class ListeTache {
         PreparedStatement statement = connect.prepareStatement(SQLPrep);
         statement.setInt(1, id);
 
-
+        statement.execute();
         ResultSet rs = statement.getResultSet();
         if(rs.next()){ //Il y a une ListeTache avec cette id dans la bd
 
@@ -62,6 +62,9 @@ public class ListeTache {
             SQLPrep="SELECT idTache FROM Contient WHERE idListeTache=?";
             statement= connect.prepareStatement(SQLPrep);
             statement.setInt(1, id);
+            statement.execute();
+
+            rs = statement.getResultSet();
 
             ArrayList<Tache> taches=new ArrayList<>();
             while(rs.next()){
@@ -97,5 +100,22 @@ public class ListeTache {
      */
     public ArrayList<Tache> getTaches() {
         return taches;
+    }
+
+
+    /**
+     * Methode d'insertion de l'objet ListeTache courant dans la table
+     * @throws SQLException
+     */
+    public void save() throws SQLException {
+        if(this.id==-1){ //On verifie que c'est bien une ListeTache pas deja dans la bd
+            Connection connect = DBConnection.getConnection();
+            //Recupere personne d'id passé en paramètre
+            String SQLPrep = "INSERT INTO ListeTache(nom) VALUES(?);";
+            PreparedStatement statement = connect.prepareStatement(SQLPrep);
+            statement.setString(1, this.nom);
+
+            statement.execute();
+        }
     }
 }
