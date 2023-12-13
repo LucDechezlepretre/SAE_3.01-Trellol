@@ -1,13 +1,13 @@
 package trellol.trellol;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -19,6 +19,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         VBox racine=new VBox(10);
+        racine.setPadding(new Insets(0, 10, 0, 10));
         HBox header=new HBox(25);
 
         //BOUTONS DE VUE
@@ -29,17 +30,20 @@ public class Main extends Application {
         Label titre=new Label("TRELLOL");
         Font font = Font.font("Arial", FontWeight.BOLD, 35);
         titre.setFont(font);
+        titre.setTextFill(Color.WHITE);
 
         //BOUTONS GANTT HISTORIQUE ARCHIVE
         Button bGantt=new Button("Gantt");
         Button bArchive=new Button("Archive");
         Button bHistorique=new Button("Historique");
 
-
         ///Ajout au header///
         header.setAlignment(Pos.CENTER);
-        header.getChildren().addAll(bVueBureau, bVueListe, titre, bGantt, bArchive, bHistorique);
+        header.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 
+
+        header.setPadding(new Insets(0,30,0,30));
+        header.getChildren().addAll(bVueBureau, bVueListe, titre, bGantt, bArchive, bHistorique);
 
         ///CREATION DE LA BOX A GAUCHE
         VBox gauche=new VBox(5);
