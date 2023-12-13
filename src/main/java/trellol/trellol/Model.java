@@ -101,6 +101,12 @@ public class Model implements Sujet {
 	}
 
 	public void ajouterTache(Tache tache) {
-		this.ensTache.add(tache);
+		if (ensTache.size() == 0 && tache.getParent() == null) {
+			ensTache.add(tache);
+		} else if (tache.getParent() != null) {
+			ensTache.add(tache);
+		}else{
+			System.out.println("Impossible d'ajouter la tache");
+		}
 	}
 }

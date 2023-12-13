@@ -39,9 +39,31 @@ class ModelTest {
         Model m = new Model();
         Tache t = new Tache("tache1", "13/12/2023", 2, "enfant", 1);
         Tache t2 = new Tache("tache2", "13/12/2023", 2, "parent", 1);
+        Tache t3 = new Tache("tache3", "13/12/2023", 2, "enfant2", 1);
         m.ajouterTache(t);
+        t2.setParent(t3);
+        t3.setParent(t);
         m.ajouterTache(t2);
-        m.deplacerTache(t, t2);
-        assertEquals(t.getParent(), t2, "La tache devrait avoir pour parent t2");
+        m.ajouterTache(t3);
+        m.deplacerTache(t2, t);
+        assertEquals(t2.getParent(), t, "La tache devrait etre déplacée");
+    }
+
+    @Test
+    public void testAjouterTache(){
+        Model m = new Model();
+        Tache t = new Tache("tache1", "13/12/2023", 2, "Bonjour", 1);
+
+        m.ajouterTache(t);
+        assertEquals(m.getEnsTache().size(), 1, "La tache devrait etre ajoutée");
+
+        Tache t2 = new Tache("tache2", "13/12/2023", 2, "Bonjour", 1);
+        m.ajouterTache(t2);
+
+        assertEquals(m.getEnsTache().size(), 1, "La tache ne devrait pas etre ajoutée");
+        t2.setParent(t);
+
+        m.ajouterTache(t2);
+        assertEquals(m.getEnsTache().size(), 2, "La tache devrait etre ajoutée");
     }
 }
