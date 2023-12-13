@@ -16,7 +16,7 @@ public class Model implements Sujet {
 	private Historique historique;
 	private List<Tache> ensTache;
 
-	public Model(Tache t){
+	public Model(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
 	}
