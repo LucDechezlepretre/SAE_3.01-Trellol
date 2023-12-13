@@ -73,10 +73,10 @@ public class Utilisateur {
     }
 
     public static ArrayList<Utilisateur> findAll() throws SQLException {
-        DBConnection.setNomDB("Trelllol");
+        DBConnection.setNomDB("Trellol");
         Connection connection = DBConnection.getConnection();
         ArrayList<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
-        PreparedStatement preparedStatement = connection.prepareStatement("select id, nom, prenom, login, mdp from Personne");
+        PreparedStatement preparedStatement = connection.prepareStatement("select id, nom, prenom, login, mdp from User");
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             Utilisateur user = new Utilisateur(resultSet.getString("nom"), resultSet.getString("prenom"), resultSet.getString("login"), resultSet.getString("mdp"));
@@ -99,19 +99,20 @@ public class Utilisateur {
         }
         return user;
     }
-    public static ArrayList<Utilisateur> findByName(String name) throws SQLException{
+
+    public static Utilisateur findByNomPrenom(String nom, String prenom) throws SQLException{
         DBConnection.setNomDB("Trellol");
         Connection connection = DBConnection.getConnection();
-        PreparedStatement prepareStatement = connection.prepareStatement("select id, nom, prenom from Personne where nom like ?");
-        prepareStatement.setString(1, name);
+        PreparedStatement prepareStatement = connection.prepareStatement("select id, nom, prenom, login, mdp from User where nom = ? and prenom = ?");
+        prepareStatement.setString(1, nom);
+        prepareStatement.setString(2, prenom);
         ResultSet res = prepareStatement.executeQuery();
-        ArrayList<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
-        while(res.next()){
-            Utilisateur user = new Utilisateur(res.getString("nom"), res.getString("prenom"), res.getString("login"), res.getString("mdp"));
+        Utilisateur user = null;
+        if(res.next()){
+            user = new Utilisateur(res.getString("nom"), res.getString("prenom"), res.getString("login"), res.getString("mdp"));
             user.id = Integer.valueOf(res.getString("id"));
-            utilisateurs.add(user);
         }
-        return utilisateurs;
+        return user;
     }
 
     @Override
@@ -125,5 +126,9 @@ public class Utilisateur {
     @Override
     public int hashCode() {
         return Objects.hash(id, nom, prenom, login, mdp);
+    }
+
+    public int getId() {
+        return id;
     }
 }
