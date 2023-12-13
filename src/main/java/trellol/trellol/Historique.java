@@ -17,7 +17,9 @@ public class Historique {
         return this.actions;
     }
 
-    public String afficherDerniereAction(){
-        return this.actions.get(this.actions.size()-1);
+    public void toStringHistorique(){
+        for (String action : this.actions){
+            System.out.println(action);
+        }
     }
 }

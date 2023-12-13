@@ -15,6 +15,7 @@ public class Model implements Sujet {
 	 */
 	private ArrayList<Observateur> observateurs;
 
+	private Historique h;
 	private Tache ensTache;
 
 
@@ -70,6 +71,16 @@ public class Model implements Sujet {
 
 	public void desarchiverTache(Tache tache) {
 		tache.setEtat("NonArchive");
+	}
+
+	public void suppressionTache(Tache tache) {
+		tache.setEtat("Supprime");
+		tache.setParent(null);
+		tache.setAntecedant(null);
+	}
+
+	public void afficherHistorique() {
+		System.out.println(h);
 	}
 
 }
