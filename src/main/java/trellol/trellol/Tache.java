@@ -3,6 +3,7 @@ package trellol.trellol;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class Tache {
     // Format de la date souhaité
@@ -99,5 +100,18 @@ public class Tache {
 
     public void setEtat(String archive) {
         this.etat = archive;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tache tache = (Tache) o;
+        return duree == tache.duree && importance == tache.importance && Objects.equals(nom, tache.nom) && Objects.equals(etat, tache.etat) && Objects.equals(dateDebut, tache.dateDebut) && Objects.equals(description, tache.description) && Objects.equals(parent, tache.parent) && Objects.equals(antecedant, tache.antecedant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nom, etat, dateDebut, duree, description, importance, parent, antecedant);
     }
 }

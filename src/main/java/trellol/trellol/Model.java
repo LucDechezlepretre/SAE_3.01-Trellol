@@ -2,6 +2,7 @@
 package trellol.trellol;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Classe correspondant au modele de l'architecture MVC 
@@ -17,19 +18,40 @@ public class Model implements Sujet {
 
 	private Historique h;
 	private Tache ensTache;
+	private List<Tache> ensTache;
 
 
 	//private Historique historique;
 
 	public Model(Tache t){
 		this.observateurs = new ArrayList<Observateur> ();
-		this.ensTache = t;
+		this.ensTache = new ArrayList<Tache>();
 	}
 
-	public ArrayList<Tache> getEnsTache() {
-		ArrayList<Tache> listTache = new ArrayList<Tache>();
+	public List<Tache> getEnsTache() {
+		return this.ensTache;
+	}
 
-		return listTache;
+	public List<Tache> getEnfant(Tache tache){
+		List<Tache> enfants = new ArrayList<Tache>();
+		for(Tache t : this.ensTache){
+			if(t.getParent()  == tache){
+				enfants.add(t);
+			}
+		}
+		return enfants;
+	}
+	public Tache getRacine(){
+		Tache racine = null;
+		for(Tache t: this.ensTache){
+			if(t.getParent() == null){
+				racine = t;
+			}
+		}
+		return racine;
+	}
+	public void ajouterEnfant(Tache parent, Tache enfant){
+
 	}
 
 
