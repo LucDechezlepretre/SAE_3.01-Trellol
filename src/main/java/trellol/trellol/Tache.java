@@ -116,4 +116,9 @@ public class Tache {
     public int hashCode() {
         return Objects.hash(nom, etat, dateDebut, duree, description, importance, parent, antecedant);
     }
+
+    @Override
+    public String toString() {
+        return "Tache{" + nom + '\''  + duree + '}';
+    }
 }
