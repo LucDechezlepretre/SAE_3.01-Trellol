@@ -47,8 +47,10 @@ public class Main extends Application {
         Button bModif=new Button("Modifier");
         Button bAjoutTache=new Button("Ajouter tache");
 
-        gauche.getChildren().addAll(bModif, bAjoutTache);
+
+        ///Ajout à gauche
         gauche.setAlignment(Pos.BOTTOM_LEFT);
+        gauche.getChildren().addAll(bModif, bAjoutTache);
 
         ///Ajout à la racine///
         racine.getChildren().addAll(header, gauche);
