@@ -1,5 +1,5 @@
 
-package main.java.trellol.trellol;
+package trellol.trellol;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ public class Model implements Sujet {
 	/**
 	 * Liste des observateurs
 	 */
-	private ArrayList<Observateur> observateurs;
+	private ArrayList<main.java.trellol.trellol.Observateur> observateurs;
 
 	private Tache ensTache;
 
