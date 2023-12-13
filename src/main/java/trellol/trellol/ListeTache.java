@@ -48,7 +48,6 @@ public class ListeTache {
      */
     public static ListeTache findById(int id) throws SQLException {
         Connection connect = DBConnection.getConnection();
-        //Recupere personne d'id passé en paramètre
         String SQLPrep = "SELECT nom FROM ListeTache WHERE id=?;";
         PreparedStatement statement = connect.prepareStatement(SQLPrep);
         statement.setInt(1, id);
@@ -110,12 +109,45 @@ public class ListeTache {
     public void save() throws SQLException {
         if(this.id==-1){ //On verifie que c'est bien une ListeTache pas deja dans la bd
             Connection connect = DBConnection.getConnection();
-            //Recupere personne d'id passé en paramètre
             String SQLPrep = "INSERT INTO ListeTache(nom) VALUES(?);";
             PreparedStatement statement = connect.prepareStatement(SQLPrep);
             statement.setString(1, this.nom);
 
             statement.execute();
         }
+    }
+
+    /**
+     * Methode d'ajout d'une tache à la liste, modifie l'attribut taches et la table Contient de la bd
+     * @param t la tache à ajouter
+     * @throws SQLException
+     */
+    public void ajouterTache(Tache t) throws SQLException {
+        this.taches.add(t);
+
+        Connection connect=DBConnection.getConnection();
+        String SQLPrep = "INSERT INTO Contient(idTache, idListeTache) VALUES(?,?);";
+        PreparedStatement statement = connect.prepareStatement(SQLPrep);
+
+        statement.setInt(1, t.getId());
+        statement.setInt(2, this.id);
+        statement.execute();
+    }
+
+    /**
+     * Methode de retrait d'une tache de la ListeTache
+     * @param t la tache à retirer
+     * @throws SQLException
+     */
+    public void retirerTache(Tache t) throws SQLException {
+        this.taches.remove(t);
+
+        Connection connect=DBConnection.getConnection();
+        String SQLPrep = "DELETE FROM Contient WHERE idTache=? AND idListeTache=?";
+        PreparedStatement statement = connect.prepareStatement(SQLPrep);
+
+        statement.setInt(1, t.getId());
+        statement.setInt(2, this.id);
+        statement.execute();
     }
 }
