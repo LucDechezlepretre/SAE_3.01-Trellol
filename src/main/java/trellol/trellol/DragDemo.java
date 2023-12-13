@@ -1,4 +1,4 @@
-package exemples;
+package trellol.trellol;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;

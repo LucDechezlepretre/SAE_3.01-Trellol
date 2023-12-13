@@ -66,6 +66,7 @@ public class Affichage extends Application {
 
         ///CREATION DE LA BOX D'AFFICHAGE DES TACHES
         VueBureau bureau=new VueBureau();
+        bureau.setOnDragDropped(new ControlleurDropTache(modele));
 
         ///Ajout à la racine///
         racine.getChildren().addAll(header, gauche);
