@@ -65,6 +65,11 @@ public class Model implements Sujet {
 	//public void deplacer(int,int,int,int) {}
 
 	public void archiverTache(Tache tache) {
-
+		tache.setEtat("Archive");
 	}
+
+	public void desarchiverTache(Tache tache) {
+		tache.setEtat("NonArchive");
+	}
+
 }

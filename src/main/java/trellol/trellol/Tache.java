@@ -11,7 +11,7 @@ public class Tache {
     // Création d'un objet SimpleDateFormat avec le format spécifié
     public static SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
     private String nom;
-
+    private String etat;
     private Date dateDebut;
     private int duree;
     private String description;
@@ -29,6 +29,7 @@ public class Tache {
         this.duree = duree;
         this.description = description;
         this.importance = importance;
+        this.etat = "NonArchive";
     }
 
     public String getNom() {
@@ -58,6 +59,10 @@ public class Tache {
 
     public void setDuree(int duree) {
         this.duree = duree;
+    }
+
+    public String getEtat() {
+    	return this.etat;
     }
 
     public String getDescription() {
@@ -90,5 +95,9 @@ public class Tache {
 
     public void setAntecedant(Tache antecedant) {
         this.antecedant = antecedant;
+    }
+
+    public void setEtat(String archive) {
+        this.etat = archive;
     }
 }

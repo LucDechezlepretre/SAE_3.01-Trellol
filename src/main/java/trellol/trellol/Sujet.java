@@ -1,4 +1,4 @@
-package main.java.trellol.trellol;
+package trellol.trellol;
 
 public interface Sujet {
         public void enregistrerObservateur(Observateur o);
