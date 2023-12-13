@@ -43,9 +43,6 @@ public class Model implements Sujet {
 		}
 		return racine;
 	}
-	public void ajouterEnfant(Tache parent, Tache enfant){
-		
-	}
 
 
 	/**
