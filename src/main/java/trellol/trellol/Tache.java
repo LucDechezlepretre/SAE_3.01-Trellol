@@ -1,13 +1,8 @@
 package trellol.trellol;
 
-import BD.DBConnection;
-
-import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Tache {
     // Format de la date souhaité
