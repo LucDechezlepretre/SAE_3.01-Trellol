@@ -87,4 +87,11 @@ class ModelTest {
         m.ajouterTache(t2);
         assertEquals(m.getEnsTache().size(), 2, "La tache devrait etre ajoutée");
     }
+    @Test
+    public void testGetRacine(){
+        Model m = new Model();
+        Tache t = new Tache("tache1", "13/12/2023", 2, "Bonjour", 1);
+        m.ajouterTache(t);
+        assertEquals(t, m.getRacine(), "Les deux tâches devraient être identiques");
+    }
 }
