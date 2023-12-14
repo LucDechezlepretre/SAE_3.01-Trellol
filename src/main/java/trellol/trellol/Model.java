@@ -155,7 +155,7 @@ public class Model implements Sujet {
 
 	@Override
 	public String toString() {
-		return afficherTache(this.ensTache.get(0), 0);
+		return afficherTache(this.getRacine(), 0);
 	}
 	private String afficherTache(Tache t, int profondeur){
 		StringBuilder res = new StringBuilder();
@@ -201,7 +201,7 @@ public class Model implements Sujet {
 		}
 	}
 	public TreeView<Tache> affichageListe(){
-		TreeItem<Tache> racine = createTreeItem(this.ensTache.get(0));
+		TreeItem<Tache> racine = createTreeItem(this.getRacine());
 		ajouterTacheRecursivement(racine, this.ensTache.get(0));
 		// Crée le TreeView avec l'élément racine
 		TreeView<Tache> treeView = new TreeView<>(racine);
