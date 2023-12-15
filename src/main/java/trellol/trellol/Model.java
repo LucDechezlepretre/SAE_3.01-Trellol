@@ -121,7 +121,7 @@ public class Model implements Sujet {
 				dureeTotale += enfant.getDuree();
 			}
 			if (!parent.getDateDebut().equals(datemin)) {
-				parent.setDateDebut(datemin.toString());
+				parent.setDateDebut(Tache.dateFormat.format(datemin));
 				parentModifie = true;
 			}
 			if (parent.getImportance() != priomax) {

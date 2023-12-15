@@ -59,6 +59,7 @@ class ModelTest {
         t2.setParent(t3);
         t3.setParent(t);
         //t2 est enfant de t3 et t3 est enfant de t
+
         m.ajouterTache(t2);
         m.ajouterTache(t3);
         //on déplace la tache t2 pour qu'elle devienne enfant de t
