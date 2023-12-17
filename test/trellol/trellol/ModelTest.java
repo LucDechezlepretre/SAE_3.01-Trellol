@@ -2,6 +2,7 @@ package trellol.trellol;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import trellol.trellol.Modele.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
