@@ -1,4 +1,4 @@
-package trellol.trellol;
+package trellol.trellol.Vues;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;

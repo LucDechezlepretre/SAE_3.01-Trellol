@@ -1,7 +1,10 @@
 
-package trellol.trellol;
+package trellol.trellol.Modele;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import trellol.trellol.Historique;
+import trellol.trellol.Vues.Observateur;
+import trellol.trellol.Tache;
 
 import java.util.ArrayList;
 import java.util.Date;

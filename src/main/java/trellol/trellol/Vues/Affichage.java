@@ -1,4 +1,4 @@
-package trellol.trellol;
+package trellol.trellol.Vues;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -16,6 +16,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import trellol.trellol.Controleurs.ControlleurDropTache;
+import trellol.trellol.Modele.Model;
+import trellol.trellol.Tache;
+import trellol.trellol.Vues.VueBureau;
 
 import java.io.IOException;
 

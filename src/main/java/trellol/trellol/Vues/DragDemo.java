@@ -1,4 +1,4 @@
-package trellol.trellol;
+package trellol.trellol.Vues;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;

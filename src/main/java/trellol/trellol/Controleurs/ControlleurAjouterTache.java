@@ -1,12 +1,8 @@
-package trellol.trellol;
+package trellol.trellol.Controleurs;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-
-import java.util.EventListener;
+import trellol.trellol.Modele.Model;
 
 public class ControlleurAjouterTache implements EventHandler<ActionEvent> {
     private Model modele;

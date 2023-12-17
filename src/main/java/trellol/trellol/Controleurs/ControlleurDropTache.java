@@ -1,7 +1,8 @@
-package trellol.trellol;
+package trellol.trellol.Controleurs;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import trellol.trellol.Modele.Model;
 
 public class ControlleurDropTache implements EventHandler<ActionEvent> {
     private Model modele;
