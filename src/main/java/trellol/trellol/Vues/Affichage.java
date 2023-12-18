@@ -1,19 +1,19 @@
 package trellol.trellol.Vues;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import trellol.trellol.Controleurs.ControlleurAjouterTache;
 import trellol.trellol.Controleurs.ControlleurDropTache;
@@ -23,6 +23,8 @@ import trellol.trellol.Vues.VueBureau;
 
 import java.io.IOException;
 import java.text.BreakIterator;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Affichage extends Application {
 
@@ -108,22 +110,80 @@ public class Affichage extends Application {
 
         //AFFICHAGE GRAPHIQUE DE LA NOUVELLE FENETRE
         Stage fenetreNomColonne = new Stage();
-        fenetreNomColonne.setTitle("Nom de la nouvelle colonne");
+        fenetreNomColonne.setTitle("Configurer Tache");
 
         // Création du formulaire de la nouvelle fenêtre
-        BorderPane layout = new BorderPane();
-        TextField nom = new TextField("colonne");
+        BorderPane form=new BorderPane();
+        form.setPadding(new Insets(0, 10, 0, 10));
+
+
+        ///nom
+        HBox ligneNom=new HBox(5);
+        Text tNom=new Text("Nom : ");
+        TextField fieldNom = new TextField("Tache");
+        ligneNom.getChildren().addAll(tNom, fieldNom);
+
+        ///date
+        HBox ligneDate=new HBox(5);
+        Text tDate=new Text("Date début : ");
+        DatePicker fieldDate = new DatePicker();
+        ligneDate.getChildren().addAll(tDate, fieldDate);
+
+        ///duree
+
+        ///importance
+        HBox ligneImportance=new HBox(5);
+        ObservableList<String> optionsImp = FXCollections.observableArrayList(
+                "faible",
+                "moyenne",
+                "élevée"
+        );
+        Text tImportance=new Text("Importance : ");
+        ComboBox<String> fieldImportance=new ComboBox<>(optionsImp);
+        ligneImportance.getChildren().addAll(tImportance, fieldImportance);
+
+        ///description
+        TextArea fieldDescription=new TextArea();
+
+        ///tache anterieur
+        HBox ligneAnter=new HBox(5);
+        Text tAnter=new Text("Tache anterieur : ");
+        ObservableList<String> optionsAnter = FXCollections.observableArrayList();
+        List<Tache> ensTaches=m.getEnsTache();
+        for(Tache t : ensTaches){
+            optionsAnter.add(t.getNom());
+        }
+        ComboBox<String> fieldAnter=new ComboBox<>(optionsAnter);
+
+        ligneAnter.getChildren().addAll(tAnter, fieldAnter);
+
+        ///sous tache
+        HBox ligneSous=new HBox(5);
+        Text tSous=new Text("Sous tache(s) : ");
+
+        ligneSous.getChildren().addAll(tSous);
+
+
+
+        ///validation
         Button valider = new Button("Valider");
         valider.setOnAction(cAjouterTache);
 
-        BorderPane.setAlignment(nom, Pos.CENTER);
-        layout.setTop(nom);
-        layout.setCenter(valider);
-        layout.getChildren().add(new Button("Nouveau Bouton"));
+        VBox gauche=new VBox(5);
+        gauche.getChildren().addAll(ligneNom, ligneDate, ligneImportance, fieldDescription);
+
+        VBox droite=new VBox(5);
+        droite.getChildren().addAll(ligneAnter, ligneSous);
+
+
+        form.setLeft(gauche);
+        form.setRight(droite);
+        form.setBottom(valider);
 
         // Définir la scène de la nouvelle fenêtre
-        Scene scene = new Scene(layout, 200, 150);
+        Scene scene = new Scene(form);
         fenetreNomColonne.setScene(scene);
+
 
         // Afficher la nouvelle fenêtre
         fenetreNomColonne.show();
