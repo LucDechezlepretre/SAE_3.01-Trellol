@@ -1,7 +1,12 @@
 
 package trellol.trellol.Modele;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import trellol.trellol.Historique;
 import trellol.trellol.Vues.Observateur;
 import trellol.trellol.Tache;
@@ -22,6 +27,7 @@ public class Model implements Sujet {
 	private ArrayList<Observateur> observateurs;
 	private Historique historique;
 	private List<Tache> ensTache;
+	private static final DataFormat customFormat = new DataFormat("application/x-java-serialized-object");
 
 	public Model(){
 		this.observateurs = new ArrayList<Observateur> ();
@@ -212,6 +218,71 @@ public class Model implements Sujet {
 		ajouterTacheRecursivement(racine, this.ensTache.get(0));
 		// Crée le TreeView avec l'élément racine
 		TreeView<Tache> treeView = new TreeView<>(racine);
+		// Enable cell reordering
+		treeView.setCellFactory(param -> {
+			TreeCell<Tache> cell = new TreeCell<Tache>() {
+				@Override
+				protected void updateItem(Tache tache, boolean empty) {
+					// une TreeCell peut changer de tâche, donc changer de TreeItem
+					super.updateItem(tache, empty);
+					setText(empty ? null : tache.toString());
+				}
+			};
+
+			cell.setOnDragDetected(event -> {
+				if (!cell.isEmpty()) {
+					Dragboard dragboard = cell.startDragAndDrop(TransferMode.MOVE);
+
+					ClipboardContent content = new ClipboardContent();
+					content.put(customFormat, cell.getItem());
+					dragboard.setContent(content);
+
+					event.consume();
+				}
+			});
+
+			cell.setOnDragOver(event -> {
+				Dragboard dragboard = event.getDragboard();
+
+				if (dragboard.hasContent(customFormat) && !cell.isEmpty()) {
+					event.acceptTransferModes(TransferMode.MOVE);
+				}
+
+				event.consume();
+			});
+
+			cell.setOnDragDropped(event -> {
+				Dragboard dragboard = event.getDragboard();
+
+				if (dragboard.hasContent(customFormat)) {
+					Tache draggedItem = (Tache) dragboard.getContent(customFormat);
+					TreeItem<Tache> draggedTreeItem = new TreeItem<>(draggedItem);
+
+					TreeItem<Tache> parentItem = treeView.getSelectionModel().getSelectedItem();
+					System.out.println(draggedItem);
+					System.out.println(cell.getItem());
+					this.deplacerTache(draggedItem, cell.getItem());
+					this.notifierObservateurs();
+					System.out.println(this);
+
+					/*// Ensure we are not dropping onto the same item or its children
+					if (parentItem != null && !parentItem.equals(draggedTreeItem) && !containsItem(parentItem, draggedItem)) {
+						parentItem.getChildren().add(draggedTreeItem);
+						event.setDropCompleted(true);
+
+						// Remove the dragged item from its original position
+						TreeItem<String> sourceParent = findParent(rootItem, draggedItem);
+						if (sourceParent != null) {
+							sourceParent.getChildren().remove(draggedTreeItem);
+						}*/
+				} else {
+					event.setDropCompleted(false);
+				}
+
+				event.consume();
+			});
+			return cell;
+		});
 		return treeView;
 	}
 
