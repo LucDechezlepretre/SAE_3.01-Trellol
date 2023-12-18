@@ -146,11 +146,13 @@ public class Model implements Sujet {
 	}
 
 	public void ajouterTache(Tache tache) {
-		if (ensTache.size() == 0 && tache.getParent() == null) {
-			ensTache.add(tache);
-		} else if (tache.getParent() != null) {
-			ensTache.add(tache);
-			mettreAJourParent(tache.getParent());
+		if ((ensTache.size() == 0 && tache.getParent() == null) || tache.getParent() != null) {
+			if (this.verifierUniciteNom(tache.getNom())) {
+				ensTache.add(tache);
+				mettreAJourParent(tache.getParent());
+			} else {
+				System.out.println("Nom de tâche déjà existant");
+			}
 		}else{
 			System.out.println("Impossible d'ajouter la tache");
 		}
@@ -209,5 +211,14 @@ public class Model implements Sujet {
 		// Crée le TreeView avec l'élément racine
 		TreeView<Tache> treeView = new TreeView<>(racine);
 		return treeView;
+	}
+
+	public boolean verifierUniciteNom(String nom) {
+		for (Tache enfant : this.ensTache) {
+			if (enfant.getNom().equals(nom)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
