@@ -1,32 +1,31 @@
 package trellol.trellol.Vues;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.input.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import trellol.trellol.Controleurs.ControlleurAjouterTache;
 import trellol.trellol.Controleurs.ControlleurDropTache;
 import trellol.trellol.Modele.Model;
 import trellol.trellol.Tache;
-import trellol.trellol.Vues.VueBureau;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 public class Affichage extends Application {
-
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -66,6 +65,11 @@ public class Affichage extends Application {
 
         Button bModif=new Button("Modifier");
         Button bAjoutTache=new Button("Ajouter tache");
+        bAjoutTache.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                Affichage.afficherFormulaireTache(m);
+            }
+        });
 
 
         ///Ajout à gauche
@@ -78,9 +82,7 @@ public class Affichage extends Application {
         EventHandler controllerDrop=new ControlleurDropTache(m);
         TreeView liste = m.affichageListe();
 
-
         bureau.setOnDragDropped(controllerDrop);
-
 
         ///Ajout à la racine///
         racine.getChildren().addAll(header, gauche, liste);
@@ -94,6 +96,95 @@ public class Affichage extends Application {
     public static void main(String[] args)
     {
         launch();
+    }
+
+
+    /**
+     * Methode de creation de la sous fenetre formulaire d'ajout de tache
+     * @param m, le model de l'application
+     */
+    public static void afficherFormulaireTache(Model m){
+        //AFFICHAGE GRAPHIQUE DE LA NOUVELLE FENETRE
+        Stage fenetreNomColonne = new Stage();
+        fenetreNomColonne.setTitle("Configurer Tache");
+
+        // Création du formulaire de la nouvelle fenêtre
+        BorderPane form=new BorderPane();
+        form.setPadding(new Insets(0, 10, 0, 10));
+
+
+        ///nom
+        HBox ligneNom=new HBox(5);
+        Text tNom=new Text("Nom : ");
+        TextField fieldNom = new TextField("Tache");
+        ligneNom.getChildren().addAll(tNom, fieldNom);
+
+        ///date
+        HBox ligneDate=new HBox(5);
+        Text tDate=new Text("Date début : ");
+        DatePicker fieldDate = new DatePicker();
+        ligneDate.getChildren().addAll(tDate, fieldDate);
+
+        ///duree
+        HBox ligneDuree=new HBox(5);
+        Text tDuree=new Text("Durée : ");
+        TextField fieldDuree=Affichage.createNumericField();
+
+        ligneDuree.getChildren().addAll(tDuree, fieldDuree);
+
+        ///importance
+        HBox ligneImportance=new HBox(5);
+        ObservableList<String> optionsImp = FXCollections.observableArrayList(
+                "faible",
+                "moyenne",
+                "élevée"
+        );
+        Text tImportance=new Text("Importance : ");
+        ComboBox<String> fieldImportance=new ComboBox<>(optionsImp);
+        ligneImportance.getChildren().addAll(tImportance, fieldImportance);
+
+        ///description
+        TextArea fieldDescription=new TextArea();
+
+        ///tache anterieur
+        HBox ligneAnter=new HBox(5);
+        Text tAnter=new Text("Tache anterieur : ");
+        ObservableList<String> optionsAnter = FXCollections.observableArrayList();
+        List<Tache> ensTaches=m.getEnsTache();
+        for(Tache t : ensTaches){
+            optionsAnter.add(t.getNom());
+        }
+        ComboBox<String> fieldAnter=new ComboBox<>(optionsAnter);
+
+        ligneAnter.getChildren().addAll(tAnter, fieldAnter);
+
+        ///validation
+        Button valider = new Button("Valider");
+
+        //association du controleur d'ajout
+        ControlleurAjouterTache cAjouterTache=new ControlleurAjouterTache(m, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter);
+        valider.setOnAction(cAjouterTache);
+
+        VBox gauche=new VBox(5);
+        gauche.getChildren().addAll(ligneNom, ligneDate, ligneDuree, ligneImportance);
+
+        VBox droite=new VBox(5);
+        droite.getChildren().addAll(ligneAnter);
+
+        VBox bas=new VBox(10);
+        bas.getChildren().addAll(fieldDescription, valider);
+
+
+        form.setLeft(gauche);
+        form.setRight(droite);
+        form.setBottom(bas);
+        // Définir la scène de la nouvelle fenêtre
+        Scene scene = new Scene(form);
+        fenetreNomColonne.setScene(scene);
+
+
+        // Afficher la nouvelle fenêtre
+        fenetreNomColonne.show();
     }
 
     public static Model creationModel(){
@@ -112,4 +203,27 @@ public class Affichage extends Application {
         return model;
     }
 
+
+    /**
+     * Methode permettant de creer un field n'autorisant QUE les chiffres
+     * @return le field créé
+     */
+    public static TextField createNumericField(){
+        TextField numericField = new TextField();
+
+        // Utilisation d'un TextFormatter avec un filtre
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String newText = change.getControlNewText();
+            if (Pattern.matches("[0-9]*", newText)) {
+                return change;
+            } else {
+                return null; // empêche le changement
+            }
+        };
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+        numericField.setTextFormatter(textFormatter);
+
+        return numericField;
+    }
 }
