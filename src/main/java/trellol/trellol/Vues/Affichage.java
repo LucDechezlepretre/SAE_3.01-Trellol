@@ -80,13 +80,14 @@ public class Affichage extends Application {
         ///CREATION DE LA BOX D'AFFICHAGE DES TACHES
         VueBureau bureau=new VueBureau();
         EventHandler controllerDrop=new ControlleurDropTache(m);
-        TreeView liste = m.affichageListe();
+        VueListe vueListe = new VueListe();
+        m.enregistrerObservateur(vueListe);
 
         bureau.setOnDragDropped(controllerDrop);
 
         ///Ajout à la racine///
-        racine.getChildren().addAll(header, gauche, liste);
-
+        racine.getChildren().addAll(header, gauche, vueListe);
+        m.notifierObservateurs();
         Scene scene = new Scene(racine);
         stage.setTitle("Hello!");
         stage.setScene(scene);
@@ -194,11 +195,8 @@ public class Affichage extends Application {
         Tache racine2 = new Tache("racine2", "13/12/2023", 7, "Ceci est la racine 2 ", 0);
         racine2.setParent(racine);
         model.ajouterTache(racine2);
-        Tache tache = new Tache("tache", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
-        tache.setParent(racine);
-        model.ajouterTache(tache);
         Tache luc = new Tache("tacheLuc", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
-        luc.setParent(tache);
+        luc.setParent(racine);
         model.ajouterTache(luc);
         return model;
     }
