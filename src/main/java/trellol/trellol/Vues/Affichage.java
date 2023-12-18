@@ -19,12 +19,11 @@ import trellol.trellol.Controleurs.ControlleurAjouterTache;
 import trellol.trellol.Controleurs.ControlleurDropTache;
 import trellol.trellol.Modele.Model;
 import trellol.trellol.Tache;
-import trellol.trellol.Vues.VueBureau;
 
 import java.io.IOException;
-import java.text.BreakIterator;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 public class Affichage extends Application {
 
@@ -105,9 +104,6 @@ public class Affichage extends Application {
      * @param m, le model de l'application
      */
     public static void afficherFormulaireTache(Model m){
-        //CREATION CONTROLLEURS
-        ControlleurAjouterTache cAjouterTache=new ControlleurAjouterTache(m);
-
         //AFFICHAGE GRAPHIQUE DE LA NOUVELLE FENETRE
         Stage fenetreNomColonne = new Stage();
         fenetreNomColonne.setTitle("Configurer Tache");
@@ -130,6 +126,11 @@ public class Affichage extends Application {
         ligneDate.getChildren().addAll(tDate, fieldDate);
 
         ///duree
+        HBox ligneDuree=new HBox(5);
+        Text tDuree=new Text("Durée : ");
+        TextField fieldDuree=Affichage.createNumericField();
+
+        ligneDuree.getChildren().addAll(tDuree, fieldDuree);
 
         ///importance
         HBox ligneImportance=new HBox(5);
@@ -157,29 +158,26 @@ public class Affichage extends Application {
 
         ligneAnter.getChildren().addAll(tAnter, fieldAnter);
 
-        ///sous tache
-        HBox ligneSous=new HBox(5);
-        Text tSous=new Text("Sous tache(s) : ");
-
-        ligneSous.getChildren().addAll(tSous);
-
-
-
         ///validation
         Button valider = new Button("Valider");
+
+        //association du controleur d'ajout
+        ControlleurAjouterTache cAjouterTache=new ControlleurAjouterTache(m, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter);
         valider.setOnAction(cAjouterTache);
 
         VBox gauche=new VBox(5);
-        gauche.getChildren().addAll(ligneNom, ligneDate, ligneImportance, fieldDescription);
+        gauche.getChildren().addAll(ligneNom, ligneDate, ligneDuree, ligneImportance);
 
         VBox droite=new VBox(5);
-        droite.getChildren().addAll(ligneAnter, ligneSous);
+        droite.getChildren().addAll(ligneAnter);
+
+        VBox bas=new VBox(10);
+        bas.getChildren().addAll(fieldDescription, valider);
 
 
         form.setLeft(gauche);
         form.setRight(droite);
-        form.setBottom(valider);
-
+        form.setBottom(bas);
         // Définir la scène de la nouvelle fenêtre
         Scene scene = new Scene(form);
         fenetreNomColonne.setScene(scene);
@@ -205,4 +203,27 @@ public class Affichage extends Application {
         return model;
     }
 
+
+    /**
+     * Methode permettant de creer un field n'autorisant QUE les chiffres
+     * @return le field créé
+     */
+    public static TextField createNumericField(){
+        TextField numericField = new TextField();
+
+        // Utilisation d'un TextFormatter avec un filtre
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String newText = change.getControlNewText();
+            if (Pattern.matches("[0-9]*", newText)) {
+                return change;
+            } else {
+                return null; // empêche le changement
+            }
+        };
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+        numericField.setTextFormatter(textFormatter);
+
+        return numericField;
+    }
 }

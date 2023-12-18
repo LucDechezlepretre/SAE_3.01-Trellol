@@ -7,6 +7,7 @@ import trellol.trellol.Modele.Model;
 public class ControlleurDropTache implements EventHandler<ActionEvent> {
     private Model modele;
 
+
     public ControlleurDropTache(Model m){
         this.modele=m;
     }
