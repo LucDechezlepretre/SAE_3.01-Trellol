@@ -149,7 +149,9 @@ public class Model implements Sujet {
 		if ((ensTache.size() == 0 && tache.getParent() == null) || tache.getParent() != null) {
 			if (this.verifierUniciteNom(tache.getNom())) {
 				ensTache.add(tache);
-				mettreAJourParent(tache.getParent());
+				if (tache.getParent() != null) {
+					mettreAJourParent(tache.getParent());
+				}
 			} else {
 				System.out.println("Nom de tâche déjà existant");
 			}
