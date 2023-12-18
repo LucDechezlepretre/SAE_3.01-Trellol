@@ -3,6 +3,7 @@ package trellol.trellol.Controleurs;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import trellol.trellol.Modele.Model;
+import trellol.trellol.Vues.Affichage;
 
 public class ControlleurAjouterTache implements EventHandler<ActionEvent> {
     private Model modele;
@@ -13,6 +14,5 @@ public class ControlleurAjouterTache implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-
     }
 }

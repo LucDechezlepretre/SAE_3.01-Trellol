@@ -1,27 +1,28 @@
 package trellol.trellol.Vues;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import trellol.trellol.Controleurs.ControlleurAjouterTache;
 import trellol.trellol.Controleurs.ControlleurDropTache;
 import trellol.trellol.Modele.Model;
 import trellol.trellol.Tache;
 import trellol.trellol.Vues.VueBureau;
 
 import java.io.IOException;
+import java.text.BreakIterator;
 
 public class Affichage extends Application {
 
@@ -63,6 +64,11 @@ public class Affichage extends Application {
 
         Button bModif=new Button("Modifier");
         Button bAjoutTache=new Button("Ajouter tache");
+        bAjoutTache.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                Affichage.afficherFormulaireTache(m);
+            }
+        });
 
 
         ///Ajout à gauche
@@ -89,6 +95,38 @@ public class Affichage extends Application {
     public static void main(String[] args)
     {
         launch();
+    }
+
+
+    /**
+     * Methode de creation de la sous fenetre formulaire d'ajout de tache
+     * @param m, le model de l'application
+     */
+    public static void afficherFormulaireTache(Model m){
+        //CREATION CONTROLLEURS
+        ControlleurAjouterTache cAjouterTache=new ControlleurAjouterTache(m);
+
+        //AFFICHAGE GRAPHIQUE DE LA NOUVELLE FENETRE
+        Stage fenetreNomColonne = new Stage();
+        fenetreNomColonne.setTitle("Nom de la nouvelle colonne");
+
+        // Création du formulaire de la nouvelle fenêtre
+        BorderPane layout = new BorderPane();
+        TextField nom = new TextField("colonne");
+        Button valider = new Button("Valider");
+        valider.setOnAction(cAjouterTache);
+
+        BorderPane.setAlignment(nom, Pos.CENTER);
+        layout.setTop(nom);
+        layout.setCenter(valider);
+        layout.getChildren().add(new Button("Nouveau Bouton"));
+
+        // Définir la scène de la nouvelle fenêtre
+        Scene scene = new Scene(layout, 200, 150);
+        fenetreNomColonne.setScene(scene);
+
+        // Afficher la nouvelle fenêtre
+        fenetreNomColonne.show();
     }
 
     public static Model creationModel(){
