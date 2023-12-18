@@ -294,4 +294,19 @@ public class Model implements Sujet {
 		}
 		return true;
 	}
+
+	/**
+	 * Methode retournant une tache du trello selon son nom
+	 * @param nom nom de la tache recherchee
+	 * @return la tache du nom recherche, null si elle n'existe pas
+	 */
+	public Tache findTacheByName(String nom){
+		for(Tache t : this.ensTache){
+			if(t.getNom().equals(nom)){
+				return t;
+			}
+		}
+
+		return null; //Aucune tache à ce nom n'a été trouvée
+	}
 }

@@ -12,6 +12,7 @@ import trellol.trellol.Tache;
 import trellol.trellol.Vues.Affichage;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class ControlleurAjouterTache implements EventHandler<ActionEvent> {
@@ -38,7 +39,11 @@ public class ControlleurAjouterTache implements EventHandler<ActionEvent> {
         //Creation de la tache
         String nom=this.nom.getText(); //NOM DE LA TACHE
 
-        String dateString=this.date.toString(); //DATE DEBUT
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        String dateString = this.date.getValue().format(formatter); //DATE DEBUT
+
+        System.out.println(dateString);
 
         int duree=Integer.parseInt(this.duree.getText()); //DUREE
 
@@ -57,6 +62,12 @@ public class ControlleurAjouterTache implements EventHandler<ActionEvent> {
         }
 
         Tache tache=new Tache(nom, dateString, duree,description, importance);
+
+
         this.modele.ajouterTache(tache);
+    }
+
+    public void ajouterAnter(){
+        String nomAnter=this.anter.getValue();
     }
 }
