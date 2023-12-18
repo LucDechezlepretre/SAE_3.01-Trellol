@@ -7,7 +7,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -24,6 +26,7 @@ import trellol.trellol.Vues.VueBureau;
 import java.io.IOException;
 
 public class Affichage extends Application {
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -75,7 +78,9 @@ public class Affichage extends Application {
         EventHandler controllerDrop=new ControlleurDropTache(m);
         TreeView liste = m.affichageListe();
 
+
         bureau.setOnDragDropped(controllerDrop);
+
 
         ///Ajout à la racine///
         racine.getChildren().addAll(header, gauche, liste);
