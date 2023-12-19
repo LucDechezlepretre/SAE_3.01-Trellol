@@ -177,7 +177,7 @@ public class Model implements Sujet {
 	public int calculerDureeTache(Tache tache){
 		int duree = tache.getDuree();
 		for(Tache t : this.getEnfant(tache)){
-			duree += calculerDureeTache(t);
+			duree += 	calculerDureeTache(t);
 		}
 		return duree;
 	}

@@ -25,7 +25,7 @@ public class VuePrincipale extends StackPane implements Observateur {
         if(VuePrincipale.model.getVue()){
             this.getChildren().add(this.affichageListe());
         }
-        else{
+        else {
             this.getChildren().add(this.createRecursiveGridPane(this.model.getRacine()));
         }
     }
