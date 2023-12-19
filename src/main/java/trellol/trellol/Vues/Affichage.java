@@ -147,26 +147,31 @@ public class Affichage extends Application {
         ligneImportance.getChildren().addAll(tImportance, fieldImportance);
 
         ///description
+        Text tDescription=new Text("Description : ");
         TextArea fieldDescription=new TextArea();
 
-        ///tache anterieur
-        HBox ligneAnter=new HBox(5);
-        Text tAnter=new Text("Tache anterieur : ");
+        ///tache parent
+        HBox ligneParent=new HBox(5);
+
         ObservableList<String> optionsTache= FXCollections.observableArrayList();
         List<Tache> ensTaches=m.getEnsTache();
         for(Tache t : ensTaches){
             optionsTache.add(t.getNom());
         }
-        ComboBox<String> fieldAnter=new ComboBox<>(optionsTache);
-
-        ligneAnter.getChildren().addAll(tAnter, fieldAnter);
-
-        ///tache parent
-        HBox ligneParent=new HBox(5);
+        optionsTache.add(null);
         Text tParent=new Text("Tache parent : ");
         ComboBox<String> fieldParent=new ComboBox<>(optionsTache);
 
         ligneParent.getChildren().addAll(tParent, fieldParent);
+
+        ///tache anterieur
+        HBox ligneAnter=new HBox(5);
+        Text tAnter=new Text("Tache anterieur : ");
+
+        ComboBox<String> fieldAnter=new ComboBox<>(optionsTache);
+
+        ligneAnter.getChildren().addAll(tAnter, fieldAnter);
+
 
 
         ///validation
@@ -183,7 +188,7 @@ public class Affichage extends Application {
         droite.getChildren().addAll(ligneAnter, ligneParent);
 
         VBox bas=new VBox(10);
-        bas.getChildren().addAll(fieldDescription, valider);
+        bas.getChildren().addAll(tDescription, fieldDescription, valider);
 
 
         form.setLeft(gauche);
