@@ -170,7 +170,7 @@ public class VuePrincipale extends StackPane implements Observateur {
             gp.add(bAjoutTache,1,gp.getRowCount());
             bAjoutTache.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
-                    Affichage.afficherFormulaireTache(VuePrincipale.model,null);
+                    Affichage.afficherFormulaireTache(VuePrincipale.model,tache.getNom());
                 }
             });
         }
