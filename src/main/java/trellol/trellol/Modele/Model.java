@@ -100,6 +100,7 @@ public class Model implements Sujet {
 	 * modifications du  Trello en appelant leurs methodes actualiser
 	 */
 	public void notifierObservateurs() {
+		//this.mettreAjourDurees();
 		for (int i = 0; i < this.observateurs.size(); i++) {
 			Observateur observer = this.observateurs.get(i);
 			observer.actualiser(this);
@@ -126,9 +127,13 @@ public class Model implements Sujet {
 		int index = ensTache.indexOf(tache);
 		Tache t = ensTache.get(index);
 		t.setParent(parent);
+		t.setDuree(this.calculerDureeTache(t));
 		ensTache.set(index, t);
-		mettreAJourParent(parent);
-		mettreAJourParent(ancienParent);
+		//mettreAJourParent(parent);
+		//mettreAJourParent(ancienParent);
+		parent.setDuree(this.calculerDureeTache(parent));
+		ancienParent.setDuree((this.calculerDureeTache(ancienParent)));
+
 	}
 
 	public void mettreAJourParent(Tache parent) {
@@ -172,9 +177,7 @@ public class Model implements Sujet {
 		if ((ensTache.size() == 0 && tache.getParent() == null) || tache.getParent() != null) {
 			if (this.verifierUniciteNom(tache.getNom())) {
 				ensTache.add(tache);
-				if (tache.getParent() != null) {
-					//mettreAJourParent(tache.getParent());
-				}
+				tache.setDuree(calculerDureeTache(tache));
 			} else {
 				System.out.println("Nom de tâche déjà existant");
 			}
