@@ -130,39 +130,6 @@ public class Model implements Sujet {
 		ensTache.set(index, t);
 	}
 
-	public void mettreAJourParent(Tache parent) {
-		if (parent != null) {
-			Boolean parentModifie = false;
-			Date datemin = new Date(9999, 12, 31);
-			int priomax = 0;
-			int dureeTotale = 0;
-			for (Tache enfant : this.getEnfant(parent)) {
-				if (datemin.after(enfant.getDateDebut())) {
-					datemin = enfant.getDateDebut();
-				}
-				if (priomax < enfant.getImportance()) {
-					priomax = enfant.getImportance();
-				}
-				dureeTotale += enfant.getDuree();
-			}
-			if (!parent.getDateDebut().equals(datemin)) {
-				parent.setDateDebut(Tache.dateFormat.format(datemin));
-				parentModifie = true;
-			}
-			if (parent.getImportance() != priomax) {
-				parent.setImportance(priomax);
-				parentModifie = true;
-			}
-			if (parent.getDuree() != dureeTotale) {
-				parent.setDuree(dureeTotale);
-				parentModifie = true;
-			}
-			if (parentModifie) {
-				this.mettreAJourParent(parent.getParent());
-			}
-		}
-	}
-
 	public void afficherHistorique() {
 		System.out.println(historique);
 	}
@@ -210,7 +177,7 @@ public class Model implements Sujet {
 	public int calculerDureeTache(Tache tache){
 		int duree = tache.getDuree();
 		for(Tache t : this.getEnfant(tache)){
-			duree += calculerDureeTache(t);
+			duree += 	calculerDureeTache(t);
 		}
 		return duree;
 	}
