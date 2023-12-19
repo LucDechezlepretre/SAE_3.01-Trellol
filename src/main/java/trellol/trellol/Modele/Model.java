@@ -41,10 +41,13 @@ public class Model implements Sujet {
 		this.notifierObservateurs();
 		this.numColonneAffiche = 0;
 	}
-	public void activerVueBureau(){
+
+	public void activerVueBureau() {
 		this.vueListe = false;
 		this.notifierObservateurs();
+		this.numColonneAffiche = 0;
 	}
+
 	public boolean getVue(){
 		return this.vueListe;
 	}

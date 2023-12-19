@@ -1,10 +1,9 @@
 package trellol.trellol.Vues;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.control.TreeView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
@@ -25,7 +24,7 @@ public class VuePrincipale extends StackPane implements Observateur {
             this.getChildren().add(this.affichageListe());
         }
         else{
-            this.getChildren().add(new Button("vue du bureau"));
+            this.getChildren().add(this.createRecursiveGridPane(this.model.getRacine()));
         }
     }
 
@@ -120,5 +119,53 @@ public class VuePrincipale extends StackPane implements Observateur {
             return cell;
         });
         return treeView;
+    }
+
+    private GridPane createRecursiveGridPane(Tache tache) {
+
+        GridPane gp = new GridPane();
+
+        this.model.getEnfant(this.model.getRacine());
+        gp.add(new Label(tache.getNom()),1,1);
+
+        gp.setHgap(5);
+        gp.setVgap(5);
+        gp.setPadding(new Insets(10));
+
+        gp.setStyle("-fx-border-color: black;"); // Ajout d'une bordure pour mieux visualiser
+        Boolean rang2 = this.model.getEnfant(this.model.getRacine()).contains(tache);
+        Boolean racine = tache == this.model.getRacine();
+        int nbColonne = 0;
+        if (this.model.getEnfant(tache).size() > 0) {
+            int colonne = 1;
+            if (racine) {
+                colonne++;
+            }
+            int ligne = 2;
+            // Appel récursif pour le VBox interne
+            for (Tache t : this.model.getEnfant(tache)) {
+                if (!racine || (racine && (nbColonne <= this.model.getNumColonneAffiche()+5) && nbColonne >= this.model.getNumColonneAffiche())) {
+                    gp.add(createRecursiveGridPane(t), colonne, ligne);
+                    if (racine) {
+                        colonne++;
+                    } else {
+                        ligne++;
+                    }
+                }
+                nbColonne++;
+            }
+        }
+        if (racine) {
+            if (this.model.getNumColonneAffiche() > 0) {
+                gp.add(new Button("<-"), 1, gp.getRowCount());
+            }
+            if (nbColonne > this.model.getNumColonneAffiche() + 5) {
+                gp.add(new Button("->"), gp.getColumnCount(), gp.getRowCount() - 1);
+            }
+        }
+        if (rang2) {
+            gp.add(new Button("Ajouter Tache"),1,gp.getRowCount());
+        }
+        return gp;
     }
 }
