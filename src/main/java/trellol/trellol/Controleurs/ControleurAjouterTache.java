@@ -81,6 +81,8 @@ public class ControleurAjouterTache implements EventHandler<ActionEvent> {
             tache.setParent(parent);
         }
         this.modele.ajouterTache(tache);
+
+        this.modele.notifierObservateurs();
         this.fenetre.close();
     }
 }
