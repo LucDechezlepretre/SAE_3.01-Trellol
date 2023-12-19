@@ -15,8 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import trellol.trellol.Controleurs.ControlleurAjouterTache;
-import trellol.trellol.Controleurs.ControlleurDropTache;
+import trellol.trellol.Controleurs.ControleurVuePrincipale;
+import trellol.trellol.Controleurs.ControleurAjouterTache;
 import trellol.trellol.Modele.Model;
 import trellol.trellol.Tache;
 
@@ -32,6 +32,9 @@ public class Affichage extends Application {
         //CREATION DU MODELE
         Model m = creationModel();
 
+        //Creation des controleurs
+        ControleurVuePrincipale controleurVuePrincipale = new ControleurVuePrincipale(m);
+
         //Affichage
         VBox racine=new VBox(10);
         racine.setPadding(new Insets(0, 10, 0, 10));
@@ -40,6 +43,8 @@ public class Affichage extends Application {
         //BOUTONS DE VUE
         Button bVueBureau=new Button("Vue Bureau");
         Button bVueListe=new Button("Vue Liste");
+        bVueListe.addEventFilter(ActionEvent.ACTION, controleurVuePrincipale);
+        bVueBureau.addEventFilter(ActionEvent.ACTION, controleurVuePrincipale);
 
         //TITRE
         Label titre=new Label("TRELLOL");
@@ -78,15 +83,13 @@ public class Affichage extends Application {
 
 
         ///CREATION DE LA BOX D'AFFICHAGE DES TACHES
-        VueBureau bureau=new VueBureau();
-        EventHandler controllerDrop=new ControlleurDropTache(m);
-        TreeView liste = m.affichageListe();
-
-        bureau.setOnDragDropped(controllerDrop);
+        VuePrincipale vuePrincipale = new VuePrincipale();
+        vuePrincipale.setPrefSize(300, 200);
+        m.enregistrerObservateur(vuePrincipale);
 
         ///Ajout à la racine///
-        racine.getChildren().addAll(header, gauche, liste);
-
+        racine.getChildren().addAll(header, gauche, vuePrincipale);
+        m.notifierObservateurs();
         Scene scene = new Scene(racine);
         stage.setTitle("Hello!");
         stage.setScene(scene);
@@ -162,7 +165,7 @@ public class Affichage extends Application {
         Button valider = new Button("Valider");
 
         //association du controleur d'ajout
-        ControlleurAjouterTache cAjouterTache=new ControlleurAjouterTache(m, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter);
+        ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter);
         valider.setOnAction(cAjouterTache);
 
         VBox gauche=new VBox(5);
@@ -194,11 +197,8 @@ public class Affichage extends Application {
         Tache racine2 = new Tache("racine2", "13/12/2023", 7, "Ceci est la racine 2 ", 0);
         racine2.setParent(racine);
         model.ajouterTache(racine2);
-        Tache tache = new Tache("tache", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
-        tache.setParent(racine);
-        model.ajouterTache(tache);
         Tache luc = new Tache("tacheLuc", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
-        luc.setParent(tache);
+        luc.setParent(racine);
         model.ajouterTache(luc);
         return model;
     }

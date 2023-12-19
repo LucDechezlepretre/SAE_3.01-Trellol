@@ -1,26 +1,32 @@
 package trellol.trellol.Vues;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
+import javafx.scene.layout.StackPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import trellol.trellol.Modele.Model;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
 
-public class VueListe extends Pane implements Observateur{
+public class VuePrincipale extends StackPane implements Observateur {
+
     private static Model model;
     private static final DataFormat customFormat = new DataFormat("application/x-java-serialized-object");
     @Override
     public void actualiser(Sujet s) {
-        VueListe.model = (Model) s;
+        VuePrincipale.model = (Model) s;
         this.getChildren().clear();
-        this.getChildren().add(this.affichageListe());
+        if(VuePrincipale.model.getVue()){
+            this.getChildren().add(this.affichageListe());
+        }
+        else{
+            this.getChildren().add(new Button("vue du bureau"));
+        }
     }
 
     // Fonction utilitaire pour créer un TreeItem à partir d'une tâche
@@ -29,10 +35,10 @@ public class VueListe extends Pane implements Observateur{
         return treeItem;
     }
     private void ajouterTacheRecursivement(TreeItem<Tache> parentItem, Tache tache){
-        if(VueListe.model.getEnfant(tache).size() == 0){
+        if(VuePrincipale.model.getEnfant(tache).size() == 0){
             return;
         }
-        for(Tache enfant : VueListe.model.getEnfant(tache)){
+        for(Tache enfant : VuePrincipale.model.getEnfant(tache)){
             // Crée un nouvel élément de TreeItem pour la tâche
             TreeItem<Tache> childItem = createTreeItem(enfant);
 
@@ -44,8 +50,8 @@ public class VueListe extends Pane implements Observateur{
         }
     }
     public TreeView<Tache> affichageListe(){
-        TreeItem<Tache> racine = createTreeItem(VueListe.model.getRacine());
-        ajouterTacheRecursivement(racine, VueListe.model.getRacine());
+        TreeItem<Tache> racine = createTreeItem(VuePrincipale.model.getRacine());
+        ajouterTacheRecursivement(racine, VuePrincipale.model.getRacine());
         // Crée le TreeView avec l'élément racine
         TreeView<Tache> treeView = new TreeView<>(racine);
         // Enable cell reordering
@@ -91,8 +97,8 @@ public class VueListe extends Pane implements Observateur{
                     TreeItem<Tache> parentItem = treeView.getSelectionModel().getSelectedItem();
                     System.out.println(draggedItem);
                     System.out.println(cell.getItem());
-                    VueListe.model.deplacerTache(draggedItem, cell.getItem());
-                    VueListe.model.notifierObservateurs();
+                    VuePrincipale.model.deplacerTache(draggedItem, cell.getItem());
+                    VuePrincipale.model.notifierObservateurs();
                     System.out.println(this);
 
 					/*// Ensure we are not dropping onto the same item or its children

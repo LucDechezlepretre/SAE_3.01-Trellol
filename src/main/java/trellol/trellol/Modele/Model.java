@@ -1,7 +1,12 @@
 
 package trellol.trellol.Modele;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import trellol.trellol.Historique;
 import trellol.trellol.Vues.Observateur;
 import trellol.trellol.Tache;
@@ -22,15 +27,27 @@ public class Model implements Sujet {
 	private ArrayList<Observateur> observateurs;
 	private Historique historique;
 	private List<Tache> ensTache;
+	private boolean vueListe;
 
 	private int numColonneAffiche;
 
 	public Model(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
+		vueListe = false;
+	}
+	public void activerVueListe(){
+		this.vueListe = true;
+		this.notifierObservateurs();
 		this.numColonneAffiche = 0;
 	}
-
+	public void activerVueBureau(){
+		this.vueListe = false;
+		this.notifierObservateurs();
+	}
+	public boolean getVue(){
+		return this.vueListe;
+	}
 	public List<Tache> getEnsTache() {
 		return this.ensTache;
 	}
@@ -190,33 +207,7 @@ public class Model implements Sujet {
 			}
 		}
 	}
-	// Fonction utilitaire pour créer un TreeItem à partir d'une tâche
-	private TreeItem<Tache> createTreeItem(Tache tache) {
-		TreeItem<Tache> treeItem = new TreeItem<>(tache);
-		return treeItem;
-	}
-	private void ajouterTacheRecursivement(TreeItem<Tache> parentItem, Tache tache){
-		if(this.getEnfant(tache).size() == 0){
-			return;
-		}
-		for(Tache enfant : this.getEnfant(tache)){
-			// Crée un nouvel élément de TreeItem pour la tâche
-			TreeItem<Tache> childItem = createTreeItem(enfant);
 
-			// Ajoute l'élément enfant à l'élément parent
-			parentItem.getChildren().add(childItem);
-
-			// Appelle récursivement la fonction pour ajouter des sous-tâches à cet élément enfant
-			ajouterTacheRecursivement(childItem, enfant);
-		}
-	}
-	public TreeView<Tache> affichageListe(){
-		TreeItem<Tache> racine = createTreeItem(this.getRacine());
-		ajouterTacheRecursivement(racine, this.ensTache.get(0));
-		// Crée le TreeView avec l'élément racine
-		TreeView<Tache> treeView = new TreeView<>(racine);
-		return treeView;
-	}
 
 	public boolean verifierUniciteNom(String nom) {
 		for (Tache enfant : this.ensTache) {
@@ -237,5 +228,20 @@ public class Model implements Sujet {
 
 	public int getNumColonneAffiche() {
 		return numColonneAffiche;
+	}
+
+	/**
+	 * Methode retournant une tache du trello selon son nom
+	 * @param nom nom de la tache recherchee
+	 * @return la tache du nom recherche, null si elle n'existe pas
+	 */
+	public Tache findTacheByName(String nom){
+		for(Tache t : this.ensTache){
+			if(t.getNom().equals(nom)){
+				return t;
+			}
+		}
+
+		return null; //Aucune tache à ce nom n'a été trouvée
 	}
 }
