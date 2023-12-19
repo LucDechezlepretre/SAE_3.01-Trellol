@@ -152,27 +152,35 @@ public class Affichage extends Application {
         ///tache anterieur
         HBox ligneAnter=new HBox(5);
         Text tAnter=new Text("Tache anterieur : ");
-        ObservableList<String> optionsAnter = FXCollections.observableArrayList();
+        ObservableList<String> optionsTache= FXCollections.observableArrayList();
         List<Tache> ensTaches=m.getEnsTache();
         for(Tache t : ensTaches){
-            optionsAnter.add(t.getNom());
+            optionsTache.add(t.getNom());
         }
-        ComboBox<String> fieldAnter=new ComboBox<>(optionsAnter);
+        ComboBox<String> fieldAnter=new ComboBox<>(optionsTache);
 
         ligneAnter.getChildren().addAll(tAnter, fieldAnter);
+
+        ///tache parent
+        HBox ligneParent=new HBox(5);
+        Text tParent=new Text("Tache parent : ");
+        ComboBox<String> fieldParent=new ComboBox<>(optionsTache);
+
+        ligneParent.getChildren().addAll(tParent, fieldParent);
+
 
         ///validation
         Button valider = new Button("Valider");
 
         //association du controleur d'ajout
-        ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter);
+        ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter, fieldParent);
         valider.setOnAction(cAjouterTache);
 
         VBox gauche=new VBox(5);
         gauche.getChildren().addAll(ligneNom, ligneDate, ligneDuree, ligneImportance);
 
         VBox droite=new VBox(5);
-        droite.getChildren().addAll(ligneAnter);
+        droite.getChildren().addAll(ligneAnter, ligneParent);
 
         VBox bas=new VBox(10);
         bas.getChildren().addAll(fieldDescription, valider);

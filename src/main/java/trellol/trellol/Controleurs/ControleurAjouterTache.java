@@ -20,14 +20,16 @@ public class ControleurAjouterTache implements EventHandler<ActionEvent> {
     private TextArea description;
     private ComboBox<String> importance;
     private ComboBox<String> anter;
+    private ComboBox<String> parent;
 
-    public ControleurAjouterTache(Model m, TextField nom, DatePicker date, TextField duree, TextArea description, ComboBox<String> importance, ComboBox<String> anter){
+    public ControleurAjouterTache(Model m, TextField nom, DatePicker date, TextField duree, TextArea description, ComboBox<String> importance, ComboBox<String> anter, ComboBox<String> parent){
         this.nom=nom;
         this.date=date;
         this.duree=duree;
         this.description=description;
         this.importance=importance;
         this.anter=anter;
+        this.parent=parent;
         this.modele=m;
     }
 
@@ -68,7 +70,13 @@ public class ControleurAjouterTache implements EventHandler<ActionEvent> {
             tache.setAntecedant(anter);
         }
 
+        //Ajout parent
+        String nomParent=this.parent.getValue();
+        if(nomParent!=null){
+            Tache parent=this.modele.findTacheByName(nomParent);
 
+            tache.setParent(parent);
+        }
         this.modele.ajouterTache(tache);
     }
 }
