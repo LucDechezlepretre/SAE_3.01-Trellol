@@ -97,4 +97,60 @@ class ModelTest {
         m.ajouterTache(t);
         assertEquals(t, m.getRacine(), "Les deux tâches devraient être identiques");
     }
+
+    @Test
+    public void testCalculerDureeTacheSeule(){
+        Tache t = new Tache("tache1", "13/12/2023", 2, "Bonjour", 1);
+
+        //ajout racine
+        m.ajouterTache(t);
+        assertEquals(2, this.m.calculerDureeTache(t), "la durée de la tache est deux");
+    }
+    @Test
+    public void testCalculerDureeDeuxTache(){
+        Tache racine = new Tache("racine", "13/12/2023", 2, "Bonjour", 1);
+        //ajout racine
+        m.ajouterTache(racine);
+
+        Tache tache = new Tache("tache1", "13/12/2023", 3, "Bonjour", 1);
+        tache.setParent(racine);
+        m.ajouterTache(tache);
+        assertEquals(5, this.m.calculerDureeTache(racine), "la durée de la tache est 5");
+    }
+
+    @Test
+    public void testCalculerDureeTroisTache(){
+        Tache racine = new Tache("racine", "13/12/2023", 2, "Bonjour", 1);
+        //ajout racine
+        m.ajouterTache(racine);
+
+        Tache tache = new Tache("tache1", "13/12/2023", 3, "Bonjour", 1);
+        tache.setParent(racine);
+        m.ajouterTache(tache);
+
+        Tache tache2 = new Tache("tache2", "13/12/2023", 3, "Bonjour", 1);
+        tache2.setParent(tache);
+        m.ajouterTache(tache2);
+        assertEquals(8, this.m.calculerDureeTache(racine), "la durée de la tache est 5");
+    }
+
+    @Test
+    public void testCalculerDureeQuatreTache(){
+        Tache racine = new Tache("racine", "13/12/2023", 2, "Bonjour", 1);
+        //ajout racine
+        m.ajouterTache(racine);
+
+        Tache tache = new Tache("tache1", "13/12/2023", 3, "Bonjour", 1);
+        tache.setParent(racine);
+        m.ajouterTache(tache);
+
+        Tache tache2 = new Tache("tache2", "13/12/2023", 3, "Bonjour", 1);
+        tache2.setParent(racine);
+        m.ajouterTache(tache2);
+
+        Tache tache3 = new Tache("tache3", "13/12/2023", 4, "Bonjour", 1);
+        tache2.setParent(racine);
+        m.ajouterTache(tache2);
+        assertEquals(3, this.m.calculerDureeTache(racine), "la durée de la tache est 5");
+    }
 }

@@ -123,21 +123,4 @@ public class Tache implements Serializable{
         return "Tache{" + nom + ' '  + duree + '}';
     }
 
-    // Méthode pour sérialiser l'objet
-    public byte[] serialize() throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(this);
-        oos.close();
-        return baos.toByteArray();
-    }
-
-    // Méthode pour désérialiser l'objet
-    public static Tache deserialize(byte[] data) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(data);
-        ObjectInputStream ois = new ObjectInputStream(bais);
-        Tache obj = (Tache) ois.readObject();
-        ois.close();
-        return obj;
-    }
 }
