@@ -161,7 +161,7 @@ public class Affichage extends Application {
         optionsTache.add(null);
         Text tParent=new Text("Tache parent : ");
         ComboBox<String> fieldParent=new ComboBox<>(optionsTache);
-        //fieldParent.getSelectionModel().select();
+        fieldParent.getSelectionModel().select(nomParent);
 
         ligneParent.getChildren().addAll(tParent, fieldParent);
 
