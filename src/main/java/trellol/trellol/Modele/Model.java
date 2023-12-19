@@ -127,13 +127,7 @@ public class Model implements Sujet {
 		int index = ensTache.indexOf(tache);
 		Tache t = ensTache.get(index);
 		t.setParent(parent);
-		t.setDuree(this.calculerDureeTache(t));
 		ensTache.set(index, t);
-		//mettreAJourParent(parent);
-		//mettreAJourParent(ancienParent);
-		parent.setDuree(this.calculerDureeTache(parent));
-		ancienParent.setDuree((this.calculerDureeTache(ancienParent)));
-
 	}
 
 	public void mettreAJourParent(Tache parent) {
@@ -177,7 +171,6 @@ public class Model implements Sujet {
 		if ((ensTache.size() == 0 && tache.getParent() == null) || tache.getParent() != null) {
 			if (this.verifierUniciteNom(tache.getNom())) {
 				ensTache.add(tache);
-				tache.setDuree(calculerDureeTache(tache));
 			} else {
 				System.out.println("Nom de tâche déjà existant");
 			}
