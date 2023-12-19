@@ -60,11 +60,15 @@ public class ControleurAjouterTache implements EventHandler<ActionEvent> {
 
         Tache tache=new Tache(nom, dateString, duree,description, importance);
 
+        //Ajout anterieur
+        String nomAnter=this.anter.getValue();
+        if(nomAnter!=null){
+            Tache anter=this.modele.findTacheByName(nomAnter);
+
+            tache.setAntecedant(anter);
+        }
+
 
         this.modele.ajouterTache(tache);
-    }
-
-    public void ajouterAnter(){
-        String nomAnter=this.anter.getValue();
     }
 }
