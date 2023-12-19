@@ -23,9 +23,12 @@ public class Model implements Sujet {
 	private Historique historique;
 	private List<Tache> ensTache;
 
+	private int numColonneAffiche;
+
 	public Model(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
+		this.numColonneAffiche = 0;
 	}
 
 	public List<Tache> getEnsTache() {
@@ -222,5 +225,17 @@ public class Model implements Sujet {
 			}
 		}
 		return true;
+	}
+
+	public void modifierNumColonne(int modif) {
+		if (modif == 1) {
+			this.numColonneAffiche++;
+		} else {
+			this.numColonneAffiche--;
+		}
+	}
+
+	public int getNumColonneAffiche() {
+		return numColonneAffiche;
 	}
 }
