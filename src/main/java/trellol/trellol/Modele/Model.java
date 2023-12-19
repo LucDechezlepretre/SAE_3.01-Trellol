@@ -7,6 +7,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Historique;
 import trellol.trellol.Vues.Observateur;
 import trellol.trellol.Tache;
@@ -134,15 +135,15 @@ public class Model implements Sujet {
 		System.out.println(historique);
 	}
 
-	public void ajouterTache(Tache tache) {
+	public void ajouterTache(Tache tache) throws AjoutTacheException {
 		if ((ensTache.size() == 0 && tache.getParent() == null) || tache.getParent() != null) {
 			if (this.verifierUniciteNom(tache.getNom())) {
 				ensTache.add(tache);
 			} else {
-				System.out.println("Nom de tâche déjà existant");
+				throw new AjoutTacheException("Nom de tâche déjà existant");
 			}
 		}else{
-			System.out.println("Impossible d'ajouter la tache");
+			throw new AjoutTacheException("Parent manquant");
 		}
 	}
 
