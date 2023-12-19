@@ -173,7 +173,7 @@ public class Affichage extends Application {
         Button valider = new Button("Valider");
 
         //association du controleur d'ajout
-        ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter, fieldParent);
+        ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fenetreNomColonne, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter, fieldParent);
         valider.setOnAction(cAjouterTache);
 
         VBox gauche=new VBox(5);

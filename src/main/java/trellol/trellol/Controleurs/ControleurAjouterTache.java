@@ -6,6 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import trellol.trellol.Importance;
 import trellol.trellol.Modele.Model;
 import trellol.trellol.Tache;
@@ -13,6 +14,7 @@ import trellol.trellol.Tache;
 import java.time.format.DateTimeFormatter;
 
 public class ControleurAjouterTache implements EventHandler<ActionEvent> {
+    private Stage fenetre;
     private Model modele;
     private TextField nom;
     private DatePicker date;
@@ -22,7 +24,8 @@ public class ControleurAjouterTache implements EventHandler<ActionEvent> {
     private ComboBox<String> anter;
     private ComboBox<String> parent;
 
-    public ControleurAjouterTache(Model m, TextField nom, DatePicker date, TextField duree, TextArea description, ComboBox<String> importance, ComboBox<String> anter, ComboBox<String> parent){
+    public ControleurAjouterTache(Model m, Stage fenetre, TextField nom, DatePicker date, TextField duree, TextArea description, ComboBox<String> importance, ComboBox<String> anter, ComboBox<String> parent){
+        this.fenetre=fenetre;
         this.nom=nom;
         this.date=date;
         this.duree=duree;
@@ -78,5 +81,6 @@ public class ControleurAjouterTache implements EventHandler<ActionEvent> {
             tache.setParent(parent);
         }
         this.modele.ajouterTache(tache);
+        this.fenetre.close();
     }
 }
