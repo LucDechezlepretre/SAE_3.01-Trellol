@@ -29,6 +29,8 @@ public class Model implements Sujet {
 	private List<Tache> ensTache;
 	private boolean vueListe;
 
+	private int numColonneAffiche;
+
 	public Model(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
@@ -37,6 +39,7 @@ public class Model implements Sujet {
 	public void activerVueListe(){
 		this.vueListe = true;
 		this.notifierObservateurs();
+		this.numColonneAffiche = 0;
 	}
 	public void activerVueBureau(){
 		this.vueListe = false;
@@ -213,6 +216,18 @@ public class Model implements Sujet {
 			}
 		}
 		return true;
+	}
+
+	public void modifierNumColonne(int modif) {
+		if (modif == 1) {
+			this.numColonneAffiche++;
+		} else {
+			this.numColonneAffiche--;
+		}
+	}
+
+	public int getNumColonneAffiche() {
+		return numColonneAffiche;
 	}
 
 	/**
