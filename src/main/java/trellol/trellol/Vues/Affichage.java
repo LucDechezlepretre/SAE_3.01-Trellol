@@ -72,7 +72,7 @@ public class Affichage extends Application {
         Button bAjoutTache=new Button("Ajouter tache");
         bAjoutTache.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                Affichage.afficherFormulaireTache(m);
+                Affichage.afficherFormulaireTache(m, null);
             }
         });
 
@@ -106,7 +106,7 @@ public class Affichage extends Application {
      * Methode de creation de la sous fenetre formulaire d'ajout de tache
      * @param m, le model de l'application
      */
-    public static void afficherFormulaireTache(Model m){
+    public static void afficherFormulaireTache(Model m, String nomParent){
         //AFFICHAGE GRAPHIQUE DE LA NOUVELLE FENETRE
         Stage fenetreNomColonne = new Stage();
         fenetreNomColonne.setTitle("Configurer Tache");
@@ -161,6 +161,7 @@ public class Affichage extends Application {
         optionsTache.add(null);
         Text tParent=new Text("Tache parent : ");
         ComboBox<String> fieldParent=new ComboBox<>(optionsTache);
+        //fieldParent.getSelectionModel().select();
 
         ligneParent.getChildren().addAll(tParent, fieldParent);
 

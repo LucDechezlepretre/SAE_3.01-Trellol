@@ -1,5 +1,7 @@
 package trellol.trellol.Vues;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -164,7 +166,13 @@ public class VuePrincipale extends StackPane implements Observateur {
             }
         }
         if (rang2) {
-            gp.add(new Button("Ajouter Tache"),1,gp.getRowCount());
+            Button bAjoutTache = new Button("Ajouter Tache");
+            gp.add(bAjoutTache,1,gp.getRowCount());
+            bAjoutTache.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    Affichage.afficherFormulaireTache(VuePrincipale.model,null);
+                }
+            });
         }
         return gp;
     }
