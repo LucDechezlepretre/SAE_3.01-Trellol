@@ -7,6 +7,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Historique;
 import trellol.trellol.Vues.Observateur;
 import trellol.trellol.Tache;
@@ -127,62 +128,22 @@ public class Model implements Sujet {
 		int index = ensTache.indexOf(tache);
 		Tache t = ensTache.get(index);
 		t.setParent(parent);
-		t.setDuree(this.calculerDureeTache(t));
 		ensTache.set(index, t);
-		//mettreAJourParent(parent);
-		//mettreAJourParent(ancienParent);
-		parent.setDuree(this.calculerDureeTache(parent));
-		ancienParent.setDuree((this.calculerDureeTache(ancienParent)));
-
-	}
-
-	public void mettreAJourParent(Tache parent) {
-		if (parent != null) {
-			Boolean parentModifie = false;
-			Date datemin = new Date(9999, 12, 31);
-			int priomax = 0;
-			int dureeTotale = 0;
-			for (Tache enfant : this.getEnfant(parent)) {
-				if (datemin.after(enfant.getDateDebut())) {
-					datemin = enfant.getDateDebut();
-				}
-				if (priomax < enfant.getImportance()) {
-					priomax = enfant.getImportance();
-				}
-				dureeTotale += enfant.getDuree();
-			}
-			if (!parent.getDateDebut().equals(datemin)) {
-				parent.setDateDebut(Tache.dateFormat.format(datemin));
-				parentModifie = true;
-			}
-			if (parent.getImportance() != priomax) {
-				parent.setImportance(priomax);
-				parentModifie = true;
-			}
-			if (parent.getDuree() != dureeTotale) {
-				parent.setDuree(dureeTotale);
-				parentModifie = true;
-			}
-			if (parentModifie) {
-				this.mettreAJourParent(parent.getParent());
-			}
-		}
 	}
 
 	public void afficherHistorique() {
 		System.out.println(historique);
 	}
 
-	public void ajouterTache(Tache tache) {
+	public void ajouterTache(Tache tache) throws AjoutTacheException {
 		if ((ensTache.size() == 0 && tache.getParent() == null) || tache.getParent() != null) {
 			if (this.verifierUniciteNom(tache.getNom())) {
 				ensTache.add(tache);
-				tache.setDuree(calculerDureeTache(tache));
 			} else {
-				System.out.println("Nom de tâche déjà existant");
+				throw new AjoutTacheException("Nom de tâche déjà existant");
 			}
 		}else{
-			System.out.println("Impossible d'ajouter la tache");
+			throw new AjoutTacheException("Parent manquant");
 		}
 	}
 

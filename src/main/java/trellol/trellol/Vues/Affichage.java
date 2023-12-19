@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import trellol.trellol.Controleurs.ControleurVuePrincipale;
 import trellol.trellol.Controleurs.ControleurAjouterTache;
+import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Modele.Model;
 import trellol.trellol.Tache;
 
@@ -208,15 +209,21 @@ public class Affichage extends Application {
     }
 
     public static Model creationModel(){
+
         Model model = new Model();
         Tache racine = new Tache("racine", "13/12/2023", 8, "Ceci est la racine", 0);
-        model.ajouterTache(racine);
-        Tache racine2 = new Tache("racine2", "13/12/2023", 7, "Ceci est la racine 2 ", 0);
-        racine2.setParent(racine);
-        model.ajouterTache(racine2);
-        Tache luc = new Tache("tacheLuc", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
-        luc.setParent(racine);
-        model.ajouterTache(luc);
+        try {
+            model.ajouterTache(racine);
+            Tache racine2 = new Tache("racine2", "13/12/2023", 7, "Ceci est la racine 2 ", 0);
+            racine2.setParent(racine);
+            model.ajouterTache(racine2);
+            Tache luc = new Tache("tacheLuc", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
+            luc.setParent(racine);
+            model.ajouterTache(luc);
+        }
+        catch(AjoutTacheException e){
+            e.getMessage();
+        }
         return model;
     }
 

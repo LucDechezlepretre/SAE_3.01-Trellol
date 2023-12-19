@@ -4,10 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Importance;
 import trellol.trellol.Modele.Model;
 import trellol.trellol.Tache;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class ControleurAjouterTache implements EventHandler<ActionEvent> {
@@ -32,56 +34,82 @@ public class ControleurAjouterTache implements EventHandler<ActionEvent> {
         this.importance=importance;
         this.anter=anter;
         this.parent=parent;
+        this.erreur=erreur;
         this.modele=m;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        //Creation de la tache
-        String nom=this.nom.getText(); //NOM DE LA TACHE
+        try{
+            //Recuperation des donnees des fields
+            String nom=this.nom.getText(); //NOM DE LA TACHE
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate date=this.date.getValue(); //DATE DEBUT
 
-        String dateString = this.date.getValue().format(formatter); //DATE DEBUT
+            String description=this.description.getText(); //DESCRIPTION
 
-        System.out.println(dateString);
+            String libelImp=this.importance.getValue();  //IMPORTANCE
 
-        int duree=Integer.parseInt(this.duree.getText()); //DUREE
+            String dureeText=this.duree.getText(); //DUREE
 
-        String description=this.description.getText(); //DESCRIPTION
+            this.verifierForm(nom, date, dureeText, libelImp); //LANCEMENT DE LA VERIFICATION DES DONNES
 
-        String libelImp=this.importance.getValue();  //IMPORTANCE
-        int importance;
-        if(libelImp.equals("faible")){
-            importance= Importance.FAIBLE;
+
+            //Creation de la tache
+            int duree=Integer.parseInt(this.duree.getText());
+            String dateString = date.format(formatter);
+            int importance;
+            if(libelImp.equals("faible")){
+                importance= Importance.FAIBLE;
+            }
+            else if(libelImp.equals("moyenne")){
+                importance=Importance.MOYENNE;
+            }
+            else{
+                importance=Importance.ELEVEE;
+            }
+
+            Tache tache=new Tache(nom, dateString, duree,description, importance);
+
+            //Ajout anterieur
+            String nomAnter=this.anter.getValue();
+            if(nomAnter!=null){
+                Tache anter=this.modele.findTacheByName(nomAnter);
+
+                tache.setAntecedant(anter);
+            }
+
+            //Ajout parent
+            String nomParent=this.parent.getValue();
+            if(nomParent!=null){
+                Tache parent=this.modele.findTacheByName(nomParent);
+
+                tache.setParent(parent);
+            }
+            this.modele.ajouterTache(tache);
+
+            this.modele.notifierObservateurs();
+            this.fenetre.close();
         }
-        else if(libelImp.equals("moyenne")){
-            importance=Importance.MOYENNE;
+        catch(AjoutTacheException e){
+            this.erreur.setText(e.getMessage());
         }
-        else{
-            importance=Importance.ELEVEE;
+    }
+
+
+    public void verifierForm(String nom, LocalDate date, String duree, String importance) throws AjoutTacheException{
+        if(nom==""){
+            throw new AjoutTacheException("Nom manquant");
         }
-
-        Tache tache=new Tache(nom, dateString, duree,description, importance);
-
-        //Ajout anterieur
-        String nomAnter=this.anter.getValue();
-        if(nomAnter!=null){
-            Tache anter=this.modele.findTacheByName(nomAnter);
-
-            tache.setAntecedant(anter);
+        if(date==null){
+            throw new AjoutTacheException("Date de début manquante");
         }
-
-        //Ajout parent
-        String nomParent=this.parent.getValue();
-        if(nomParent!=null){
-            Tache parent=this.modele.findTacheByName(nomParent);
-
-            tache.setParent(parent);
+        if(duree==""){
+            throw new AjoutTacheException("Durée manquante");
         }
-        this.modele.ajouterTache(tache);
-
-        this.modele.notifierObservateurs();
-        this.fenetre.close();
+        if(importance==null){
+            throw new AjoutTacheException("Importance manquante");
+        }
     }
 }

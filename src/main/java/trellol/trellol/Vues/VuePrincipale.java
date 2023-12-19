@@ -56,6 +56,7 @@ public class VuePrincipale extends StackPane implements Observateur {
         ajouterTacheRecursivement(racine, VuePrincipale.model.getRacine());
         // Crée le TreeView avec l'élément racine
         TreeView<Tache> treeView = new TreeView<>(racine);
+        treeView.setEditable(true);
         // Enable cell reordering
         treeView.setCellFactory(param -> {
             TreeCell<Tache> cell = new TreeCell<Tache>() {
@@ -63,7 +64,7 @@ public class VuePrincipale extends StackPane implements Observateur {
                 protected void updateItem(Tache tache, boolean empty) {
                     // une TreeCell peut changer de tâche, donc changer de TreeItem
                     super.updateItem(tache, empty);
-                    setText(empty ? null : tache.toString());
+                    setText(empty ? null : tache.getNom()+" durée : "+model.calculerDureeTache(tache));
                 }
             };
 
