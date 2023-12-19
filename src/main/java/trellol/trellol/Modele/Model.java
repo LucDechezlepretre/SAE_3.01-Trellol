@@ -173,7 +173,7 @@ public class Model implements Sujet {
 			if (this.verifierUniciteNom(tache.getNom())) {
 				ensTache.add(tache);
 				if (tache.getParent() != null) {
-					mettreAJourParent(tache.getParent());
+					//mettreAJourParent(tache.getParent());
 				}
 			} else {
 				System.out.println("Nom de tâche déjà existant");
@@ -211,6 +211,13 @@ public class Model implements Sujet {
 		}
 	}
 
+	public int calculerDureeTache(Tache tache){
+		int duree = tache.getDuree();
+		for(Tache t : this.getEnfant(tache)){
+			duree += calculerDureeTache(t);
+		}
+		return duree;
+	}
 
 	public boolean verifierUniciteNom(String nom) {
 		for (Tache enfant : this.ensTache) {
