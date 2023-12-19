@@ -9,13 +9,10 @@ import javafx.scene.control.TextField;
 import trellol.trellol.Importance;
 import trellol.trellol.Modele.Model;
 import trellol.trellol.Tache;
-import trellol.trellol.Vues.Affichage;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
-public class ControlleurAjouterTache implements EventHandler<ActionEvent> {
+public class ControleurAjouterTache implements EventHandler<ActionEvent> {
     private Model modele;
     private TextField nom;
     private DatePicker date;
@@ -24,7 +21,7 @@ public class ControlleurAjouterTache implements EventHandler<ActionEvent> {
     private ComboBox<String> importance;
     private ComboBox<String> anter;
 
-    public ControlleurAjouterTache(Model m, TextField nom, DatePicker date, TextField duree, TextArea description, ComboBox<String> importance, ComboBox<String> anter){
+    public ControleurAjouterTache(Model m, TextField nom, DatePicker date, TextField duree, TextArea description, ComboBox<String> importance, ComboBox<String> anter){
         this.nom=nom;
         this.date=date;
         this.duree=duree;

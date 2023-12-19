@@ -15,8 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import trellol.trellol.Controleurs.ControlleurAjouterTache;
-import trellol.trellol.Controleurs.ControlleurDropTache;
+import trellol.trellol.Controleurs.ControleurVuePrincipale;
+import trellol.trellol.Controleurs.ControleurAjouterTache;
 import trellol.trellol.Modele.Model;
 import trellol.trellol.Tache;
 
@@ -32,6 +32,9 @@ public class Affichage extends Application {
         //CREATION DU MODELE
         Model m = creationModel();
 
+        //Creation des controleurs
+        ControleurVuePrincipale controleurVuePrincipale = new ControleurVuePrincipale(m);
+
         //Affichage
         VBox racine=new VBox(10);
         racine.setPadding(new Insets(0, 10, 0, 10));
@@ -40,6 +43,8 @@ public class Affichage extends Application {
         //BOUTONS DE VUE
         Button bVueBureau=new Button("Vue Bureau");
         Button bVueListe=new Button("Vue Liste");
+        bVueListe.addEventFilter(ActionEvent.ACTION, controleurVuePrincipale);
+        bVueBureau.addEventFilter(ActionEvent.ACTION, controleurVuePrincipale);
 
         //TITRE
         Label titre=new Label("TRELLOL");
@@ -78,15 +83,12 @@ public class Affichage extends Application {
 
 
         ///CREATION DE LA BOX D'AFFICHAGE DES TACHES
-        VueBureau bureau=new VueBureau();
-        EventHandler controllerDrop=new ControlleurDropTache(m);
-        VueListe vueListe = new VueListe();
-        m.enregistrerObservateur(vueListe);
-
-        bureau.setOnDragDropped(controllerDrop);
+        VuePrincipale vuePrincipale = new VuePrincipale();
+        vuePrincipale.setPrefSize(300, 200);
+        m.enregistrerObservateur(vuePrincipale);
 
         ///Ajout à la racine///
-        racine.getChildren().addAll(header, gauche, vueListe);
+        racine.getChildren().addAll(header, gauche, vuePrincipale);
         m.notifierObservateurs();
         Scene scene = new Scene(racine);
         stage.setTitle("Hello!");
@@ -163,7 +165,7 @@ public class Affichage extends Application {
         Button valider = new Button("Valider");
 
         //association du controleur d'ajout
-        ControlleurAjouterTache cAjouterTache=new ControlleurAjouterTache(m, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter);
+        ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter);
         valider.setOnAction(cAjouterTache);
 
         VBox gauche=new VBox(5);

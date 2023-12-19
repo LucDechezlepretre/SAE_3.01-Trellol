@@ -27,12 +27,24 @@ public class Model implements Sujet {
 	private ArrayList<Observateur> observateurs;
 	private Historique historique;
 	private List<Tache> ensTache;
+	private boolean vueListe;
 
 	public Model(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
+		vueListe = false;
 	}
-
+	public void activerVueListe(){
+		this.vueListe = true;
+		this.notifierObservateurs();
+	}
+	public void activerVueBureau(){
+		this.vueListe = false;
+		this.notifierObservateurs();
+	}
+	public boolean getVue(){
+		return this.vueListe;
+	}
 	public List<Tache> getEnsTache() {
 		return this.ensTache;
 	}
