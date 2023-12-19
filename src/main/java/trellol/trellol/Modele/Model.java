@@ -101,7 +101,6 @@ public class Model implements Sujet {
 	 * modifications du  Trello en appelant leurs methodes actualiser
 	 */
 	public void notifierObservateurs() {
-		//this.mettreAjourDurees();
 		for (int i = 0; i < this.observateurs.size(); i++) {
 			Observateur observer = this.observateurs.get(i);
 			observer.actualiser(this);
