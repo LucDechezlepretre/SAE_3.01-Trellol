@@ -2,10 +2,7 @@ package trellol.trellol.Controleurs;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import trellol.trellol.Importance;
 import trellol.trellol.Modele.Model;
@@ -24,7 +21,9 @@ public class ControleurAjouterTache implements EventHandler<ActionEvent> {
     private ComboBox<String> anter;
     private ComboBox<String> parent;
 
-    public ControleurAjouterTache(Model m, Stage fenetre, TextField nom, DatePicker date, TextField duree, TextArea description, ComboBox<String> importance, ComboBox<String> anter, ComboBox<String> parent){
+    private Label erreur;
+
+    public ControleurAjouterTache(Model m, Stage fenetre, TextField nom, DatePicker date, TextField duree, TextArea description, ComboBox<String> importance, ComboBox<String> anter, ComboBox<String> parent, Label erreur){
         this.fenetre=fenetre;
         this.nom=nom;
         this.date=date;

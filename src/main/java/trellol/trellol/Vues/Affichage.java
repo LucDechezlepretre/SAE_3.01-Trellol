@@ -175,11 +175,14 @@ public class Affichage extends Application {
 
 
 
-        ///validation
+        ///validation et potentiel message d'erreur (dernière ligne)
+        HBox lastline=new HBox(5);
         Button valider = new Button("Valider");
+        Label erreur=new Label("");
+        lastline.getChildren().addAll(valider, erreur);
 
         //association du controleur d'ajout
-        ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fenetreNomColonne, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter, fieldParent);
+        ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fenetreNomColonne, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter, fieldParent, erreur);
         valider.setOnAction(cAjouterTache);
 
         VBox gauche=new VBox(5);
@@ -189,7 +192,7 @@ public class Affichage extends Application {
         droite.getChildren().addAll(ligneAnter, ligneParent);
 
         VBox bas=new VBox(10);
-        bas.getChildren().addAll(tDescription, fieldDescription, valider);
+        bas.getChildren().addAll(tDescription, fieldDescription, lastline);
 
 
         form.setLeft(gauche);
