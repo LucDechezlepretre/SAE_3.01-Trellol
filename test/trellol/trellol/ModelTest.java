@@ -149,8 +149,8 @@ class ModelTest {
         m.ajouterTache(tache2);
 
         Tache tache3 = new Tache("tache3", "13/12/2023", 4, "Bonjour", 1);
-        tache2.setParent(racine);
-        m.ajouterTache(tache2);
-        assertEquals(3, this.m.calculerDureeTache(racine), "la durée de la tache est 5");
+        tache3.setParent(racine);
+        m.ajouterTache(tache3);
+        assertEquals(12, this.m.calculerDureeTache(racine), "la durée de la tache est 5");
     }
 }

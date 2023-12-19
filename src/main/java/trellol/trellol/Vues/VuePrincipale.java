@@ -33,6 +33,7 @@ public class VuePrincipale extends StackPane implements Observateur {
     // Fonction utilitaire pour créer un TreeItem à partir d'une tâche
     private TreeItem<Tache> createTreeItem(Tache tache) {
         TreeItem<Tache> treeItem = new TreeItem<>(tache);
+
         return treeItem;
     }
     private void ajouterTacheRecursivement(TreeItem<Tache> parentItem, Tache tache){
@@ -96,11 +97,10 @@ public class VuePrincipale extends StackPane implements Observateur {
                     TreeItem<Tache> draggedTreeItem = new TreeItem<>(draggedItem);
 
                     TreeItem<Tache> parentItem = treeView.getSelectionModel().getSelectedItem();
-                    System.out.println(draggedItem);
-                    System.out.println(cell.getItem());
+
                     VuePrincipale.model.deplacerTache(draggedItem, cell.getItem());
                     VuePrincipale.model.notifierObservateurs();
-                    System.out.println(this);
+                    System.out.println(model);
 
 					/*// Ensure we are not dropping onto the same item or its children
 					if (parentItem != null && !parentItem.equals(draggedTreeItem) && !containsItem(parentItem, draggedItem)) {
