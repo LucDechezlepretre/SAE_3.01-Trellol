@@ -16,6 +16,7 @@ import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
@@ -50,7 +51,7 @@ public class Affichage extends Application {
      * Methode de creation de la sous fenetre formulaire d'ajout de tache
      * @param m, le model de l'application
      */
-    public static void afficherFormulaireTache(Modele m, String nomParent){
+    public static void afficherFormulaireTache(Modele m, String nomParent, boolean modif){
         //AFFICHAGE GRAPHIQUE DE LA NOUVELLE FENETRE
         Stage fenetreNomColonne = new Stage();
         fenetreNomColonne.setTitle("Configurer Tache");
@@ -64,6 +65,9 @@ public class Affichage extends Application {
         HBox ligneNom=new HBox(5);
         Text tNom=new Text("Nom : ");
         TextField fieldNom = new TextField("Tache");
+        if (modif == true) {
+            fieldNom.setText(nomParent);
+        }
         ligneNom.getChildren().addAll(tNom, fieldNom);
 
         ///date
@@ -71,11 +75,18 @@ public class Affichage extends Application {
         Text tDate=new Text("Date début : ");
         DatePicker fieldDate = new DatePicker();
         ligneDate.getChildren().addAll(tDate, fieldDate);
+        if (modif == true) {
+            fieldDate.setValue(m.findTacheByName(nomParent).getDateDebut().toInstant()
+                    .atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+        }
 
         ///duree
         HBox ligneDuree=new HBox(5);
         Text tDuree=new Text("Durée : ");
         TextField fieldDuree=Affichage.createNumericField();
+        if (modif == true) {
+            fieldDuree.setText(String.valueOf(m.findTacheByName(nomParent).getDuree()));
+        }
 
         ligneDuree.getChildren().addAll(tDuree, fieldDuree);
 
@@ -89,10 +100,16 @@ public class Affichage extends Application {
         Text tImportance=new Text("Importance : ");
         ComboBox<String> fieldImportance=new ComboBox<>(optionsImp);
         ligneImportance.getChildren().addAll(tImportance, fieldImportance);
+        if (modif == true) {
+            fieldImportance.getSelectionModel().select(m.findTacheByName(nomParent).getImportance());
+        }
 
         ///description
         Text tDescription=new Text("Description : ");
         TextArea fieldDescription=new TextArea();
+        if (modif == true) {
+            fieldDescription.setText(m.findTacheByName(nomParent).getDescription());
+        }
 
         ///tache parent
         HBox ligneParent=new HBox(5);
@@ -106,6 +123,9 @@ public class Affichage extends Application {
         Text tParent=new Text("Tache parent : ");
         ComboBox<String> fieldParent=new ComboBox<>(optionsTache);
         fieldParent.getSelectionModel().select(nomParent);
+        if (modif == true) {
+            fieldParent.getSelectionModel().select(m.findTacheByName(nomParent).getParent().getNom());
+        }
 
         ligneParent.getChildren().addAll(tParent, fieldParent);
 
@@ -127,7 +147,11 @@ public class Affichage extends Application {
 
         //association du controleur d'ajout
         ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fenetreNomColonne, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter, fieldParent, erreur);
-        valider.setOnAction(cAjouterTache);
+        if (modif == true) {
+            valider.setOnAction();
+        }else {
+            valider.setOnAction(cAjouterTache);
+        }
 
         VBox gauche=new VBox(5);
         gauche.getChildren().addAll(ligneNom, ligneDate, ligneDuree, ligneImportance);

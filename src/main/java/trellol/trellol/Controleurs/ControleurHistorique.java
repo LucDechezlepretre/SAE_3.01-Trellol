@@ -15,13 +15,6 @@ public class ControleurHistorique implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        Button button = (Button) actionEvent.getSource();
-        String textBouton = button.getText();
-        if(textBouton.equals("Vue Bureau")){
-            this.modele.activerVueBureau();
-        }
-        else{
-            this.modele.activerVueListe();
-        }
+
     }
 }
