@@ -36,12 +36,6 @@ public class VueBureau extends Tab implements Observateur {
     private GridPane createRecursiveGridPane(Tache tache) {
 
         GridPane gp = new GridPane();
-        //Button modif = new Button("Modifier");
-        /*modif.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                Affichage.afficherFormulaireTache(VueBureau.model,tache.getNom(), true);
-            }
-        });*/
 
         this.model.getEnfant(this.model.getRacine());
         gp.add(new Label(tache.getNom()),1,1);
