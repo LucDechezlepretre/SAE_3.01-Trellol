@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import trellol.trellol.Exceptions.AjoutTacheException;
+import trellol.trellol.Historique;
 import trellol.trellol.Importance;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
@@ -42,6 +43,7 @@ public class ControleurModifierTache implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         try{
+            modele.getHistorique().addAction(Historique.MODIFICATION_ACTION, tacheMod.getNom());
             //Recuperation des donnees des fields
             String nom=this.nom.getText(); //NOM DE LA TACHE
 
