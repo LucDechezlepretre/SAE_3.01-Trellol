@@ -5,7 +5,6 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
@@ -75,7 +74,7 @@ public class VueListe extends Tab implements Observateur {
                     Dragboard dragboard = cell.startDragAndDrop(TransferMode.MOVE);
 
                     ClipboardContent content = new ClipboardContent();
-                    content.put(Affichage.customFormatListe, cell.getItem());
+                    content.put(MainAffichage.customFormatListe, cell.getItem());
                     dragboard.setContent(content);
 
                     event.consume();
@@ -85,7 +84,7 @@ public class VueListe extends Tab implements Observateur {
             cell.setOnDragOver(event -> {
                 Dragboard dragboard = event.getDragboard();
 
-                if (dragboard.hasContent(Affichage.customFormatListe) && !cell.isEmpty()) {
+                if (dragboard.hasContent(MainAffichage.customFormatListe) && !cell.isEmpty()) {
                     event.acceptTransferModes(TransferMode.MOVE);
                 }
 
@@ -95,8 +94,8 @@ public class VueListe extends Tab implements Observateur {
             cell.setOnDragDropped(event -> {
                 Dragboard dragboard = event.getDragboard();
 
-                if (dragboard.hasContent(Affichage.customFormatListe)) {
-                    Tache draggedItem = (Tache) dragboard.getContent(Affichage.customFormatListe);
+                if (dragboard.hasContent(MainAffichage.customFormatListe)) {
+                    Tache draggedItem = (Tache) dragboard.getContent(MainAffichage.customFormatListe);
                     TreeItem<Tache> draggedTreeItem = new TreeItem<>(draggedItem);
 
                     TreeItem<Tache> parentItem = treeView.getSelectionModel().getSelectedItem();
