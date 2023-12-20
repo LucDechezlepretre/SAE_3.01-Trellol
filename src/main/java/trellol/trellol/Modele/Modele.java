@@ -28,6 +28,7 @@ public class Modele implements Sujet {
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
 		vueListe = false;
+		historique = new Historique();
 	}
 	public void activerVueListe(){
 		this.vueListe = true;
@@ -102,16 +103,20 @@ public class Modele implements Sujet {
 
 	public void archiverTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_ARCHIVE);
+		this.getHistorique().addAction(Historique.ARCHIVAGE_ACTION, tache.getNom());
 	}
 
 	public void desarchiverTache(Tache tache) {
-		tache.setEtat(Tache.ETAT_NON_ARCHIVE);
+		tache.setEtat(Tache.ETAT_NON_ARCHIVE
+		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom()
+		);
 	}
 
 	public void suppressionTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_SUPPRIME);
 		tache.setParent(null);
 		tache.setAntecedant(null);
+		this.getHistorique().addAction(Historique.SUPRESSION_ACTION, tache.getNom());
 	}
 
 	public void deplacerTache(Tache tache, Tache parent) {
@@ -121,6 +126,7 @@ public class Modele implements Sujet {
 		t.setParent(parent);
 		ensTache.set(index, t);
 		this.notifierObservateurs();
+		this.getHistorique().addAction(Historique.DEPLACEMENT_ACTION, tache.getNom());
 	}
 
 	public void afficherHistorique() {
@@ -137,6 +143,7 @@ public class Modele implements Sujet {
 		}else{
 			throw new AjoutTacheException("Parent manquant");
 		}
+		this.getHistorique().addAction(Historique.CREATION_TACHE_ACTION, tache.getNom());
 	}
 
 	@Override
@@ -201,5 +208,9 @@ public class Modele implements Sujet {
 		}
 
 		return null; //Aucune tache à ce nom n'a été trouvée
+	}
+
+	public Historique getHistorique() {
+		return this.historique;
 	}
 }

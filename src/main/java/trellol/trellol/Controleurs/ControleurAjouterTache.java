@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import trellol.trellol.Exceptions.AjoutTacheException;
+import trellol.trellol.Historique;
 import trellol.trellol.Importance;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
