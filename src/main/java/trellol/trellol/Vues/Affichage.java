@@ -3,6 +3,8 @@ package trellol.trellol.Vues;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -28,14 +30,41 @@ public class Affichage extends Application {
         //CREATION DU MODELE
         Modele m = creationModel();
 
-        TabPane racine = new TabPane();
+        BorderPane racine = new BorderPane();
+        racine.setPadding(new Insets(10));
+
+
+        //Bandeau nom appli
+        StackPane conteneurNomAppli = new StackPane();
+        conteneurNomAppli.setPadding(new Insets(5));
+        conteneurNomAppli.setStyle("-fx-background-color: #ff0099;");
+        Label nomAppli = new Label("Trellol");
+        nomAppli.setFont(javafx.scene.text.Font.font(18));
+        conteneurNomAppli.getChildren().add(nomAppli);
+        racine.setTop(conteneurNomAppli);
+
+        //Bouton ajouter tache gauche
+        StackPane conteneurBouton = new StackPane();
+        Button ajouterTache = new Button("Ajouter Tache");
+        conteneurBouton.getChildren().add(ajouterTache);
+        ajouterTache.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                Affichage.afficherFormulaireTache(m, null);
+            }
+        });
+        racine.setLeft(conteneurBouton);
+
+        //Vue avec des onglets
+        TabPane tabPane = new TabPane();
         VueListe vueListe = new VueListe("Liste",m);
         VueBureau vueBureau = new VueBureau("Bureau", m);
         m.enregistrerObservateur(vueListe);
         m.enregistrerObservateur(vueBureau);
         m.notifierObservateurs();
-        racine.getTabs().addAll(vueListe, vueBureau);
-        Scene scene = new Scene(racine);
+        tabPane.getTabs().addAll(vueListe, vueBureau);
+        racine.setCenter(tabPane);
+
+        Scene scene = new Scene(racine, 600, 400);
         stage.setTitle("Trellol");
         stage.setScene(scene);
         stage.show();
@@ -167,7 +196,7 @@ public class Affichage extends Application {
         form.setRight(droite);
         form.setBottom(bas);
         // Définir la scène de la nouvelle fenêtre
-        Scene scene = new Scene(form);
+        Scene scene = new Scene(form, 700, 500);
         fenetreNomColonne.setScene(scene);
 
 
