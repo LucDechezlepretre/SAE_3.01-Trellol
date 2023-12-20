@@ -13,12 +13,11 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import trellol.trellol.Controleurs.ControleurAjouterTache;
+import trellol.trellol.Controleurs.ControleurModifierTache;
 import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
@@ -26,7 +25,7 @@ import java.util.regex.Pattern;
 public class Affichage extends Application {
     public static final DataFormat customFormatListe = new DataFormat("application/x-java-serialized-object");
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage){
         //CREATION DU MODELE
         Modele m = creationModel();
 
@@ -49,7 +48,7 @@ public class Affichage extends Application {
         conteneurBouton.getChildren().add(ajouterTache);
         ajouterTache.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                Affichage.afficherFormulaireTache(m, null);
+                Affichage.afficherFormulaireTache(m, null, false);
             }
         });
         racine.setLeft(conteneurBouton);
@@ -94,7 +93,7 @@ public class Affichage extends Application {
         HBox ligneNom=new HBox(5);
         Text tNom=new Text("Nom : ");
         TextField fieldNom = new TextField("Tache");
-        if (modif == true) {
+        if (modif) {
             fieldNom.setText(nomParent);
         }
         ligneNom.getChildren().addAll(tNom, fieldNom);
@@ -104,7 +103,7 @@ public class Affichage extends Application {
         Text tDate=new Text("Date début : ");
         DatePicker fieldDate = new DatePicker();
         ligneDate.getChildren().addAll(tDate, fieldDate);
-        if (modif == true) {
+        if (modif) {
             fieldDate.setValue(m.findTacheByName(nomParent).getDateDebut().toInstant()
                     .atZone(java.time.ZoneId.systemDefault()).toLocalDate());
         }
@@ -113,7 +112,7 @@ public class Affichage extends Application {
         HBox ligneDuree=new HBox(5);
         Text tDuree=new Text("Durée : ");
         TextField fieldDuree=Affichage.createNumericField();
-        if (modif == true) {
+        if (modif) {
             fieldDuree.setText(String.valueOf(m.findTacheByName(nomParent).getDuree()));
         }
 
@@ -129,14 +128,14 @@ public class Affichage extends Application {
         Text tImportance=new Text("Importance : ");
         ComboBox<String> fieldImportance=new ComboBox<>(optionsImp);
         ligneImportance.getChildren().addAll(tImportance, fieldImportance);
-        if (modif == true) {
+        if (modif) {
             fieldImportance.getSelectionModel().select(m.findTacheByName(nomParent).getImportance());
         }
 
         ///description
         Text tDescription=new Text("Description : ");
         TextArea fieldDescription=new TextArea();
-        if (modif == true) {
+        if (modif) {
             fieldDescription.setText(m.findTacheByName(nomParent).getDescription());
         }
 
@@ -152,7 +151,7 @@ public class Affichage extends Application {
         Text tParent=new Text("Tache parent : ");
         ComboBox<String> fieldParent=new ComboBox<>(optionsTache);
         fieldParent.getSelectionModel().select(nomParent);
-        if (modif == true) {
+        if (modif) {
             fieldParent.getSelectionModel().select(m.findTacheByName(nomParent).getParent().getNom());
         }
 
@@ -174,11 +173,13 @@ public class Affichage extends Application {
         Label erreur=new Label("");
         lastline.getChildren().addAll(valider, erreur);
 
-        //association du controleur d'ajout
-        ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fenetreNomColonne, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter, fieldParent, erreur);
-        if (modif == true) {
-            valider.setOnAction();
+
+        if (modif) {
+            ControleurModifierTache controleurModifierTache = new ControleurModifierTache(m, m.findTacheByName(nomParent), fenetreNomColonne, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter, fieldParent, erreur);
+            valider.setOnAction(controleurModifierTache);
         }else {
+            //association du controleur d'ajout
+            ControleurAjouterTache cAjouterTache=new ControleurAjouterTache(m, fenetreNomColonne, fieldNom, fieldDate, fieldDuree, fieldDescription, fieldImportance, fieldAnter, fieldParent, erreur);
             valider.setOnAction(cAjouterTache);
         }
 

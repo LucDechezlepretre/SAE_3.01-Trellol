@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.input.DataFormat;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import trellol.trellol.Modele.Modele;
@@ -35,16 +36,15 @@ public class VueBureau extends Tab implements Observateur {
     private GridPane createRecursiveGridPane(Tache tache) {
 
         GridPane gp = new GridPane();
-        Button modif = new Button("Modifier");
-        modif.setOnAction(new EventHandler<ActionEvent>() {
+        //Button modif = new Button("Modifier");
+        /*modif.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 Affichage.afficherFormulaireTache(VueBureau.model,tache.getNom(), true);
             }
-        });
+        });*/
 
         this.model.getEnfant(this.model.getRacine());
         gp.add(new Label(tache.getNom()),1,1);
-        gp.add(modif,2,1);
 
         gp.setHgap(5);
         gp.setVgap(5);
@@ -63,7 +63,11 @@ public class VueBureau extends Tab implements Observateur {
             // Appel récursif pour le VBox interne
             for (Tache t : this.model.getEnfant(tache)) {
                 if (!racine || (racine && (nbColonne <= this.model.getNumColonneAffiche()+5) && nbColonne >= this.model.getNumColonneAffiche())) {
-                    gp.add(createRecursiveGridPane(t), colonne, ligne);
+                    GridPane gpt = createRecursiveGridPane(t);
+                    gpt.setOnMouseClicked(mouseEvent -> {
+                        Affichage.afficherFormulaireTache(VueBureau.model, t.getNom(), true);
+                    });
+                    gp.add(gpt, colonne, ligne);
                     if (racine) {
                         colonne++;
                     } else {

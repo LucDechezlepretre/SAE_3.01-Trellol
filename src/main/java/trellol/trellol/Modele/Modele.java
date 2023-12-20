@@ -20,30 +20,12 @@ public class Modele implements Sujet {
 	private ArrayList<Observateur> observateurs;
 	private Historique historique;
 	private List<Tache> ensTache;
-	private boolean vueListe;
-
 	private int numColonneAffiche;
 
 	public Modele(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
-		vueListe = false;
 		historique = new Historique();
-	}
-	public void activerVueListe(){
-		this.vueListe = true;
-		this.notifierObservateurs();
-		this.numColonneAffiche = 0;
-	}
-
-	public void activerVueBureau() {
-		this.vueListe = false;
-		this.notifierObservateurs();
-		this.numColonneAffiche = 0;
-	}
-
-	public boolean getVue(){
-		return this.vueListe;
 	}
 	public List<Tache> getEnsTache() {
 		return this.ensTache;
