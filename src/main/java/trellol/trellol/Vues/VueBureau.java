@@ -15,9 +15,10 @@ import trellol.trellol.Tache;
 
 public class VueBureau extends Tab implements Observateur {
     private static Modele model;
-    private static final DataFormat customFormat = new DataFormat("application/x-java-serialized-object");
 
-    public VueBureau(Sujet s) {
+
+    public VueBureau(String nom, Sujet s) {
+        super(nom);
         VueBureau.model = (Modele) s;
         StackPane conteneur = new StackPane(this.createRecursiveGridPane(model.getRacine()));
         this.setContent(conteneur);

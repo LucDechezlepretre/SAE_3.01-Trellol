@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.DataFormat;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -20,15 +21,15 @@ import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 public class Affichage extends Application {
-
+    public static final DataFormat customFormatListe = new DataFormat("application/x-java-serialized-object");
     @Override
     public void start(Stage stage) throws IOException {
         //CREATION DU MODELE
         Modele m = creationModel();
 
         TabPane racine = new TabPane();
-        VueListe vueListe = new VueListe(m);
-        VueBureau vueBureau = new VueBureau(m);
+        VueListe vueListe = new VueListe("Liste",m);
+        VueBureau vueBureau = new VueBureau("Bureau", m);
         m.enregistrerObservateur(vueListe);
         m.enregistrerObservateur(vueBureau);
         m.notifierObservateurs();

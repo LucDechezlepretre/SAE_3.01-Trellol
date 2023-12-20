@@ -15,9 +15,10 @@ import trellol.trellol.Tache;
 
 public class VueListe extends Tab implements Observateur {
     private static Modele model;
-    private static final DataFormat customFormat = new DataFormat("application/x-java-serialized-object");
 
-    public VueListe(Sujet s) {
+
+    public VueListe(String nom, Sujet s) {
+        super(nom);
         VueListe.model = (Modele)s;
         StackPane conteneur = new StackPane(this.affichageListe());
         this.setContent(conteneur);
@@ -74,7 +75,7 @@ public class VueListe extends Tab implements Observateur {
                     Dragboard dragboard = cell.startDragAndDrop(TransferMode.MOVE);
 
                     ClipboardContent content = new ClipboardContent();
-                    content.put(customFormat, cell.getItem());
+                    content.put(Affichage.customFormatListe, cell.getItem());
                     dragboard.setContent(content);
 
                     event.consume();
@@ -84,7 +85,7 @@ public class VueListe extends Tab implements Observateur {
             cell.setOnDragOver(event -> {
                 Dragboard dragboard = event.getDragboard();
 
-                if (dragboard.hasContent(customFormat) && !cell.isEmpty()) {
+                if (dragboard.hasContent(Affichage.customFormatListe) && !cell.isEmpty()) {
                     event.acceptTransferModes(TransferMode.MOVE);
                 }
 
@@ -94,8 +95,8 @@ public class VueListe extends Tab implements Observateur {
             cell.setOnDragDropped(event -> {
                 Dragboard dragboard = event.getDragboard();
 
-                if (dragboard.hasContent(customFormat)) {
-                    Tache draggedItem = (Tache) dragboard.getContent(customFormat);
+                if (dragboard.hasContent(Affichage.customFormatListe)) {
+                    Tache draggedItem = (Tache) dragboard.getContent(Affichage.customFormatListe);
                     TreeItem<Tache> draggedTreeItem = new TreeItem<>(draggedItem);
 
                     TreeItem<Tache> parentItem = treeView.getSelectionModel().getSelectedItem();
