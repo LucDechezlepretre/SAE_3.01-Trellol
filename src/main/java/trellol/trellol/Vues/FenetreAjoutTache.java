@@ -125,7 +125,7 @@ public class FenetreAjoutTache {
             Button bArchiv=new Button("Archiver");
 
             //Creation de leurs controlleurs
-            ControlleurArchivage cArchivage=new ControlleurArchivage(m, m.findTacheByName(nomParent));
+            ControlleurArchivage cArchivage=new ControlleurArchivage(m, fenetreNomColonne, m.findTacheByName(nomParent));
 
             //Association des controlleurs
             bArchiv.setOnAction(cArchivage);

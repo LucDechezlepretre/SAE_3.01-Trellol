@@ -86,11 +86,14 @@ public class Modele implements Sujet {
 	public void archiverTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_ARCHIVE);
 		this.getHistorique().addAction(Historique.ARCHIVAGE_ACTION, tache.getNom());
+		this.notifierObservateurs();
 	}
 
 	public void desarchiverTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_NON_ARCHIVE);
 		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom());
+		this.notifierObservateurs();
+
 	}
 
 	public void suppressionTache(Tache tache) {
@@ -98,6 +101,7 @@ public class Modele implements Sujet {
 		tache.setParent(null);
 		tache.setAntecedant(null);
 		this.getHistorique().addAction(Historique.SUPRESSION_ACTION, tache.getNom());
+		this.notifierObservateurs();
 	}
 
 	public void deplacerTache(Tache tache, Tache parent) {
@@ -106,8 +110,8 @@ public class Modele implements Sujet {
 		Tache t = ensTache.get(index);
 		t.setParent(parent);
 		ensTache.set(index, t);
-		this.notifierObservateurs();
 		this.getHistorique().addAction(Historique.DEPLACEMENT_ACTION, tache.getNom());
+		this.notifierObservateurs();
 	}
 
 	public void afficherHistorique() {
@@ -125,6 +129,7 @@ public class Modele implements Sujet {
 			throw new AjoutTacheException("Parent manquant");
 		}
 		this.getHistorique().addAction(Historique.CREATION_TACHE_ACTION, tache.getNom());
+		this.notifierObservateurs();
 	}
 
 	@Override

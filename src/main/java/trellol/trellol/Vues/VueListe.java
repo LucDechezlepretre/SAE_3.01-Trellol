@@ -101,7 +101,6 @@ public class VueListe extends Tab implements Observateur {
                     TreeItem<Tache> parentItem = treeView.getSelectionModel().getSelectedItem();
 
                     VueListe.model.deplacerTache(draggedItem, cell.getItem());
-                    VueListe.model.notifierObservateurs();
                     //System.out.println(model);
                 } else {
                     event.setDropCompleted(false);
