@@ -107,9 +107,8 @@ public class Modele implements Sujet {
 	}
 
 	public void desarchiverTache(Tache tache) {
-		tache.setEtat(Tache.ETAT_NON_ARCHIVE
-		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom()
-		);
+		tache.setEtat(Tache.ETAT_NON_ARCHIVE);
+		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom());
 	}
 
 	public void suppressionTache(Tache tache) {
