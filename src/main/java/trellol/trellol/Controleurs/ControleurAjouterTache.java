@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Importance;
-import trellol.trellol.Modele.Model;
+import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ControleurAjouterTache implements EventHandler<ActionEvent> {
     private Stage fenetre;
-    private Model modele;
+    private Modele modele;
     private TextField nom;
     private DatePicker date;
     private TextField duree;
@@ -25,7 +25,7 @@ public class ControleurAjouterTache implements EventHandler<ActionEvent> {
 
     private Label erreur;
 
-    public ControleurAjouterTache(Model m, Stage fenetre, TextField nom, DatePicker date, TextField duree, TextArea description, ComboBox<String> importance, ComboBox<String> anter, ComboBox<String> parent, Label erreur){
+    public ControleurAjouterTache(Modele m, Stage fenetre, TextField nom, DatePicker date, TextField duree, TextArea description, ComboBox<String> importance, ComboBox<String> anter, ComboBox<String> parent, Label erreur){
         this.fenetre=fenetre;
         this.nom=nom;
         this.date=date;

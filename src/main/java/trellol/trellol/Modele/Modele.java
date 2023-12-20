@@ -1,19 +1,11 @@
 
 package trellol.trellol.Modele;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Historique;
 import trellol.trellol.Vues.Observateur;
 import trellol.trellol.Tache;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,7 +13,7 @@ import java.util.List;
  * de l'exemple compteur_MVC
  *
  */
-public class Model implements Sujet {
+public class Modele implements Sujet {
 	/**
 	 * Liste des observateurs
 	 */
@@ -32,7 +24,7 @@ public class Model implements Sujet {
 
 	private int numColonneAffiche;
 
-	public Model(){
+	public Modele(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
 		vueListe = false;
@@ -190,14 +182,6 @@ public class Model implements Sujet {
 			}
 		}
 		return true;
-	}
-
-	public void modifierNumColonne(int modif) {
-		if (modif == 1) {
-			this.numColonneAffiche++;
-		} else {
-			this.numColonneAffiche--;
-		}
 	}
 
 	public int getNumColonneAffiche() {

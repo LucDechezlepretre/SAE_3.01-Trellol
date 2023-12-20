@@ -1,32 +1,34 @@
 package trellol.trellol.Vues;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.StackPane;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
 
-public class VuePrincipale extends TabPane implements Observateur {
-
+public class VueListe extends Tab implements Observateur {
     private static Modele model;
     private static final DataFormat customFormat = new DataFormat("application/x-java-serialized-object");
+
+    public VueListe(Sujet s) {
+        VueListe.model = (Modele)s;
+        StackPane conteneur = new StackPane(this.affichageListe());
+        this.setContent(conteneur);
+    }
+
     @Override
     public void actualiser(Sujet s) {
-        System.out.println("actualisation");
-        VuePrincipale.model = (Modele) s;
-        this.getChildren().clear();
-        Tab vueListe = new Tab("Liste");
-        Tab vueBureau = new Tab("Bureau");
-        vueBureau.setContent(this.createRecursiveGridPane(model.getRacine()));
-        vueListe.setContent(this.affichageListe());
-        this.getTabs().addAll(vueBureau, vueListe);
+        VueListe.model =(Modele) s;
+        StackPane content = (StackPane) this.getContent();
+        content.getChildren().clear();
+        content.getChildren().add(this.affichageListe());
     }
 
     // Fonction utilitaire pour créer un TreeItem à partir d'une tâche
@@ -36,10 +38,10 @@ public class VuePrincipale extends TabPane implements Observateur {
         return treeItem;
     }
     private void ajouterTacheRecursivement(TreeItem<Tache> parentItem, Tache tache){
-        if(VuePrincipale.model.getEnfant(tache).size() == 0){
+        if(VueListe.model.getEnfant(tache).size() == 0){
             return;
         }
-        for(Tache enfant : VuePrincipale.model.getEnfant(tache)){
+        for(Tache enfant : VueListe.model.getEnfant(tache)){
             // Crée un nouvel élément de TreeItem pour la tâche
             TreeItem<Tache> childItem = createTreeItem(enfant);
 
@@ -51,8 +53,8 @@ public class VuePrincipale extends TabPane implements Observateur {
         }
     }
     public TreeView<Tache> affichageListe(){
-        TreeItem<Tache> racine = createTreeItem(VuePrincipale.model.getRacine());
-        ajouterTacheRecursivement(racine, VuePrincipale.model.getRacine());
+        TreeItem<Tache> racine = createTreeItem(VueListe.model.getRacine());
+        ajouterTacheRecursivement(racine, VueListe.model.getRacine());
         // Crée le TreeView avec l'élément racine
         TreeView<Tache> treeView = new TreeView<>(racine);
         treeView.setEditable(true);
@@ -98,8 +100,8 @@ public class VuePrincipale extends TabPane implements Observateur {
 
                     TreeItem<Tache> parentItem = treeView.getSelectionModel().getSelectedItem();
 
-                    VuePrincipale.model.deplacerTache(draggedItem, cell.getItem());
-                    VuePrincipale.model.notifierObservateurs();
+                    VueListe.model.deplacerTache(draggedItem, cell.getItem());
+                    VueListe.model.notifierObservateurs();
                     //System.out.println(model);
                 } else {
                     event.setDropCompleted(false);
@@ -109,59 +111,5 @@ public class VuePrincipale extends TabPane implements Observateur {
             return cell;
         });
         return treeView;
-    }
-
-    private GridPane createRecursiveGridPane(Tache tache) {
-
-        GridPane gp = new GridPane();
-
-        this.model.getEnfant(this.model.getRacine());
-        gp.add(new Label(tache.getNom()),1,1);
-
-        gp.setHgap(5);
-        gp.setVgap(5);
-        gp.setPadding(new Insets(10));
-
-        gp.setStyle("-fx-border-color: black;"); // Ajout d'une bordure pour mieux visualiser
-        Boolean rang2 = this.model.getEnfant(this.model.getRacine()).contains(tache);
-        Boolean racine = tache == this.model.getRacine();
-        int nbColonne = 0;
-        if (this.model.getEnfant(tache).size() > 0) {
-            int colonne = 1;
-            if (racine) {
-                colonne++;
-            }
-            int ligne = 2;
-            // Appel récursif pour le VBox interne
-            for (Tache t : this.model.getEnfant(tache)) {
-                if (!racine || (racine && (nbColonne <= this.model.getNumColonneAffiche()+5) && nbColonne >= this.model.getNumColonneAffiche())) {
-                    gp.add(createRecursiveGridPane(t), colonne, ligne);
-                    if (racine) {
-                        colonne++;
-                    } else {
-                        ligne++;
-                    }
-                }
-                nbColonne++;
-            }
-        }
-        if (racine) {
-            if (this.model.getNumColonneAffiche() > 0) {
-                gp.add(new Button("<-"), 1, gp.getRowCount());
-            }
-            if (nbColonne > this.model.getNumColonneAffiche() + 5) {
-                gp.add(new Button("->"), gp.getColumnCount(), gp.getRowCount() - 1);
-            }
-        }
-        if (rang2) {
-            Button bAjoutTache = new Button("Ajouter Tache");
-            gp.add(bAjoutTache,1,gp.getRowCount());
-            bAjoutTache.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-                    Affichage.afficherFormulaireTache(VuePrincipale.model,tache.getNom());
-                }
-            });
-        }
-        return gp;
     }
 }

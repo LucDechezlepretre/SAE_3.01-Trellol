@@ -3,13 +3,13 @@ package trellol.trellol.Controleurs;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import trellol.trellol.Modele.Model;
+import trellol.trellol.Modele.Modele;
 
 public class ControleurVuePrincipale implements EventHandler<ActionEvent> {
 
-    private Model modele;
+    private Modele modele;
 
-    public ControleurVuePrincipale(Model modele) {
+    public ControleurVuePrincipale(Modele modele) {
         this.modele = modele;
     }
 

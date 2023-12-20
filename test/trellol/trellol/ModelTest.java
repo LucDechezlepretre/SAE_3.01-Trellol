@@ -3,7 +3,7 @@ package trellol.trellol;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import trellol.trellol.Exceptions.AjoutTacheException;
-import trellol.trellol.Modele.Model;
+import trellol.trellol.Modele.Modele;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,10 +11,10 @@ class ModelTest {
     /**
      * vérification de l'archivage d'une tache
      */
-    Model m;
+    Modele m;
     @BeforeEach
     void setUp() {
-        m = new Model();
+        m = new Modele();
     }
 
     @Test

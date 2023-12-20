@@ -3,22 +3,15 @@ package trellol.trellol.Vues;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import trellol.trellol.Controleurs.ControleurVuePrincipale;
 import trellol.trellol.Controleurs.ControleurAjouterTache;
 import trellol.trellol.Exceptions.AjoutTacheException;
-import trellol.trellol.Modele.Model;
+import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 
 import java.io.IOException;
@@ -31,12 +24,15 @@ public class Affichage extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //CREATION DU MODELE
-        Model m = creationModel();
+        Modele m = creationModel();
 
-        VuePrincipale racine = new VuePrincipale();
-        m.enregistrerObservateur(racine);
-
+        TabPane racine = new TabPane();
+        VueListe vueListe = new VueListe(m);
+        VueBureau vueBureau = new VueBureau(m);
+        m.enregistrerObservateur(vueListe);
+        m.enregistrerObservateur(vueBureau);
         m.notifierObservateurs();
+        racine.getTabs().addAll(vueListe, vueBureau);
         Scene scene = new Scene(racine);
         stage.setTitle("Trellol");
         stage.setScene(scene);
@@ -53,7 +49,7 @@ public class Affichage extends Application {
      * Methode de creation de la sous fenetre formulaire d'ajout de tache
      * @param m, le model de l'application
      */
-    public static void afficherFormulaireTache(Model m, String nomParent){
+    public static void afficherFormulaireTache(Modele m, String nomParent){
         //AFFICHAGE GRAPHIQUE DE LA NOUVELLE FENETRE
         Stage fenetreNomColonne = new Stage();
         fenetreNomColonne.setTitle("Configurer Tache");
@@ -154,9 +150,9 @@ public class Affichage extends Application {
         fenetreNomColonne.show();
     }
 
-    public static Model creationModel(){
+    public static Modele creationModel(){
 
-        Model model = new Model();
+        Modele model = new Modele();
         Tache racine = new Tache("racine", "13/12/2023", 8, "Ceci est la racine", 0);
         try {
             model.ajouterTache(racine);
