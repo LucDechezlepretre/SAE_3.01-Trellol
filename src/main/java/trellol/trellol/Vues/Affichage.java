@@ -58,10 +58,12 @@ public class Affichage extends Application {
         TabPane tabPane = new TabPane();
         VueListe vueListe = new VueListe("Liste",m);
         VueBureau vueBureau = new VueBureau("Bureau", m);
+        VueHistorique vueHistorique = new VueHistorique("Historique", m);
         m.enregistrerObservateur(vueListe);
+        m.enregistrerObservateur(vueHistorique);
         m.enregistrerObservateur(vueBureau);
         m.notifierObservateurs();
-        tabPane.getTabs().addAll(vueListe, vueBureau);
+        tabPane.getTabs().addAll(vueListe, vueBureau, vueHistorique);
         racine.setCenter(tabPane);
 
         Scene scene = new Scene(racine, 600, 400);
