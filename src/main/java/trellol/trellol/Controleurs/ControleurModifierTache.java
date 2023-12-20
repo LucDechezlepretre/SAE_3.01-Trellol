@@ -9,6 +9,7 @@ import trellol.trellol.Historique;
 import trellol.trellol.Importance;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
+import trellol.trellol.Vues.MainAffichage;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -100,6 +101,7 @@ public class ControleurModifierTache implements EventHandler<ActionEvent> {
         catch(AjoutTacheException e){
             this.erreur.setText(e.getMessage());
         }
+        MainAffichage.affichageFormTache = false;
     }
 
 
