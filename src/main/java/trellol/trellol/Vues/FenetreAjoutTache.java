@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import trellol.trellol.Controleurs.ControleurAjouterTache;
 import trellol.trellol.Controleurs.ControleurModifierTache;
+import trellol.trellol.Controleurs.ControlleurArchivage;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 
@@ -108,12 +109,27 @@ public class FenetreAjoutTache {
 
         ///tache anterieur
         HBox ligneAnter=new HBox(5);
-        Text tAnter=new Text("Tache anterieur : ");
+        Text tAnter=new Text("Tache anterieure : ");
 
         ComboBox<String> fieldAnter=new ComboBox<>(optionsTache);
 
         ligneAnter.getChildren().addAll(tAnter, fieldAnter);
 
+        ///boutons archiver et sup (UNIQUEMENT EN CAS DE MODIF)
+        HBox ligneModif=new HBox(5);
+
+        if(modif){
+            Button bSup=new Button("Supprimer");
+            Button bArchiv=new Button("Archiver");
+
+            //Creation de leurs controlleurs
+            ControlleurArchivage cArchivage=new ControlleurArchivage(m, m.findTacheByName(nomParent));
+
+            //Association des controlleurs
+            bArchiv.setOnAction(cArchivage);
+
+            ligneModif.getChildren().addAll(bSup, bArchiv);
+        }
 
 
         ///validation et potentiel message d'erreur (dernière ligne)
@@ -136,7 +152,9 @@ public class FenetreAjoutTache {
         gauche.getChildren().addAll(ligneNom, ligneDate, ligneDuree, ligneImportance);
 
         VBox droite=new VBox(5);
-        droite.getChildren().addAll(ligneAnter, ligneParent);
+
+        droite.getChildren().addAll(ligneAnter, ligneParent, ligneModif);
+
 
         VBox bas=new VBox(10);
         bas.getChildren().addAll(tDescription, fieldDescription, lastline);
