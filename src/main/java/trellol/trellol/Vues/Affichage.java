@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 public class Affichage extends Application {
     public static final DataFormat customFormatListe = new DataFormat("application/x-java-serialized-object");
+    public static boolean affichageFormTache = false;
     @Override
     public void start(Stage stage){
         //CREATION DU MODELE
@@ -79,7 +80,11 @@ public class Affichage extends Application {
      * Methode de creation de la sous fenetre formulaire d'ajout de tache
      * @param m, le model de l'application
      */
-    public static void afficherFormulaireTache(Modele m, String nomParent, boolean modif){
+    public static synchronized void afficherFormulaireTache(Modele m, String nomParent, boolean modif){
+        if(modif && Affichage.affichageFormTache){
+            return;
+        }
+        Affichage.affichageFormTache = true;
         //AFFICHAGE GRAPHIQUE DE LA NOUVELLE FENETRE
         Stage fenetreNomColonne = new Stage();
         fenetreNomColonne.setTitle("Configurer Tache");
@@ -199,6 +204,9 @@ public class Affichage extends Application {
         // Définir la scène de la nouvelle fenêtre
         Scene scene = new Scene(form, 700, 500);
         fenetreNomColonne.setScene(scene);
+        fenetreNomColonne.setOnCloseRequest(windowEvent -> {
+            Affichage.affichageFormTache = false;
+        });
 
 
         // Afficher la nouvelle fenêtre
