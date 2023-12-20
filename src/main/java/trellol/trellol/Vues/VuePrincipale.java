@@ -14,7 +14,7 @@ import trellol.trellol.Modele.Model;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
 
-public class VuePrincipale extends StackPane implements Observateur {
+public class VuePrincipale extends TabPane implements Observateur {
 
     private static Model model;
     private static final DataFormat customFormat = new DataFormat("application/x-java-serialized-object");
@@ -22,12 +22,11 @@ public class VuePrincipale extends StackPane implements Observateur {
     public void actualiser(Sujet s) {
         VuePrincipale.model = (Model) s;
         this.getChildren().clear();
-        if(VuePrincipale.model.getVue()){
-            this.getChildren().add(this.affichageListe());
-        }
-        else {
-            this.getChildren().add(this.createRecursiveGridPane(this.model.getRacine()));
-        }
+        Tab vueListe = new Tab("Liste");
+        Tab vueBureau = new Tab("Bureau");
+        vueBureau.setContent(this.createRecursiveGridPane(model.getRacine()));
+        vueListe.setContent(this.affichageListe());
+        this.getTabs().addAll(vueBureau, vueListe);
     }
 
     // Fonction utilitaire pour créer un TreeItem à partir d'une tâche

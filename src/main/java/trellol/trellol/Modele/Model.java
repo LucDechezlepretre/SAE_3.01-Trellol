@@ -128,6 +128,7 @@ public class Model implements Sujet {
 		Tache t = ensTache.get(index);
 		t.setParent(parent);
 		ensTache.set(index, t);
+		this.notifierObservateurs();
 	}
 
 	public void afficherHistorique() {

@@ -33,66 +33,12 @@ public class Affichage extends Application {
         //CREATION DU MODELE
         Model m = creationModel();
 
-        //Creation des controleurs
-        ControleurVuePrincipale controleurVuePrincipale = new ControleurVuePrincipale(m);
+        VuePrincipale racine = new VuePrincipale();
+        m.enregistrerObservateur(racine);
 
-        //Affichage
-        VBox racine=new VBox(10);
-        racine.setPadding(new Insets(0, 10, 0, 10));
-        HBox header=new HBox(25);
-
-        //BOUTONS DE VUE
-        Button bVueBureau=new Button("Vue Bureau");
-        Button bVueListe=new Button("Vue Liste");
-        bVueListe.addEventFilter(ActionEvent.ACTION, controleurVuePrincipale);
-        bVueBureau.addEventFilter(ActionEvent.ACTION, controleurVuePrincipale);
-
-        //TITRE
-        Label titre=new Label("TRELLOL");
-        Font font = Font.font("Arial", FontWeight.BOLD, 35);
-        titre.setFont(font);
-        titre.setTextFill(Color.WHITE);
-
-        //BOUTONS GANTT HISTORIQUE ARCHIVE
-        Button bGantt=new Button("Gantt");
-        Button bArchive=new Button("Archive");
-        Button bHistorique=new Button("Historique");
-
-        ///Ajout au header///
-        header.setAlignment(Pos.CENTER);
-        header.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-
-
-        header.setPadding(new Insets(0,30,0,30));
-        header.getChildren().addAll(bVueBureau, bVueListe, titre, bGantt, bArchive, bHistorique);
-
-        ///CREATION DE LA BOX A GAUCHE
-        VBox gauche=new VBox(5);
-
-        Button bModif=new Button("Modifier");
-        Button bAjoutTache=new Button("Ajouter tache");
-        bAjoutTache.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                Affichage.afficherFormulaireTache(m, null);
-            }
-        });
-
-
-        ///Ajout à gauche
-        gauche.setAlignment(Pos.BOTTOM_LEFT);
-        gauche.getChildren().addAll(bModif, bAjoutTache);
-
-
-        ///CREATION DE LA BOX D'AFFICHAGE DES TACHES
-        VuePrincipale vuePrincipale = new VuePrincipale();
-        vuePrincipale.setPrefSize(300, 200);
-        m.enregistrerObservateur(vuePrincipale);
-
-        ///Ajout à la racine///
-        racine.getChildren().addAll(header, gauche, vuePrincipale);
         m.notifierObservateurs();
         Scene scene = new Scene(racine);
-        stage.setTitle("Hello!");
+        stage.setTitle("Trellol");
         stage.setScene(scene);
         stage.show();
     }
