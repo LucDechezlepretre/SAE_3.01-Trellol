@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Historique {
     private ArrayList<String> actions;
 
+    public static String MODIFICATION_ACTION = "La tâche {objet} a été modifiée";
     public static String DEPLACEMENT_ACTION = "La tâche {objet} a été déplacé";
 
     public static String SUPRESSION_ACTION = "La tâche {objet} a été supprimé";
