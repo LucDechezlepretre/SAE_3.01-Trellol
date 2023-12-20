@@ -53,11 +53,12 @@ public class MainAffichage extends Application {
         VueListe vueListe = new VueListe("Liste",m);
         VueBureau vueBureau = new VueBureau("Bureau", m);
         VueHistorique vueHistorique = new VueHistorique("Historique", m);
+        VueArchive vueArchive = new VueArchive("Archive", m);
         m.enregistrerObservateur(vueListe);
         m.enregistrerObservateur(vueHistorique);
         m.enregistrerObservateur(vueBureau);
         m.notifierObservateurs();
-        tabPane.getTabs().addAll(vueListe, vueBureau, vueHistorique);
+        tabPane.getTabs().addAll(vueListe, vueBureau, vueHistorique, vueArchive);
         tabPane.tabClosingPolicyProperty().setValue(TabPane.TabClosingPolicy.UNAVAILABLE);
         racine.setCenter(tabPane);
 
