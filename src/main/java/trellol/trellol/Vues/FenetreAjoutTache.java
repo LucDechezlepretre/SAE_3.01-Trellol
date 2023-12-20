@@ -1,81 +1,23 @@
 package trellol.trellol.Vues;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.DataFormat;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import trellol.trellol.Controleurs.ControleurAjouterTache;
 import trellol.trellol.Controleurs.ControleurModifierTache;
-import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 
 import java.util.List;
-import java.util.function.UnaryOperator;
-import java.util.regex.Pattern;
 
-public class Affichage extends Application {
-    public static final DataFormat customFormatListe = new DataFormat("application/x-java-serialized-object");
-    public static boolean affichageFormTache = false;
-    @Override
-    public void start(Stage stage){
-        //CREATION DU MODELE
-        Modele m = creationModel();
-
-        BorderPane racine = new BorderPane();
-        racine.setPadding(new Insets(10));
-
-
-        //Bandeau nom appli
-        StackPane conteneurNomAppli = new StackPane();
-        conteneurNomAppli.setPadding(new Insets(5));
-        conteneurNomAppli.setStyle("-fx-background-color: #ff0099;");
-        Label nomAppli = new Label("Trellol");
-        nomAppli.setFont(javafx.scene.text.Font.font(18));
-        conteneurNomAppli.getChildren().add(nomAppli);
-        racine.setTop(conteneurNomAppli);
-
-        //Bouton ajouter tache gauche
-        StackPane conteneurBouton = new StackPane();
-        Button ajouterTache = new Button("Ajouter Tache");
-        conteneurBouton.getChildren().add(ajouterTache);
-        ajouterTache.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                Affichage.afficherFormulaireTache(m, null, false);
-            }
-        });
-        racine.setLeft(conteneurBouton);
-
-        //Vue avec des onglets
-        TabPane tabPane = new TabPane();
-        VueListe vueListe = new VueListe("Liste",m);
-        VueBureau vueBureau = new VueBureau("Bureau", m);
-        VueHistorique vueHistorique = new VueHistorique("Historique", m);
-        m.enregistrerObservateur(vueListe);
-        m.enregistrerObservateur(vueHistorique);
-        m.enregistrerObservateur(vueBureau);
-        m.notifierObservateurs();
-        tabPane.getTabs().addAll(vueListe, vueBureau, vueHistorique);
-        racine.setCenter(tabPane);
-
-        Scene scene = new Scene(racine, 600, 400);
-        stage.setTitle("Trellol");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void main(String[] args)
-    {
-        launch();
-    }
+public class FenetreAjoutTache {
 
 
     /**
@@ -83,10 +25,10 @@ public class Affichage extends Application {
      * @param m, le model de l'application
      */
     public static synchronized void afficherFormulaireTache(Modele m, String nomParent, boolean modif){
-        if(modif && Affichage.affichageFormTache){
+        if(modif && MainAffichage.affichageFormTache){
             return;
         }
-        Affichage.affichageFormTache = true;
+        MainAffichage.affichageFormTache = true;
         //AFFICHAGE GRAPHIQUE DE LA NOUVELLE FENETRE
         Stage fenetreNomColonne = new Stage();
         fenetreNomColonne.setTitle("Configurer Tache");
@@ -118,7 +60,7 @@ public class Affichage extends Application {
         ///duree
         HBox ligneDuree=new HBox(5);
         Text tDuree=new Text("Durée : ");
-        TextField fieldDuree=Affichage.createNumericField();
+        TextField fieldDuree= MainAffichage.createNumericField();
         if (modif) {
             fieldDuree.setText(String.valueOf(m.findTacheByName(nomParent).getDuree()));
         }
@@ -207,54 +149,11 @@ public class Affichage extends Application {
         Scene scene = new Scene(form, 700, 500);
         fenetreNomColonne.setScene(scene);
         fenetreNomColonne.setOnCloseRequest(windowEvent -> {
-            Affichage.affichageFormTache = false;
+            MainAffichage.affichageFormTache = false;
         });
 
 
         // Afficher la nouvelle fenêtre
         fenetreNomColonne.show();
-    }
-
-    public static Modele creationModel(){
-
-        Modele model = new Modele();
-        Tache racine = new Tache("racine", "13/12/2023", 8, "Ceci est la racine", 0);
-        try {
-            model.ajouterTache(racine);
-            Tache racine2 = new Tache("racine2", "13/12/2023", 7, "Ceci est la racine 2 ", 0);
-            racine2.setParent(racine);
-            model.ajouterTache(racine2);
-            Tache luc = new Tache("tacheLuc", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
-            luc.setParent(racine);
-            model.ajouterTache(luc);
-        }
-        catch(AjoutTacheException e){
-            e.getMessage();
-        }
-        return model;
-    }
-
-
-    /**
-     * Methode permettant de creer un field n'autorisant QUE les chiffres
-     * @return le field créé
-     */
-    public static TextField createNumericField(){
-        TextField numericField = new TextField();
-
-        // Utilisation d'un TextFormatter avec un filtre
-        UnaryOperator<TextFormatter.Change> filter = change -> {
-            String newText = change.getControlNewText();
-            if (Pattern.matches("[0-9]*", newText)) {
-                return change;
-            } else {
-                return null; // empêche le changement
-            }
-        };
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
-        numericField.setTextFormatter(textFormatter);
-
-        return numericField;
     }
 }
