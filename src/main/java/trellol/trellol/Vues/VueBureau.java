@@ -56,7 +56,7 @@ public class VueBureau extends Tab implements Observateur {
             int ligne = 2;
             // Appel récursif pour le VBox interne
             for (Tache t : this.model.getEnfant(tache)) {
-                if (t.getEtat()!=t.ETAT_ARCHIVE && !racine || (racine && (nbColonne <= this.model.getNumColonneAffiche()+5) && nbColonne >= this.model.getNumColonneAffiche())) {
+                if (!t.getEtat().equals(Tache.ETAT_ARCHIVE) && (!racine || (racine && (nbColonne <= this.model.getNumColonneAffiche()+5) && nbColonne >= this.model.getNumColonneAffiche()))) {
                     GridPane gpt = createRecursiveGridPane(t);
                     gpt.setOnMouseClicked(mouseEvent -> {
                         FenetreAjoutTache.afficherFormulaireTache(VueBureau.model, t.getNom(), true);
