@@ -105,13 +105,20 @@ public class Modele implements Sujet {
 	}
 
 	public void deplacerTache(Tache tache, Tache parent) {
-		Tache ancienParent = tache.getParent();
-		int index = ensTache.indexOf(tache);
-		Tache t = ensTache.get(index);
-		t.setParent(parent);
-		ensTache.set(index, t);
-		this.getHistorique().addAction(Historique.DEPLACEMENT_ACTION, tache.getNom());
-		this.notifierObservateurs();
+		if (!tache.equals(this.getRacine())) {
+			if (!tache.getNom().equals(parent.getNom())) {
+				if (parent.getParent() != null && parent.getParent().equals(tache)) {
+					Tache ancienParent = tache.getParent();
+					parent.setParent(ancienParent);
+				}
+				int index = ensTache.indexOf(tache);
+				Tache t = ensTache.get(index);
+				t.setParent(parent);
+				ensTache.set(index, t);
+				this.getHistorique().addAction(Historique.DEPLACEMENT_ACTION, tache.getNom());
+				this.notifierObservateurs();
+			}
+		}
 	}
 
 	public void afficherHistorique() {
