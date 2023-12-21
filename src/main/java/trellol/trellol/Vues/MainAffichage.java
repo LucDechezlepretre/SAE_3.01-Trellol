@@ -57,6 +57,7 @@ public class MainAffichage extends Application {
         m.enregistrerObservateur(vueListe);
         m.enregistrerObservateur(vueHistorique);
         m.enregistrerObservateur(vueBureau);
+        m.enregistrerObservateur(vueArchive);
         m.notifierObservateurs();
         tabPane.getTabs().addAll(vueListe, vueBureau, vueHistorique, vueArchive);
         tabPane.tabClosingPolicyProperty().setValue(TabPane.TabClosingPolicy.UNAVAILABLE);
