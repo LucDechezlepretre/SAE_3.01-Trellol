@@ -15,8 +15,6 @@ public class Tache implements Serializable{
     private String nom;
     public static final String ETAT_ARCHIVE = "Archive";
     public static final String ETAT_NON_ARCHIVE = "NonArchive";
-
-    public static final String PARENT_ARCHIVE="ParentArchive";
     public static final String ETAT_SUPPRIME = "Supprime";
     private Date dateDebut;
     private int duree;
