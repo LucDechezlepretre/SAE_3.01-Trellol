@@ -85,12 +85,21 @@ public class Modele implements Sujet {
 
 	public void archiverTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_ARCHIVE);
+		this.archiverEnfants(tache);
 		this.getHistorique().addAction(Historique.ARCHIVAGE_ACTION, tache.getNom());
 		this.notifierObservateurs();
 	}
 
+	private void archiverEnfants(Tache tache){
+		ArrayList<Tache> enfants= (ArrayList)this.getEnfant(tache);
+		for(Tache t : enfants){
+			t.setEtat(Tache.ETAT_PARENT_ARCHIVE);
+			this.archiverEnfants(t);
+		}
+	}
+
 	public void desarchiverTache(Tache tache) {
-		tache.setEtat(Tache.ETAT_NON_ARCHIVE);
+		tache.setEtat(Tache.ETAT_INITIAL);
 		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom());
 		this.notifierObservateurs();
 

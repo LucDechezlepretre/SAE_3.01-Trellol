@@ -14,8 +14,9 @@ public class Tache implements Serializable{
     public static SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
     private String nom;
     public static final String ETAT_ARCHIVE = "Archive";
-    public static final String ETAT_NON_ARCHIVE = "NonArchive";
+    public static final String ETAT_INITIAL = "Initial";
     public static final String ETAT_SUPPRIME = "Supprime";
+    public static final String ETAT_PARENT_ARCHIVE = "ParentArchive";
     private Date dateDebut;
     private int duree;
     private String etat;
@@ -34,7 +35,7 @@ public class Tache implements Serializable{
         this.duree = duree;
         this.description = description;
         this.importance = importance;
-        this.etat = Tache.ETAT_NON_ARCHIVE;
+        this.etat = Tache.ETAT_INITIAL;
     }
 
     public String getNom() {

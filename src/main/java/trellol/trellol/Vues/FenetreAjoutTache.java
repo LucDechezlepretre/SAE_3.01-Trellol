@@ -95,7 +95,7 @@ public class FenetreAjoutTache {
         ObservableList<String> optionsTache= FXCollections.observableArrayList();
         List<Tache> ensTaches=m.getEnsTache();
         for(Tache t : ensTaches){
-            if(t.getEtat()!=Tache.ETAT_ARCHIVE){
+            if(t.getEtat().equals(Tache.ETAT_INITIAL)){
                 optionsTache.add(t.getNom());
             }
         }
