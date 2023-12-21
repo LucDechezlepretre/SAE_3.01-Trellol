@@ -1,0 +1,92 @@
+<mxfile host="app.diagrams.net" modified="2023-12-21T14:12:38.955Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:120.0) Gecko/20100101 Firefox/120.0" etag="JjyONnk99oaEjWXpMF-G" version="22.1.11" type="device">
+  <diagram name="Page-1" id="_txGMDrKLNHXlA4i5DsF">
+    <mxGraphModel dx="839" dy="433" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="W4z42jeXibaAhiuxcx9J-1" value="gp : GridPane" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
+          <mxGeometry x="210" y="40" width="100" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-2" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="W4z42jeXibaAhiuxcx9J-1">
+          <mxGeometry x="45" y="50" width="10" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-6" value="DragDropped()" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;curved=0;rounded=0;" edge="1" parent="1" target="W4z42jeXibaAhiuxcx9J-1">
+          <mxGeometry width="60" relative="1" as="geometry">
+            <mxPoint x="130" y="120" as="sourcePoint" />
+            <mxPoint x="160" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-7" value="getContent(Format) " style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;curved=0;rounded=0;" edge="1" parent="1" source="W4z42jeXibaAhiuxcx9J-1" target="W4z42jeXibaAhiuxcx9J-8">
+          <mxGeometry width="60" relative="1" as="geometry">
+            <mxPoint x="310" y="150" as="sourcePoint" />
+            <mxPoint x="370" y="150" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="310" y="150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-8" value="db : DragBoard" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
+          <mxGeometry x="720" y="40" width="100" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-13" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="W4z42jeXibaAhiuxcx9J-8">
+          <mxGeometry x="45" y="90" width="10" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-10" value="tacheDeplacé : Tache" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1" source="W4z42jeXibaAhiuxcx9J-8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="549.5" y="180" as="sourcePoint" />
+            <mxPoint x="259.5" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-12" value="model : Model" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="1">
+          <mxGeometry x="550" y="40" width="100" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-21" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="W4z42jeXibaAhiuxcx9J-12">
+          <mxGeometry x="45" y="190" width="10" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-23" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="W4z42jeXibaAhiuxcx9J-12">
+          <mxGeometry x="45" y="250" width="10" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-26" value="" style="html=1;points=[[0,0,0,0,5],[0,1,0,0,-5],[1,0,0,0,5],[1,1,0,0,-5]];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;curved&quot;:0,&quot;rounded&quot;:0};" vertex="1" parent="W4z42jeXibaAhiuxcx9J-12">
+          <mxGeometry x="45" y="300" width="10" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-14" value="findByName(nomTache)" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;curved=0;rounded=0;" edge="1" parent="1" target="W4z42jeXibaAhiuxcx9J-12">
+          <mxGeometry width="60" relative="1" as="geometry">
+            <mxPoint x="260" y="239.5" as="sourcePoint" />
+            <mxPoint x="749.5" y="239.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-17" value="nouvTacheParent : Tache" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1" source="W4z42jeXibaAhiuxcx9J-12">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="749.5" y="270" as="sourcePoint" />
+            <mxPoint x="259.5" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-20" value="deplacerTache(tacheDeplacé, nouvTacheParent)" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;curved=0;rounded=0;" edge="1" parent="1" target="W4z42jeXibaAhiuxcx9J-12">
+          <mxGeometry width="60" relative="1" as="geometry">
+            <mxPoint x="260" y="300" as="sourcePoint" />
+            <mxPoint x="320" y="300" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-24" value="void" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1" source="W4z42jeXibaAhiuxcx9J-23">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="749.5" y="320" as="sourcePoint" />
+            <mxPoint x="259.5" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-25" value="notifierObservateurs()" style="html=1;verticalAlign=bottom;startArrow=oval;startFill=1;endArrow=block;startSize=8;curved=0;rounded=0;" edge="1" parent="1" target="W4z42jeXibaAhiuxcx9J-26">
+          <mxGeometry width="60" relative="1" as="geometry">
+            <mxPoint x="259.5" y="350" as="sourcePoint" />
+            <mxPoint x="420" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="W4z42jeXibaAhiuxcx9J-27" value="void" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;curved=0;rounded=0;" edge="1" parent="1" source="W4z42jeXibaAhiuxcx9J-12">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="550" y="360" as="sourcePoint" />
+            <mxPoint x="260" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
