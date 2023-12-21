@@ -34,6 +34,7 @@ public class Tache implements Serializable{
         this.duree = duree;
         this.description = description;
         this.importance = importance;
+        this.etat = Tache.ETAT_NON_ARCHIVE;
     }
 
     public String getNom() {
