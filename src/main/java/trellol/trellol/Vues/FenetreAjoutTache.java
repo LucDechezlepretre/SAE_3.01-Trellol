@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import trellol.trellol.Controleurs.ControleurAjouterTache;
 import trellol.trellol.Controleurs.ControleurModifierTache;
 import trellol.trellol.Controleurs.ControlleurArchivage;
+import trellol.trellol.Controleurs.ControlleurSuppression;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 
@@ -126,9 +127,11 @@ public class FenetreAjoutTache {
 
             //Creation de leurs controlleurs
             ControlleurArchivage cArchivage=new ControlleurArchivage(m, fenetreNomColonne, m.findTacheByName(nomParent));
+            ControlleurSuppression cSup=new ControlleurSuppression(m, fenetreNomColonne, m.findTacheByName(nomParent));
 
             //Association des controlleurs
             bArchiv.setOnAction(cArchivage);
+            bSup.setOnAction(cSup);
 
             ligneModif.getChildren().addAll(bSup, bArchiv);
         }
