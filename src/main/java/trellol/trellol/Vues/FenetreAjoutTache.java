@@ -95,7 +95,9 @@ public class FenetreAjoutTache {
         ObservableList<String> optionsTache= FXCollections.observableArrayList();
         List<Tache> ensTaches=m.getEnsTache();
         for(Tache t : ensTaches){
-            optionsTache.add(t.getNom());
+            if(t.getEtat()!=Tache.ETAT_ARCHIVE){
+                optionsTache.add(t.getNom());
+            }
         }
         optionsTache.add(null);
         Text tParent=new Text("Tache parent : ");
@@ -123,7 +125,7 @@ public class FenetreAjoutTache {
             Button bArchiv=new Button("Archiver");
 
             //Creation de leurs controlleurs
-            ControlleurArchivage cArchivage=new ControlleurArchivage(m, m.findTacheByName(nomParent));
+            ControlleurArchivage cArchivage=new ControlleurArchivage(m, fenetreNomColonne, m.findTacheByName(nomParent));
 
             //Association des controlleurs
             bArchiv.setOnAction(cArchivage);

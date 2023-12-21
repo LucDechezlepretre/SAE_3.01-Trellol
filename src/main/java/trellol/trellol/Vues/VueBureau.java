@@ -6,8 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.input.DataFormat;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import trellol.trellol.Modele.Modele;
@@ -37,6 +36,7 @@ public class VueBureau extends Tab implements Observateur {
 
         GridPane gp = new GridPane();
 
+        String nomTache = tache.getNom();
         this.model.getEnfant(this.model.getRacine());
         gp.add(new Label(tache.getNom()),1,1);
 
@@ -56,7 +56,7 @@ public class VueBureau extends Tab implements Observateur {
             int ligne = 2;
             // Appel récursif pour le VBox interne
             for (Tache t : this.model.getEnfant(tache)) {
-                if (!racine || (racine && (nbColonne <= this.model.getNumColonneAffiche()+5) && nbColonne >= this.model.getNumColonneAffiche())) {
+                if (!racine || (racine && (nbColonne <= this.model.getNumColonneAffiche()+5) && nbColonne >= this.model.getNumColonneAffiche()) && t.getEtat()!=t.ETAT_ARCHIVE) {
                     GridPane gpt = createRecursiveGridPane(t);
                     gpt.setOnMouseClicked(mouseEvent -> {
                         FenetreAjoutTache.afficherFormulaireTache(VueBureau.model, t.getNom(), true);
@@ -88,6 +88,42 @@ public class VueBureau extends Tab implements Observateur {
                 }
             });
         }
+        gp.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Dragboard db = gp.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.put(MainAffichage.customFormatListe,model.findTacheByName(nomTache));
+                db.setContent(content);
+                mouseEvent.consume();
+            }
+        });
+        gp.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                //if (dragEvent.getGestureSource() != gp &&dragEvent.getDragboard().hasString()) {
+                    dragEvent.acceptTransferModes(TransferMode.MOVE);
+                //}
+                dragEvent.consume();
+            }
+        });
+
+        gp.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                Dragboard db = dragEvent.getDragboard();
+                Tache t = (Tache) db.getContent(MainAffichage.customFormatListe);
+                boolean success = false;
+                if (t != null) {
+                    model.deplacerTache(t, model.findTacheByName(nomTache));
+                    model.notifierObservateurs();
+                    success = true;
+                }
+
+                dragEvent.setDropCompleted(success);
+                dragEvent.consume();
+            }
+        });
         return gp;
     }
 }

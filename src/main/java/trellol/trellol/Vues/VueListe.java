@@ -42,14 +42,16 @@ public class VueListe extends Tab implements Observateur {
             return;
         }
         for(Tache enfant : VueListe.model.getEnfant(tache)){
-            // Crée un nouvel élément de TreeItem pour la tâche
-            TreeItem<Tache> childItem = createTreeItem(enfant);
+            if(enfant.getEtat()!=Tache.ETAT_ARCHIVE) {
+                // Crée un nouvel élément de TreeItem pour la tâche
+                TreeItem<Tache> childItem = createTreeItem(enfant);
 
-            // Ajoute l'élément enfant à l'élément parent
-            parentItem.getChildren().add(childItem);
+                // Ajoute l'élément enfant à l'élément parent
+                parentItem.getChildren().add(childItem);
 
-            // Appelle récursivement la fonction pour ajouter des sous-tâches à cet élément enfant
-            ajouterTacheRecursivement(childItem, enfant);
+                // Appelle récursivement la fonction pour ajouter des sous-tâches à cet élément enfant
+                ajouterTacheRecursivement(childItem, enfant);
+            }
         }
     }
     public TreeView<Tache> affichageListe(){
@@ -101,7 +103,6 @@ public class VueListe extends Tab implements Observateur {
                     TreeItem<Tache> parentItem = treeView.getSelectionModel().getSelectedItem();
 
                     VueListe.model.deplacerTache(draggedItem, cell.getItem());
-                    VueListe.model.notifierObservateurs();
                     //System.out.println(model);
                 } else {
                     event.setDropCompleted(false);

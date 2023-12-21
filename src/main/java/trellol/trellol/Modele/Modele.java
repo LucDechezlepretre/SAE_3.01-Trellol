@@ -86,11 +86,14 @@ public class Modele implements Sujet {
 	public void archiverTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_ARCHIVE);
 		this.getHistorique().addAction(Historique.ARCHIVAGE_ACTION, tache.getNom());
+		this.notifierObservateurs();
 	}
 
 	public void desarchiverTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_NON_ARCHIVE);
 		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom());
+		this.notifierObservateurs();
+
 	}
 
 	public void suppressionTache(Tache tache) {
@@ -98,16 +101,24 @@ public class Modele implements Sujet {
 		tache.setParent(null);
 		tache.setAntecedant(null);
 		this.getHistorique().addAction(Historique.SUPRESSION_ACTION, tache.getNom());
+		this.notifierObservateurs();
 	}
 
 	public void deplacerTache(Tache tache, Tache parent) {
-		Tache ancienParent = tache.getParent();
-		int index = ensTache.indexOf(tache);
-		Tache t = ensTache.get(index);
-		t.setParent(parent);
-		ensTache.set(index, t);
-		this.notifierObservateurs();
-		this.getHistorique().addAction(Historique.DEPLACEMENT_ACTION, tache.getNom());
+		if (!tache.equals(this.getRacine())) {
+			if (!tache.getNom().equals(parent.getNom())) {
+				if (parent.getParent() != null && parent.getParent().equals(tache)) {
+					Tache ancienParent = tache.getParent();
+					parent.setParent(ancienParent);
+				}
+				int index = ensTache.indexOf(tache);
+				Tache t = ensTache.get(index);
+				t.setParent(parent);
+				ensTache.set(index, t);
+				this.getHistorique().addAction(Historique.DEPLACEMENT_ACTION, tache.getNom());
+				this.notifierObservateurs();
+			}
+		}
 	}
 
 	public void afficherHistorique() {
@@ -125,6 +136,7 @@ public class Modele implements Sujet {
 			throw new AjoutTacheException("Parent manquant");
 		}
 		this.getHistorique().addAction(Historique.CREATION_TACHE_ACTION, tache.getNom());
+		this.notifierObservateurs();
 	}
 
 	@Override

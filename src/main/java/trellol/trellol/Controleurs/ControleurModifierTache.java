@@ -95,7 +95,6 @@ public class ControleurModifierTache implements EventHandler<ActionEvent> {
 
                 this.tacheMod.setParent(parent);
             }
-            this.modele.notifierObservateurs();
             this.fenetre.close();
         }
         catch(AjoutTacheException e){
