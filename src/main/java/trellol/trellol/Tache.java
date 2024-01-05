@@ -7,23 +7,61 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Tache implements Serializable{
-    // Format de la date souhaité
+    /**
+     * Format de la date souhaité
+     */
     public final static String pattern = "dd/MM/yyyy";
 
-    // Création d'un objet SimpleDateFormat avec le format spécifié
+    /**
+     * Création d'un objet SimpleDateFormat avec le format spécifié
+     */
     public static SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+    /**
+     * Nom de la tache
+     */
     private String nom;
     public static final String ETAT_ARCHIVE = "Archive";
+    public static final String ETAT_NON_ARCHIVE = "Non-archive";
     public static final String ETAT_INITIAL = "Initial";
     public static final String ETAT_SUPPRIME = "Supprime";
     public static final String ETAT_PARENT_ARCHIVE = "ParentArchive";
+    /**
+     * Date où commence la tâche
+     */
     private Date dateDebut;
+    /**
+     * Durée de la tâche
+     */
     private int duree;
+    /**
+     * Etat de la tâche à un instant t
+     */
     private String etat;
+    /**
+     * Description de la tâche
+     */
     private String description;
+    /**
+     * Attribut représentant l'importance de la tâche basé sur la classe Importance
+     */
     private int importance;
+    /**
+     * Parent de la tâche actuel
+     */
     private Tache parent;
+    /**
+     * Antécédent de la tâche actuel
+     */
     private Tache antecedant;
+
+    /**
+     * Constructeur de la classe
+     * @param nom nom de la tâche
+     * @param date date prise en String puis convertie en objet Date
+     * @param duree durée de la tâche
+     * @param description description de la tâche
+     * @param importance importance de la tâche
+     */
     public Tache(String nom, String date, int duree, String description, int importance){
         this.nom = nom;
         try{
@@ -38,6 +76,10 @@ public class Tache implements Serializable{
         this.etat = Tache.ETAT_INITIAL;
     }
 
+    /**
+     * Getter de l'attribut nom
+     * @return String représentant le nom de la tâche
+     */
     public String getNom() {
         return nom;
     }
@@ -45,7 +87,10 @@ public class Tache implements Serializable{
     public void setNom(String nom) {
         this.nom = nom;
     }
-
+    /**
+     * Getter de l'attribut dateDebut
+     * @return l'objet Date de la tâche
+     */
     public Date getDateDebut() {
         return dateDebut;
     }
@@ -58,7 +103,10 @@ public class Tache implements Serializable{
             this.dateDebut = new Date();
         }
     }
-
+    /**
+     * Getter de l'attribut duree
+     * @return la durée de la tâche
+     */
     public int getDuree() {
         return duree;
     }
@@ -67,10 +115,17 @@ public class Tache implements Serializable{
         this.duree = duree;
     }
 
+    /**
+     * Getter de l'attibut
+     * @return int représentant l'état de la tâche
+     */
     public String getEtat() {
     	return this.etat;
     }
-
+    /**
+     * Getter de l'attibut Description
+     * @return String représentant la description de la tâche
+     */
     public String getDescription() {
         return description;
     }
