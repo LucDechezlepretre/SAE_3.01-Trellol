@@ -2,6 +2,10 @@ package trellol.trellol;
 
 import java.util.ArrayList;
 
+/**
+ * Classe Historique permettant la gestion d'un historique des modifications
+ * au sein d'un modèle
+ */
 public class Historique {
     /**
      * Attribut liste représentant la totalité des actions
