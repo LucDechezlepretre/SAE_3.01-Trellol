@@ -15,22 +15,41 @@ import java.util.List;
  */
 public class Modele implements Sujet {
 	/**
-	 * Liste des observateurs
+	 * Attribut observateurs ArrayList représentant la liste des observateurs
 	 */
 	private ArrayList<Observateur> observateurs;
+	/**
+	 * Attribut historique, Historique représentant l'historique
+	 */
 	private Historique historique;
+	/**
+	 * Attribut ensTache, List représentant l'ensemble des tâches du projet
+	 */
 	private List<Tache> ensTache;
 	private int numColonneAffiche;
 
+	/**
+	 * Constructeur du modele, initialise la liste d'observateurs et de tâches
+	 */
 	public Modele(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
 		historique = new Historique();
 	}
+
+	/**
+	 * Getter de l'attribut ensTache
+	 * @return la liste contenant toutes les tâches
+	 */
 	public List<Tache> getEnsTache() {
 		return this.ensTache;
 	}
 
+	/**
+	 * Méthode renvoyant tous les enfants d'une tâche
+	 * @param tache parent
+	 * @return liste de tache ayant le parent passé en paremètre
+	 */
 	public List<Tache> getEnfant(Tache tache){
 		List<Tache> enfants = new ArrayList<Tache>();
 		for(int i = 1; i < this.ensTache.size(); i++){
@@ -41,6 +60,11 @@ public class Modele implements Sujet {
 		}
 		return enfants;
 	}
+
+	/**
+	 * Méthode renvoyant la tache racine, c-à-d la seule tâche sans parent
+	 * @return la tache racine
+	 */
 	public Tache getRacine(){
 		Tache racine = null;
 		for(Tache t: this.ensTache){
@@ -82,7 +106,10 @@ public class Modele implements Sujet {
 		}
 	}
 
-
+	/**
+	 * Méthode permettant l'achivage dans le modèle de la tâche passé en paramètre
+	 * @param tache à archiver
+	 */
 	public void archiverTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_ARCHIVE);
 		this.archiverEnfants(tache);
@@ -90,6 +117,10 @@ public class Modele implements Sujet {
 		this.notifierObservateurs();
 	}
 
+	/**
+	 * Méthode permettant l'achivage des enfants d'une tâche
+	 * @param tache parent des enfants à archiver
+	 */
 	private void archiverEnfants(Tache tache){
 		ArrayList<Tache> enfants= (ArrayList)this.getEnfant(tache);
 		for(Tache t : enfants){
@@ -98,6 +129,10 @@ public class Modele implements Sujet {
 		}
 	}
 
+	/**
+	 * Méthode permettant le desarchivage d'une tâche
+	 * @param tache tâche à desarchiver
+	 */
 	public void desarchiverTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_INITIAL);
 		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom());
@@ -105,6 +140,10 @@ public class Modele implements Sujet {
 
 	}
 
+	/**
+	 * Méthode permettant la suppression d'une tâche du modèle
+	 * @param tache tâche à supprimer
+	 */
 	public void suppressionTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_SUPPRIME);
 		tache.setParent(null);
@@ -114,6 +153,11 @@ public class Modele implements Sujet {
 		this.notifierObservateurs();
 	}
 
+	/**
+	 * Méthode permettant le déplacement d'une tache, c-à-d le changement de parent
+	 * @param tache tâche à déplacer
+	 * @param parent nouveau parent de la tâche
+	 */
 	public void deplacerTache(Tache tache, Tache parent) {
 		if (!tache.equals(this.getRacine())) {
 			if (!tache.getNom().equals(parent.getNom())) {
@@ -131,10 +175,19 @@ public class Modele implements Sujet {
 		}
 	}
 
+	/**
+	 * Méthode permettant l'affichage de l'historique
+	 */
 	public void afficherHistorique() {
 		System.out.println(historique);
 	}
 
+	/**
+	 * Méthode permettant l'ajout d'une tache dans le modèle
+	 * @param tache tâche à ajouter
+	 * @throws AjoutTacheException si la tache n'a pas de parent dans un modèle avec une racine déjà présente ou si
+	 * le nom de la tâche existe déjà
+	 */
 	public void ajouterTache(Tache tache) throws AjoutTacheException {
 		if ((ensTache.size() == 0 && tache.getParent() == null) || tache.getParent() != null) {
 			if (this.verifierUniciteNom(tache.getNom())) {
@@ -149,6 +202,10 @@ public class Modele implements Sujet {
 		this.notifierObservateurs();
 	}
 
+	/**
+	 * Méthode toString du modèle
+	 * @return String représentant le modèle
+	 */
 	@Override
 	public String toString() {
 		return afficherTache(this.getRacine(), 0);
@@ -177,6 +234,11 @@ public class Modele implements Sujet {
 		}
 	}
 
+	/**
+	 * Méthode de calcul de durée d'une tâche en prenant compte de ses sous-tâches (enfants)
+	 * @param tache tâche pour laquelle la durée va être calculée
+	 * @return int représentant la durée de la tâche
+	 */
 	public int calculerDureeTache(Tache tache){
 		int duree = tache.getDuree();
 		for(Tache t : this.getEnfant(tache)){
@@ -185,6 +247,11 @@ public class Modele implements Sujet {
 		return duree;
 	}
 
+	/**
+	 * Méthode vérifiant l'unicité d'un nom
+	 * @param nom nom à vérifier
+	 * @return true si aucune tâche n'a le même nom, false sinon
+	 */
 	public boolean verifierUniciteNom(String nom) {
 		for (Tache enfant : this.ensTache) {
 			if (enfant.getNom().equals(nom)) {
@@ -194,6 +261,10 @@ public class Modele implements Sujet {
 		return true;
 	}
 
+	/**
+	 * Getter de l'attribut numColonneAffiche
+	 * @return int numColonneAffiche
+	 */
 	public int getNumColonneAffiche() {
 		return numColonneAffiche;
 	}
@@ -213,6 +284,10 @@ public class Modele implements Sujet {
 		return null; //Aucune tache à ce nom n'a été trouvée
 	}
 
+	/**
+	 * Getter de l'attribut historique
+	 * @return l'objet historique
+	 */
 	public Historique getHistorique() {
 		return this.historique;
 	}
