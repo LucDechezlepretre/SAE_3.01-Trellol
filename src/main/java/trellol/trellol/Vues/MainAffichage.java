@@ -16,9 +16,28 @@ import trellol.trellol.Tache;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+/**
+ * Classe MainAffichage qui se charge de lancer l'application et d'une partie de la création IHM
+ */
 public class MainAffichage extends Application {
+    /**
+     * Attribut costumFormatListe utilisé pour le transfert des données lors du
+     * Drag and Drop (donc ici des objet Tache)
+     */
     public static final DataFormat customFormatListe = new DataFormat("application/x-java-serialized-object");
+    /**
+     * Attribut affichageFormTache qui aide à garantir l'ouverture d'une
+     * seule fenetre lors d'un clique de l'utilisateur pour modifier une
+     * tache, sans cela par récursivité les taches parentes de la
+     * tache s'ouvrent aussi pour la modification
+     */
     public static boolean affichageFormTache = false;
+
+    /**
+     * Redéfinition de la méthode start pour la construction de la scene
+     * principale
+     * @param stage objet Stage sur lequel construire la scene
+     */
     @Override
     public void start(Stage stage){
         //CREATION DU MODELE
@@ -54,12 +73,16 @@ public class MainAffichage extends Application {
         VueBureau vueBureau = new VueBureau("Bureau", m);
         VueHistorique vueHistorique = new VueHistorique("Historique", m);
         VueArchive vueArchive = new VueArchive("Archive", m);
+
+        //Enregistrement des observateurs auprès du modèle
         m.enregistrerObservateur(vueListe);
         m.enregistrerObservateur(vueHistorique);
         m.enregistrerObservateur(vueBureau);
         m.enregistrerObservateur(vueArchive);
         m.notifierObservateurs();
+
         tabPane.getTabs().addAll(vueListe, vueBureau, vueArchive, vueHistorique);
+        //On empêche la fermeture des onglets
         tabPane.tabClosingPolicyProperty().setValue(TabPane.TabClosingPolicy.UNAVAILABLE);
         racine.setCenter(tabPane);
 
@@ -74,7 +97,11 @@ public class MainAffichage extends Application {
         launch();
     }
 
-
+    /**
+     * Méthode créant un modèle pré-construit pour gagner du temps lors
+     * des phase de test du DnD
+     * @return un objet Modele contenant plusieurs tâches
+     */
     public static Modele creationModel(){
 
         Modele model = new Modele();
