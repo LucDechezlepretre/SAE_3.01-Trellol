@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe correspondant au modele de l'architecture MVC 
- * de l'exemple compteur_MVC
- *
+ * Classe correspondant au modele de l'architecture MVC
  */
 public class Modele implements Sujet {
 	/**
