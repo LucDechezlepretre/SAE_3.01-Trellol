@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * La classe Tache représent dans l'appication, une tâche et toutes ses informations
+ */
 public class Tache implements Serializable{
     /**
      * Format de la date souhaité
@@ -20,10 +23,25 @@ public class Tache implements Serializable{
      * Nom de la tache
      */
     private String nom;
+    /**
+     * Attribut statique représentant l'état archivée pour une tâche
+     */
     public static final String ETAT_ARCHIVE = "Archive";
+    /**
+     * Attribut statique représentant l'état non-archivée pour une tâche
+     */
     public static final String ETAT_NON_ARCHIVE = "Non-archive";
+    /**
+     * Attribut statique représentant l'état initial pour une tâche
+     */
     public static final String ETAT_INITIAL = "Initial";
+    /**
+     * Attribut statique représentant l'état suprimé pour une tâche
+     */
     public static final String ETAT_SUPPRIME = "Supprime";
+    /**
+     * Attribut statique représentant l'état de la tache parent de toutes les tâches archivées
+     */
     public static final String ETAT_PARENT_ARCHIVE = "ParentArchive";
     /**
      * Date où commence la tâche
@@ -84,6 +102,10 @@ public class Tache implements Serializable{
         return nom;
     }
 
+    /**
+     * Setter pour l'attribut nom
+     * @param nom nouveau nom
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -95,6 +117,10 @@ public class Tache implements Serializable{
         return dateDebut;
     }
 
+    /**
+     * Setter pour l'attribut dateDebut
+     * @param dateDebut nouvelle date en String
+     */
     public void setDateDebut(String dateDebut) {
         try{
             this.dateDebut = Tache.dateFormat.parse(dateDebut);
@@ -111,12 +137,16 @@ public class Tache implements Serializable{
         return duree;
     }
 
+    /**
+     * Setter de l'attribut duree
+     * @param duree nouvelle duree
+     */
     public void setDuree(int duree) {
         this.duree = duree;
     }
 
     /**
-     * Getter de l'attibut
+     * Getter de l'attibut etat
      * @return int représentant l'état de la tâche
      */
     public String getEtat() {
@@ -130,38 +160,75 @@ public class Tache implements Serializable{
         return description;
     }
 
+    /**
+     * Setter de l'attribut description
+     * @param description nouvelle description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Getter de l'attribut importance
+     * @return int représentant l'importance
+     */
     public int getImportance() {
         return importance;
     }
 
+    /**
+     * Setter de l'attribut importance
+     * @param importance nouvelle valeur pour importance
+     */
     public void setImportance(int importance) {
         this.importance = importance;
     }
 
+    /**
+     * Getter de l'attribut parent
+     * @return un objet Tache représentant le parent
+     */
     public Tache getParent() {
         return parent;
     }
 
+    /**
+     * Setter de l'attribut parent
+     * @param parent nouvelle Tache parent
+     */
     public void setParent(Tache parent) {
         this.parent = parent;
     }
 
+    /**
+     * Getter de l'attribut antecedent
+     * @return l'antécécent actuel de la tâche
+     */
     public Tache getAntecedant() {
         return antecedant;
     }
 
+    /**
+     * Setter de l'attribut antecedent
+     * @param antecedant le nouvel antécédent
+     */
     public void setAntecedant(Tache antecedant) {
         this.antecedant = antecedant;
     }
 
-    public void setEtat(String archive) {
-        this.etat = archive;
+    /**
+     * Setter pour l'attribut etat
+     * @param etat nouvel etat
+     */
+    public void setEtat(String etat) {
+        this.etat = etat;
     }
 
+    /**
+     * Méthode equals
+     * @param o l'objet à comparer avec this
+     * @return true si o et this sont égaux false sinon
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -170,11 +237,19 @@ public class Tache implements Serializable{
         return duree == tache.duree && importance == tache.importance && Objects.equals(nom, tache.nom) && Objects.equals(etat, tache.etat) && Objects.equals(dateDebut, tache.dateDebut) && Objects.equals(description, tache.description) && Objects.equals(parent, tache.parent) && Objects.equals(antecedant, tache.antecedant);
     }
 
+    /**
+     * Méthode retournant le hashCode de la Tache this
+     * @return hash code de this
+     */
     @Override
     public int hashCode() {
         return Objects.hash(nom, etat, dateDebut, duree, description, importance, parent, antecedant);
     }
 
+    /**
+     * toString de this
+     * @return String représentant this
+     */
     @Override
     public String toString() {
         return "Tache{" + nom + ' '  + duree + '}';
