@@ -19,7 +19,10 @@ import trellol.trellol.Tache;
 
 import java.util.List;
 
-public class FenetreAjoutTache {
+/**
+ * Classe FenetreAjoutTache permettant la création d'une fenetre pour l'ajout ou la modification d'une tache
+ */
+public class FenetreTache {
 
 
     /**

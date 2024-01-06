@@ -59,7 +59,7 @@ public class VueBureau extends Tab implements Observateur {
                 if (t.getEtat().equals(Tache.ETAT_INITIAL) && (!racine || (racine && (nbColonne <= this.model.getNumColonneAffiche()+5) && nbColonne >= this.model.getNumColonneAffiche()))) {
                     GridPane gpt = createRecursiveGridPane(t);
                     gpt.setOnMouseClicked(mouseEvent -> {
-                        FenetreAjoutTache.afficherFormulaireTache(VueBureau.model, t.getNom(), true);
+                        FenetreTache.afficherFormulaireTache(VueBureau.model, t.getNom(), true);
                     });
                     gp.add(gpt, colonne, ligne);
                     if (racine) {
@@ -84,7 +84,7 @@ public class VueBureau extends Tab implements Observateur {
             gp.add(bAjoutTache,1,gp.getRowCount());
             bAjoutTache.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
-                    FenetreAjoutTache.afficherFormulaireTache(VueBureau.model,tache.getNom(), false);
+                    FenetreTache.afficherFormulaireTache(VueBureau.model,tache.getNom(), false);
                 }
             });
         }

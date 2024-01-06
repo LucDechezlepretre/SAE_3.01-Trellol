@@ -62,7 +62,7 @@ public class MainAffichage extends Application {
         conteneurBouton.getChildren().add(ajouterTache);
         ajouterTache.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                FenetreAjoutTache.afficherFormulaireTache(m, null, false);
+                FenetreTache.afficherFormulaireTache(m, null, false);
             }
         });
         racine.setLeft(conteneurBouton);
