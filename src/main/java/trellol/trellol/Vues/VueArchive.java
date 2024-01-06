@@ -15,7 +15,15 @@ import trellol.trellol.Tache;
 
 import java.util.ArrayList;
 
+/**
+ * Classe VueArchive permettant la représentation des tâches archivées d'un modèle
+ * héritant de la classe Tab pour permettre un affichage sous la forme d'un onglet
+ */
 public class VueArchive extends Tab implements Observateur{
+    /**
+     * Attribut model, représentant le modèle sur lequel se basera la vue pour se
+     * construire
+     */
     private static Modele model;
 
     public VueArchive(String nom, Sujet s) {
