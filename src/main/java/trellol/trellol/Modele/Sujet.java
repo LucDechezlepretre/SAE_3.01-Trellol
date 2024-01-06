@@ -17,7 +17,7 @@ public interface Sujet {
         public void supprimerObservateur(Observateur o);
         /**
          * Informe tous les observateurs du modèle des
-         * modifications 
+         * modifications
          */
         public void notifierObservateurs();
 }
