@@ -147,7 +147,7 @@ public class ControleurAjouterTache implements EventHandler<ActionEvent> {
     }
 
     /**
-     * Méthode qui vérifie la validité des données transmisent par les formulaires
+     * Méthode qui vérifie la non-nullité des données transmisent par les formulaires
      * @param nom le nom de la tâche
      * @param date la date de début de la tâche
      * @param duree la durée de la tache
