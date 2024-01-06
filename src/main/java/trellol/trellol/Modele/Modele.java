@@ -110,6 +110,7 @@ public class Modele implements Sujet {
 		tache.setParent(null);
 		tache.setAntecedant(null);
 		this.getHistorique().addAction(Historique.SUPRESSION_ACTION, tache.getNom());
+		this.ensTache.remove(tache);
 		this.notifierObservateurs();
 	}
 
