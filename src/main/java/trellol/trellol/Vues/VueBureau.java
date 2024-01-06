@@ -13,17 +13,34 @@ import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
 
+/**
+ * Classe VueBureau permettant la représentation des tâches sous forme d'un
+ * affichage "Bureau" d'un modèle, héritant de la classe Tab pour permettre
+ * un affichage sous la forme d'un onglet
+ * et implémentant Observateur pour pouvoir être enregistrer auprès d'un Sujet
+ */
 public class VueBureau extends Tab implements Observateur {
+    /**
+     * Attribut model, représentant le modèle sur lequel se basera la vue pour se
+     * construire
+     */
     private static Modele model;
 
-
+    /**
+     * Constructeur de la vue
+     * @param nom nom de l'onglet
+     * @param s modèle sur lequel se basera la vue
+     */
     public VueBureau(String nom, Sujet s) {
         super(nom);
         VueBureau.model = (Modele) s;
         StackPane conteneur = new StackPane(this.createRecursiveGridPane(model.getRacine()));
         this.setContent(conteneur);
     }
-
+    /**
+     * Redéfinition de la méthode reçu de l'interface Observateur
+     * @param s sujet qui servira à la modélisation des données
+     */
     @Override
     public void actualiser(Sujet s) {
         VueBureau.model =(Modele) s;
@@ -32,6 +49,13 @@ public class VueBureau extends Tab implements Observateur {
         content.getChildren().add(this.createRecursiveGridPane(VueBureau.model.getRacine()));
     }
 
+    /**
+     * Méthode qui construit récursivement un GridPane représentant les tâches du
+     * sujet, chaque tâche est représenté par un GridPane
+     * @param tache la tâche pour laquelle on construit un GridPane (et donc récursivement
+     *              pour ses enfants aussi)
+     * @return GridPane représentation de toutes les tâches
+     */
     private GridPane createRecursiveGridPane(Tache tache) {
 
         GridPane gp = new GridPane();
@@ -88,38 +112,44 @@ public class VueBureau extends Tab implements Observateur {
                 }
             });
         }
+        //Gestion du DnD
+        //Détection du Drag
         gp.setOnDragDetected(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
+                //On met les données dans un objet ClipboardContent
                 Dragboard db = gp.startDragAndDrop(TransferMode.MOVE);
                 ClipboardContent content = new ClipboardContent();
                 content.put(MainAffichage.customFormatListe,model.findTacheByName(nomTache));
+                //Puis on donne les données au Dragboard pour le transfert
                 db.setContent(content);
                 mouseEvent.consume();
             }
         });
+        //Pendant le déplacement des données
         gp.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
-                //if (dragEvent.getGestureSource() != gp &&dragEvent.getDragboard().hasString()) {
-                    dragEvent.acceptTransferModes(TransferMode.MOVE);
-                //}
+                //On accepte le déplacement
+                dragEvent.acceptTransferModes(TransferMode.MOVE);
                 dragEvent.consume();
             }
         });
-
+        //Gestion du Drop
         gp.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
+                //On récupère le contenu du DragBoard
                 Dragboard db = dragEvent.getDragboard();
                 Tache t = (Tache) db.getContent(MainAffichage.customFormatListe);
                 boolean success = false;
                 if (t != null) {
+                    //On met à jour le modèle
                     model.deplacerTache(t, model.findTacheByName(nomTache));
                     model.notifierObservateurs();
                     success = true;
                 }
-
+                //Fin du Drag and Drop
                 dragEvent.setDropCompleted(success);
                 dragEvent.consume();
             }
