@@ -18,6 +18,7 @@ import java.util.ArrayList;
 /**
  * Classe VueArchive permettant la représentation des tâches archivées d'un modèle
  * héritant de la classe Tab pour permettre un affichage sous la forme d'un onglet
+ * et implémentant Observateur pour pouvoir être enregistrer auprès d'un Sujet
  */
 public class VueArchive extends Tab implements Observateur{
     /**
@@ -26,12 +27,22 @@ public class VueArchive extends Tab implements Observateur{
      */
     private static Modele model;
 
+    /**
+     * Constructeur de la vue
+     * @param nom nom de l'onglet
+     * @param s modèle sur lequel se basera la vue
+     */
     public VueArchive(String nom, Sujet s) {
         super(nom);
         VueArchive.model = (Modele) s;
         StackPane conteneur = new StackPane(this.affichageArchive());
         this.setContent(conteneur);
     }
+
+    /**
+     * Redéfinition de la méthode reçu de l'interface Observateur
+     * @param s sujet qui servira à la modélisation des données
+     */
     @Override
     public void actualiser(Sujet s) {
         VueArchive.model =(Modele) s;
@@ -40,6 +51,10 @@ public class VueArchive extends Tab implements Observateur{
         content.getChildren().add(this.affichageArchive());
     }
 
+    /**
+     * Méthode contruisant une VBox qui affiche les tâches archivées
+     * @return la VBox représentant les tâches archivées
+     */
     private VBox affichageArchive() {
         VBox vb = new VBox(10);
         vb.setPadding(new Insets(20,0,0,10));
