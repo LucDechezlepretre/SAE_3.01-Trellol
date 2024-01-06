@@ -7,8 +7,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import trellol.trellol.Controleurs.ControlleurDesarchivage;
-import trellol.trellol.Controleurs.ControlleurSuppression;
+import trellol.trellol.Controleurs.ControleurDesarchivage;
+import trellol.trellol.Controleurs.ControleurSuppression;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
@@ -46,8 +46,8 @@ public class VueArchive extends Tab implements Observateur{
                 Button bDesarchiv=new Button("Désarchiver");
                 Button bSup=new Button("Supprimer");
                 //Controlleurs
-                ControlleurSuppression cSup=new ControlleurSuppression(model, t);
-                ControlleurDesarchivage cDesarchiv=new ControlleurDesarchivage(model, t);
+                ControleurSuppression cSup=new ControleurSuppression(model, t);
+                ControleurDesarchivage cDesarchiv=new ControleurDesarchivage(model, t);
 
                 //Association des controlleurs
                 bSup.setOnAction(cSup);
@@ -82,7 +82,7 @@ public class VueArchive extends Tab implements Observateur{
             Label nomSousTache=new Label("- "+t.getNom());
 
             Button bSup=new Button("Supprimer");
-            ControlleurSuppression cSup=new ControlleurSuppression(model, t);
+            ControleurSuppression cSup=new ControleurSuppression(model, t);
             bSup.setOnAction(cSup);
 
             ligneSousTache.getChildren().addAll(nomSousTache, bSup);

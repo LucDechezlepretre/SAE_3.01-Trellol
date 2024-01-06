@@ -12,8 +12,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import trellol.trellol.Controleurs.ControleurAjouterTache;
 import trellol.trellol.Controleurs.ControleurModifierTache;
-import trellol.trellol.Controleurs.ControlleurArchivage;
-import trellol.trellol.Controleurs.ControlleurSuppression;
+import trellol.trellol.Controleurs.ControleurArchivage;
+import trellol.trellol.Controleurs.ControleurSuppression;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 
@@ -126,8 +126,8 @@ public class FenetreAjoutTache {
             Button bArchiv=new Button("Archiver");
 
             //Creation de leurs controlleurs
-            ControlleurArchivage cArchivage=new ControlleurArchivage(m, fenetreNomColonne, m.findTacheByName(nomParent));
-            ControlleurSuppression cSup=new ControlleurSuppression(m, fenetreNomColonne, m.findTacheByName(nomParent));
+            ControleurArchivage cArchivage=new ControleurArchivage(m, fenetreNomColonne, m.findTacheByName(nomParent));
+            ControleurSuppression cSup=new ControleurSuppression(m, fenetreNomColonne, m.findTacheByName(nomParent));
 
             //Association des controlleurs
             bArchiv.setOnAction(cArchivage);
