@@ -8,9 +8,7 @@ import trellol.trellol.Modele.Modele;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ModelTest {
-    /**
-     * vérification de l'archivage d'une tache
-     */
+
     Modele m;
     @BeforeEach
     void setUp() {
