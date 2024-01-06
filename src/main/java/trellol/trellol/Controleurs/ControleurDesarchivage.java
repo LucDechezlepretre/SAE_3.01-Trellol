@@ -2,16 +2,14 @@ package trellol.trellol.Controleurs;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
-import trellol.trellol.Vues.MainAffichage;
 
-public class ControlleurDesarchivage implements EventHandler {
+public class ControleurDesarchivage implements EventHandler {
     private Modele m;
     private Tache tache;
 
-    public ControlleurDesarchivage(Modele m, Tache t){
+    public ControleurDesarchivage(Modele m, Tache t){
         this.m=m;
         this.tache=t;
     }

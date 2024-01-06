@@ -7,19 +7,19 @@ import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 import trellol.trellol.Vues.MainAffichage;
 
-public class ControlleurSuppression implements EventHandler {
+public class ControleurSuppression implements EventHandler {
     private Modele m;
 
     private Stage fenetre;
     private Tache tache;
 
-    public ControlleurSuppression(Modele m, Stage fenetre, Tache t){
+    public ControleurSuppression(Modele m, Stage fenetre, Tache t){
         this.m=m;
         this.fenetre=fenetre;
         this.tache=t;
     }
 
-    public ControlleurSuppression(Modele m, Tache t){
+    public ControleurSuppression(Modele m, Tache t){
         this.m=m;
         this.fenetre=null;
         this.tache=t;

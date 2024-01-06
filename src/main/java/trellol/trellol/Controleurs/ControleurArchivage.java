@@ -10,7 +10,7 @@ import trellol.trellol.Vues.MainAffichage;
 /**
  * Classe controleur pour l'archivage d'une tache
  */
-public class ControlleurArchivage implements EventHandler {
+public class ControleurArchivage implements EventHandler {
     /**
      * Attribut m de type Modele
      */
@@ -30,7 +30,7 @@ public class ControlleurArchivage implements EventHandler {
      * @param fenetre Stage de modification de la tache
      * @param t Tache à archiver
      */
-    public ControlleurArchivage(Modele m, Stage fenetre, Tache t){
+    public ControleurArchivage(Modele m, Stage fenetre, Tache t){
         this.m=m;
         this.fenetre=fenetre;
         this.tache=t;
