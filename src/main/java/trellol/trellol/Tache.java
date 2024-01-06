@@ -7,7 +7,8 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * La classe Tache représent dans l'appication, une tâche et toutes ses informations
+ * La classe Tache représent dans l'appication, une tâche et toutes ses informations.
+ * Tache implémente l'interface Serializable pour le transfert de données lors du DnD
  */
 public class Tache implements Serializable{
     /**
