@@ -24,16 +24,20 @@ public class ControleurSuppression implements EventHandler {
 
     /**
      * Constructeur pour le controleur
-     * @param m le modele
+     * @param m le modele à mettre à jour
      * @param fenetre la fenetre si le controleur est dans la fenetre de modification d'une tache
-     * @param t
+     * @param t tache à supprimer
      */
     public ControleurSuppression(Modele m, Stage fenetre, Tache t){
         this.m=m;
         this.fenetre=fenetre;
         this.tache=t;
     }
-
+    /**
+     * Constructeur pour le controleur
+     * @param m le modele à mettre à jour
+     * @param t tache à supprimer
+     */
     public ControleurSuppression(Modele m, Tache t){
         this.m=m;
         this.fenetre=null;
