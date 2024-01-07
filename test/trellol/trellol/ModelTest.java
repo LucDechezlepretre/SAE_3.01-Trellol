@@ -172,4 +172,17 @@ class ModelTest {
         m.deplacerTache(tache2, tache);
         assertEquals(6, m.calculerDureeTache(tache), "la taille de la tache est 6");
     }
+
+    @Test
+    public void testGetSuccesseurs() throws AjoutTacheException{
+        Tache racine = new Tache("racine", "13/12/2023", 2, "Bonjour", 1);
+        //ajout racine
+        m.ajouterTache(racine);
+
+        Tache tache = new Tache("tache1", "13/12/2023", 3, "Bonjour", 1);
+        tache.setParent(racine);
+        tache.setAntecedant(racine);
+        m.ajouterTache(tache);
+        assertEquals(tache, m.getSuccesseurs(racine).get(0), "La racine devrait avoir pour successeur tache");
+    }
 }
