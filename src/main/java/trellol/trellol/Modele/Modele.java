@@ -60,6 +60,23 @@ public class Modele implements Sujet {
 	}
 
 	/**
+	 * Méthode permettant de récupérer tous les successeurs d'une tâche
+	 * @param tache tâche dont l'on veut les successeurs
+	 * @return la liste des successeurs
+	 */
+	public List<Tache> getSuccesseurs(Tache tache){
+		List<Tache> successeurs = new ArrayList<Tache>();
+		for(Tache t : this.ensTache){
+			if(t.getAntecedant() != null) {
+				if (t.getAntecedant().equals(tache)) {
+					successeurs.add(t);
+				}
+			}
+		}
+		return successeurs;
+	}
+
+	/**
 	 * Méthode renvoyant la tache racine, c-à-d la seule tâche sans parent
 	 * @return la tache racine
 	 */
@@ -143,9 +160,6 @@ public class Modele implements Sujet {
 	 * @param tache tâche à supprimer
 	 */
 	public void suppressionTache(Tache tache) {
-		tache.setEtat(Tache.ETAT_SUPPRIME);
-		tache.setParent(null);
-		tache.setAntecedant(null);
 		this.getHistorique().addAction(Historique.SUPRESSION_ACTION, tache.getNom());
 		this.ensTache.remove(tache);
 		this.notifierObservateurs();
