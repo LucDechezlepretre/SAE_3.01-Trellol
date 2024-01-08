@@ -19,27 +19,27 @@ public class Historique {
     /**
      * Attribut String représentant l'action de déplacement d'une tâche
      */
-    public static String DEPLACEMENT_ACTION = "La tâche {objet} a été déplacé";
+    public static String DEPLACEMENT_ACTION = "La tâche {objet} a été déplacée";
     /**
      * Attribut String représentant l'action de suppression d'une tâche
      */
-    public static String SUPRESSION_ACTION = "La tâche {objet} a été supprimé";
+    public static String SUPRESSION_ACTION = "La tâche {objet} a été supprimée";
     /**
      * Attribut String représentant l'action d'archivage d'une tâche
      */
-    public static String ARCHIVAGE_ACTION = "La tâche {objet} a été archivé";
+    public static String ARCHIVAGE_ACTION = "La tâche {objet} a été archivée";
     /**
      * Attribut String représentant l'action de déarchivage d'une tâche
      */
-    public static String DESARCHIVAGE_ACTION = "La tâche {objet} a été désarchivé";
+    public static String DESARCHIVAGE_ACTION = "La tâche {objet} a été désarchivée";
     /**
      * Attribut String représentant l'action de la création d'une tâche
      */
-    public static String CREATION_TACHE_ACTION = "La tâche {objet} a été créé";
+    public static String CREATION_TACHE_ACTION = "La tâche {objet} a été créée";
     /**
      * Attribut String représentant l'action d'exportation des tâches dans un fichier
      */
-    public static String EXPORTER_TABLEAU = "Le tableau {objet} a été exporté";
+    public static String EXPORTER_TABLEAU = "Le tableau {objet} a été exportée";
 
     /**
      * Constructeur de l'historique
