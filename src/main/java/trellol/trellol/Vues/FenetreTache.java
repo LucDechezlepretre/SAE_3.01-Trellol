@@ -131,7 +131,9 @@ public class FenetreTache {
             fieldParent.getSelectionModel().select(m.findTacheByName(nomParent).getParent().getNom());
         }
         else{ //par defaut
-            fieldParent.setValue(m.getRacine().getNom());
+            if(m.getEnsTache().size() > 0) {
+                fieldParent.setValue(m.getRacine().getNom());
+            }
         }
 
         ligneParent.getChildren().addAll(tParent, fieldParent);
@@ -141,6 +143,15 @@ public class FenetreTache {
         Text tAnter=new Text("Tache anterieure : ");
 
         ComboBox<String> fieldAnter=new ComboBox<>(optionsTache);
+
+        if(modif){
+            if(m.findTacheByName(nomParent).getAntecedant()==null){
+                fieldAnter.setValue(null);
+            }
+            else{
+                fieldAnter.setValue(m.findTacheByName(nomParent).getAntecedant().getNom());
+            }
+        }
 
         ligneAnter.getChildren().addAll(tAnter, fieldAnter);
 

@@ -178,7 +178,17 @@ public class Modele implements Sujet {
 		}
 		this.notifierObservateurs();
 	}
-
+	public boolean parentNotAntecedent(Tache tache, Tache parent){
+		if(parent.getAntecedant() != null){
+			if(parent.getAntecedant().equals(tache)){
+				return true;
+			}
+			else if(parent.getParent() != null){
+				return parentNotAntecedent(tache, parent.getParent());
+			}
+		}
+		return false;
+	}
 	/**
 	 * Méthode permettant le déplacement d'une tache, c-à-d le changement de parent
 	 * @param tache tâche à déplacer
@@ -187,19 +197,20 @@ public class Modele implements Sujet {
 	public void deplacerTache(Tache tache, Tache parent) {
 		Tache rechercheSiLienParent = tache.getParent();
 		if (!tache.equals(this.getRacine())) {
-			if (!tache.getNom().equals(parent.getNom())) {
-				if (parent.getParent() != null && parent.getParent().equals(tache)) {
-					Tache ancienParent = tache.getParent();
-					parent.setParent(ancienParent);
+			if(!parentNotAntecedent(tache, parent)) {
+				if (!tache.getNom().equals(parent.getNom())) {
+					if (parent.getParent() != null && parent.getParent().equals(tache)) {
+						Tache ancienParent = tache.getParent();
+						parent.setParent(ancienParent);
+					}
+					int index = ensTache.indexOf(tache);
+					Tache t = ensTache.get(index);
+					t.setParent(parent);
+					ensTache.set(index, t);
+					this.getHistorique().addAction(Historique.DEPLACEMENT_ACTION, tache.getNom());
+					this.notifierObservateurs();
 				}
-				int index = ensTache.indexOf(tache);
-				Tache t = ensTache.get(index);
-				t.setParent(parent);
-				ensTache.set(index, t);
-				this.getHistorique().addAction(Historique.DEPLACEMENT_ACTION, tache.getNom());
-				this.notifierObservateurs();
 			}
-
 			this.generationDate(tache);
 		}
 	}

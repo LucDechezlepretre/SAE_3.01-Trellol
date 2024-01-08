@@ -40,8 +40,7 @@ public class VueGantt extends Tab implements Observateur {
     public VueGantt(String nom, Sujet s) {
         super(nom);
         VueGantt.model = (Modele)s;
-        this.debutProjet = this.model.getRacine().getDateDebut();
-        StackPane conteneur = new StackPane(this.affichageGantt());
+        StackPane conteneur = new StackPane();
         this.setContent(conteneur);
         //coordonneesParents = new HashMap<Tache, List<Integer>>();
     }
@@ -50,6 +49,7 @@ public class VueGantt extends Tab implements Observateur {
     public void actualiser(Sujet s) {
         this.y = 1;
         VueGantt.model =(Modele) s;
+        this.debutProjet = this.model.getRacine().getDateDebut();
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
         ScrollPane scrollPane = new ScrollPane();
