@@ -133,7 +133,7 @@ public class Modele implements Sujet {
 	}
 
 	/**
-	 * Méthode permettant l'achivage des enfants d'une tâche
+	 * Méthode recursive permettant l'achivage des enfants d'une tâche
 	 * @param tache parent des enfants à archiver
 	 */
 	private void archiverEnfants(Tache tache){
@@ -150,9 +150,21 @@ public class Modele implements Sujet {
 	 */
 	public void desarchiverTache(Tache tache) {
 		tache.setEtat(Tache.ETAT_INITIAL);
+		this.desarchiverEnfants(tache);
 		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom());
 		this.notifierObservateurs();
 
+	}
+	/**
+	 * Méthode recursive permettant le desachivage des enfants d'une tâche
+	 * @param tache parent des enfants à desarchiver
+	 */
+	private void desarchiverEnfants(Tache tache){
+		ArrayList<Tache> enfants= (ArrayList)this.getEnfant(tache);
+		for(Tache t : enfants){
+			t.setEtat(Tache.ETAT_INITIAL);
+			this.desarchiverEnfants(t);
+		}
 	}
 
 	/**
