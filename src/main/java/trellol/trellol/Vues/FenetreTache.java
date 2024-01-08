@@ -141,6 +141,15 @@ public class FenetreTache {
 
         ComboBox<String> fieldAnter=new ComboBox<>(optionsTache);
 
+        if(modif){
+            if(m.findTacheByName(nomParent).getAntecedant()==null){
+                fieldAnter.setValue(null);
+            }
+            else{
+                fieldAnter.setValue(m.findTacheByName(nomParent).getAntecedant().getNom());
+            }
+        }
+
         ligneAnter.getChildren().addAll(tAnter, fieldAnter);
 
         ///boutons archiver et sup (UNIQUEMENT EN CAS DE MODIF)
