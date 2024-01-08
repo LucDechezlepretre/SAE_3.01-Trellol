@@ -1,0 +1,179 @@
+@startuml
+
+
+
+class Historique{
+  - actions : ArrayList<String>
+  + {static} AJOUTER_ACTION : String
+  + {static} DEPLACEMENT_ACTION : String
+  + {static} SUPRESSION_ACTION : String
+  + {static} ARCHIVAGE_ACTION : String
+  + {static} DESARCHIVAGE_ACTION : String
+  + {static} CREATION_TACHE_ACTION : String
+  + {static} CREATION_COLONNE : String
+  + {static} EXPORTER_TABLEAU : String
+  + addAction(String, Tache): void
+  + getActions() : ArrayList<String>
+  + toString(): void
+}
+
+class Importance{
+  +{static} BASSE: int 
+  +{static} MOYENNNE : int
+  +{static} HAUTE: int
+}
+
+interface Sujet{
+  + enregistrerObservateur(Obsevateur): void
+  + supprimerObservateur(Obsevateur): void
+  + notifierObservateur(): void
+}
+
+interface Obsevateur{
+  +actualiser(Sujet): void
+}
+
+
+class VueBureau{
+  +actualiser(Sujet) : void
+  + createRecursiveGridPane(Tache) : GridPane
+}
+
+class VueListe{
+
+  + affichageListe() : TreeItem<Tache>
+  + createTreeItem(Tache) : GridPane
+  + actualiser(Sujet) void
+  + ajouterTacheRecursivement(TreeItem<Tache>, Tache) : void
+}
+
+class VueHistorique{
+
+  + affichageListe() : TreeItem<Tache>
+  + createTreeItem(Tache) : GridPane
+  + actualiser(Sujet) void
+  + ajouterTacheRecursivement(TreeItem<Tache>, Tache) : void
+}
+
+class VueGantt{
+  - static model : Modele
+  - static TailleJour : int
+  - x: int
+  - y: int
+  + VueGantt(String, Sujet): void
+  + actualiser(Sujet) : void
+  + affichageGantt() : Canvas
+  + DessinerTacheRecursivement(GraphicsContext, Tache) : void
+  + diffDatesProjet(Date) : int
+  + creerTimeline(GraphicsContext, Tache) : void
+}
+
+
+class Modele{
+  - observateurs : ArrayList<Observateur>
+  - historique : Historique
+  - ensTache : List<Tache>
+  - vueListe : boolean
+  - numColonneAffiche : int
+  
+  + Modele()
+  + getSuccesseurs(Tache): List<Tache>
+  + getHistorique() : Historique
+  + supprimerObservateur(Observateur) : void
+  +verifierUniciteNom(String): boolean
+  + getEnsTache(): List<Tache>
+  + getRacine(): Tache
+  +ajouterTache(Tache): void
+  +enregistrerObservateur(Observateur) : void
+  +fficherTache(Tache, int) : String
+  +desarchiverTache(Tache) : void
+  +suppressionTache(Tache): void
+  -archiverEnfant(Tache) : void
+  +calculerDureeTache(Tache): int
+  +deplacerTache(Tache): void
+  +toString() : String
+  +archiverTache(Tache) : void
+  +getEnfant(Tache) : List<Tache>
+  +findTacheByName(String) : Tache
+  +notifierObservateur() : void
+}
+
+class MainAffichage{
+  + main(String[]) : void
+  + creationModel() : Model
+  + createNumericField : TextField
+  + start(Stage) : void
+}
+
+class FenetreAjoutTache{
+  + affcherFormulaireTache(Modele, String, boolean) : void
+}
+
+class ControleurAjouterTache{
+  + handle(ActionEvent) : void
+  + verifierForm(String, LocalDate, String, String) : void
+}
+class ControleurModifierTache{
+  + verifierForm(String, LocalDate, String, String) : void
+  + handle(ActionEvent) : void
+}
+class ControleurArchivage{
+  + handle(ActionEvent) : void
+}
+
+
+class Tache{
+  +{static} pattern : String
+  +{static} dateFormat : SimpleDateFormat
+  +{static} ETAT_ARCHIVE : String
+  +{static} ETAT_NON_ARCHIVE : String
+  +{static} ETAT_SUPPRIME : String
+  - nom : String
+  - dateDebut : date
+  - duree : int 
+  - etat : String
+  - description : String
+  - importance : int
+  
+  + Tache(String, String, int, String, int)
+  + getNom(): String
+  + setNom(String): void
+  + getDateDebut(): Date 
+  + setDateDebut(String) : void 
+  + getDuree(): int 
+  + setDuree(int): void
+  + getEtat(): String 
+  + setEtat(String) : void
+  + getDescription(): String
+  + setDescription(String): void
+  + getImportance(): int 
+  + setImportance(int): void
+  + getParent(): Tache 
+  + setParent(Tache): void 
+  + getAntecedent(): Tache
+  + setAntecedent(Tache): void
+  + toString(): String 
+}
+
+'''Relations
+
+Modele -up-.|> Sujet
+VueBureau -up-.|> Obsevateur
+VueListe -up-.|> Obsevateur
+VueHistorique -up-.|> Obsevateur
+VueGantt -up-.|> Obsevateur
+
+Modele "1" -> "*" Obsevateur : -observateurs
+Modele "1" -> "*" Tache: -ensTache
+Modele "1" -up-> "1" Historique: -historique
+Modele "1"  <-- "1" ControleurModifierTache: -modele
+Modele "1"  <-- "1" ControleurArchivage: -modele
+Modele "1"  <-- "1" ControleurAjouterTache: -modele
+
+Tache "1" -left-> "1" Tache : -parent
+Tache "1" --> "1" Tache : -antecedent
+
+VueBureau "1" --> "1"  Modele : modele
+VueListe "1" --> "1"  Modele : modele
+VueHistorique "1" --> "1"  Modele : modele
+VueGantt "1" --> "1"  Modele : modele

@@ -88,6 +88,7 @@ public class FenetreTache {
 
         ///importance
         HBox ligneImportance=new HBox(5);
+
         ObservableList<String> optionsImp = FXCollections.observableArrayList(
                 "faible",
                 "moyenne",
@@ -95,6 +96,8 @@ public class FenetreTache {
         );
         Text tImportance=new Text("Importance : ");
         ComboBox<String> fieldImportance=new ComboBox<>(optionsImp);
+
+
         ligneImportance.getChildren().addAll(tImportance, fieldImportance);
         if (modif) {
             fieldImportance.getSelectionModel().select(m.findTacheByName(nomParent).getImportance());
