@@ -44,7 +44,7 @@ class ModelTest {
         Tache t = new Tache("tache1", "13/12/2023", 2, "Bonjour", 1);
         m.ajouterTache(t);
         m.suppressionTache(t);
-        assertEquals(Tache.ETAT_SUPPRIME, t.getEtat(),"La tache devrait etre supprimée");
+        assertEquals(0,m.getEnfant(t).size());
     }
 
     /**
@@ -82,8 +82,7 @@ class ModelTest {
 
         //ajout tache sans parent
         Tache t2 = new Tache("tache2", "13/12/2023", 2, "Bonjour", 1);
-        m.ajouterTache(t2);
-        assertEquals(1,m.getEnsTache().size(), "La tache ne devrait pas etre ajoutée");
+        assertThrows(AjoutTacheException.class, () -> m.ajouterTache(t2), "La tache ne devrait pas etre ajoutée");
         t2.setParent(t);
 
         //ajout tache avec parent

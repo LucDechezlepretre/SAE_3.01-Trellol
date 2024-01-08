@@ -78,7 +78,6 @@ class Model{
   + afficherTache(Tache, int): String
   + ouvrirArchive(): void
   + createTreeItem(Tache): TreeItem<Tache>
-  - ajouterTacheRecursivement(TreeItem<Tache>, Tache)
   + affichageListe(): TreeView<Tache>
 }
 
@@ -149,9 +148,6 @@ VueHistorique -up-.|> Obsevateur
 Model "1" -> "*" Obsevateur : -observateurs
 Model "1" -> "*" Tache: -ensTache
 Model "1" -up-> "1" Historique: -historique
-Model "1"  --* "1" ControleurArchivage
-Model "1"  --* "1" ControleurAjouterTache
-Model "1"  --* "1" ControleurModifierTache
 Model "1"  <-- "1" ControleurModifierTache: -model
 Model "1"  <-- "1" ControleurArchivage: -model
 Model "1"  <-- "1" ControleurAjouterTache: -model
@@ -160,8 +156,5 @@ Tache "1" -left-> "1" Tache : -parent
 Tache "1" --> "1" Tache : -antecedent
 
 VueBureau "1" --> "1"  Model : model
-VueBureau "1" <-- "1" Model : model
 VueListe "1" --> "1"  Model : model
-VueListe "1" <-- "1" Model : model
 VueHistorique "1" --> "1"  Model : model
-VueHistorique "1" <-- "1" Model : model

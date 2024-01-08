@@ -53,7 +53,6 @@ public class VueListe extends Tab implements Observateur {
      *  Méthode pour créer un TreeItem à partir d'une tâche
      * @param tache tâche pour laquelle on crée un TreeItem
      */
-
     private TreeItem<Tache> createTreeItem(Tache tache) {
         TreeItem<Tache> treeItem = new TreeItem<>(tache);
 

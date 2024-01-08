@@ -149,6 +149,7 @@ public class Modele implements Sujet {
 	 * @param tache tâche à desarchiver
 	 */
 	public void desarchiverTache(Tache tache) {
+		tache.setEtat(Tache.ETAT_NON_ARCHIVE);
 		tache.setEtat(Tache.ETAT_INITIAL);
 		this.desarchiverEnfants(tache);
 		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom());
