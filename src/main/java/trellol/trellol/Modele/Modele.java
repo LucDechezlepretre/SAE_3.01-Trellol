@@ -178,6 +178,14 @@ public class Modele implements Sujet {
 		}
 		this.notifierObservateurs();
 	}
+
+	/**
+	 * Méthode récursive permettant de vérifier entre toute l'arborescence d'une tache et de la racine
+	 * si il y a des antécédent de la tâche parmis l'arborescence
+	 * @param tache tâche pour laquelle on veut vérifier qu'elle n'est pas antécédent parmis l'arborescence
+	 * @param parent tâche parent pour laquelle on veut faire la vérification
+	 * @return true si il y a un antécédent parmis l'arborescence, false sinon
+	 */
 	public boolean parentNotAntecedent(Tache tache, Tache parent){
 		if(parent.getAntecedant() != null){
 			if(parent.getAntecedant().equals(tache)){
