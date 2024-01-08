@@ -17,7 +17,11 @@ import trellol.trellol.Controleurs.ControleurSuppression;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Classe FenetreAjoutTache permettant la création d'une fenetre pour l'ajout ou la modification d'une tache
@@ -50,6 +54,9 @@ public class FenetreTache {
         if (modif) {
             fieldNom.setText(nomParent);
         }
+        else{
+            fieldNom.setText("Tache "+Tache.NUMERO);
+        }
         ligneNom.getChildren().addAll(tNom, fieldNom);
 
         ///date
@@ -61,6 +68,10 @@ public class FenetreTache {
             fieldDate.setValue(m.findTacheByName(nomParent).getDateDebut().toInstant()
                     .atZone(java.time.ZoneId.systemDefault()).toLocalDate());
         }
+        else{ //par defaut date d'aujourd'hui
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.FRENCH);
+            fieldDate.setValue(LocalDate.now());
+        }
 
         ///duree
         HBox ligneDuree=new HBox(5);
@@ -68,6 +79,9 @@ public class FenetreTache {
         TextField fieldDuree= MainAffichage.createNumericField();
         if (modif) {
             fieldDuree.setText(String.valueOf(m.findTacheByName(nomParent).getDuree()));
+        }
+        else{ //par defaut
+            fieldDuree.setText("1");
         }
 
         ligneDuree.getChildren().addAll(tDuree, fieldDuree);
@@ -84,6 +98,9 @@ public class FenetreTache {
         ligneImportance.getChildren().addAll(tImportance, fieldImportance);
         if (modif) {
             fieldImportance.getSelectionModel().select(m.findTacheByName(nomParent).getImportance());
+        }
+        else{ //par defaut
+            fieldImportance.setValue("faible");
         }
 
         ///description
@@ -109,6 +126,9 @@ public class FenetreTache {
         fieldParent.getSelectionModel().select(nomParent);
         if (modif) {
             fieldParent.getSelectionModel().select(m.findTacheByName(nomParent).getParent().getNom());
+        }
+        else{ //par defaut
+            fieldParent.setValue(m.getRacine().getNom());
         }
 
         ligneParent.getChildren().addAll(tParent, fieldParent);
