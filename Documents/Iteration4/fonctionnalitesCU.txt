@@ -1,8 +1,8 @@
 Pour cette itération nous nous sommes concentré sur la création du Gantt, et la correction d'imprécision du modèle au niveau des dates :
 
-DECHEZLEPRETRE Luc a travaillé sur la création du Gantt, l'implémentation du scrollPane pour les différentes vues et
-une méthode de vérification des antécédents lors du déplacement d'une tâche
-DESPAQUIS Liam a principalement travaillé sur la création Gantt en majorité
+DECHEZLEPRETRE Luc a travaillé sur la création du Gantt, l'implémentation du scrollPane pour les différentes vues, le graphe de scene et
+une méthode de vérification des antécédents lors du déplacement d'une tâche et les tests qui en découlent.
+DESPAQUIS Liam a principalement travaillé sur la création Gantt en majorité.
 FONTANEZ Antoine a travaillé sur le desarchivage des tâches, leurs suppression, l'ajout de valeur par défaut dans le formulaire, la bonne gestion
 des dates de début des tâches lors de leurs création, modification ou déplacement.
 SLIMANI Robin a travaillé sur la mise à jour de notre diagramme de classe, les tests et les diagramme de séquence.
