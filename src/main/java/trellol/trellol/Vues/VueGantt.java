@@ -11,67 +11,86 @@ import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+
+import static trellol.trellol.Tache.dateFormat;
 
 public class VueGantt extends Tab implements Observateur {
 
     private static Modele model;
 
-    private static int TailleJour = 50;
+    private static int TailleJour = 70;
 
-    private int x = 1;
+    private double y = 0.5;
 
-    private int y = 1;
+    private static double ecartVertical = 1.3;
+
+    private static double decalage = 15;
+
+    private Date debutProjet;
 
     public VueGantt(String nom, Sujet s) {
         super(nom);
         VueGantt.model = (Modele)s;
+        this.debutProjet = this.model.getRacine().getDateDebut();
         StackPane conteneur = new StackPane(this.affichageGantt());
         this.setContent(conteneur);
     }
 
     @Override
     public void actualiser(Sujet s) {
-        this.x = 1;
         this.y = 1;
         VueGantt.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
         content.getChildren().add(this.affichageGantt());
-        System.out.println("--------");
+        this.debutProjet = this.model.getRacine().getDateDebut();
     }
 
     public Canvas affichageGantt() {
-        Canvas canvas = new Canvas(1000,1000);
+        Canvas canvas = new Canvas(10000,10000);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        for (Tache t: model.getEnsTache()) {
-            System.out.println(t.getNom()+" 1");
-               List<Tache> listeSuccesseur = model.getSuccesseurs(t);
-               System.out.println(listeSuccesseur.size());
-               DessinerTacheRecursivement(gc,t);
+        List<Tache> listeTache = model.getEnsTache();
+        Collections.sort(listeTache);
+        for (Tache t: listeTache) {
+               if (t.getAntecedant() == null && !t.equals(model.getRacine())) {
+                   DessinerTacheRecursivement(gc, t);
+               }
         }
+        this.creerTimeline(gc,model.getRacine());
         return canvas;
     }
 
     public void DessinerTacheRecursivement(GraphicsContext gc, Tache t) {
-        System.out.println(t.getNom()+ " 2");
-        for (Tache parent: model.getSuccesseurs(t)) {
-            //gc.setFill(new Color(Math.round(Math.random()*255),Math.round(Math.random()*255),Math.round(Math.random()*255),1.0));
-            gc.strokeRect(this.x*this.TailleJour,this.y*this.TailleJour,this.TailleJour, this.TailleJour);
-            gc.strokeText(parent.getNom(),this.x*this.TailleJour,this.y*this.TailleJour);
-            this.y++;
-            if (model.getSuccesseurs(parent).size() == 0) {
-                this.x = 1;
-            } else {
-                for (Tache enfant: model.getEnfant(parent)) {
-                    this.x++;
-                    this.DessinerTacheRecursivement(gc,enfant);
-                }
-            }
-
+        //gc.setFill(new Color(Math.round(Math.random()*255),Math.round(Math.random()*255),Math.round(Math.random()*255),1.0));
+        gc.strokeRect(VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage,this.y*VueGantt.TailleJour,VueGantt.TailleJour*t.getDuree(), VueGantt.TailleJour);
+        gc.strokeText(t.getNom(),this.diffDatesProjet(t.getDateDebut())*VueGantt.TailleJour+VueGantt.decalage,this.y*VueGantt.TailleJour+10);
+        this.y += VueGantt.ecartVertical;
+        for (Tache enfant: model.getEnfant(t)) {
+            this.DessinerTacheRecursivement(gc,enfant);
         }
-
     }
+
+    public int diffDatesProjet(Date date) {
+        long diffInMillies = Math.abs(date.getTime() - this.debutProjet.getTime());
+        long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        return (int) diff;
+    }
+
+    public void creerTimeline(GraphicsContext gc, Tache racine) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM");
+        Date date = racine.getDateDebut();
+        int position = 0;
+        for(int i = 0; i<model.calculerDureeTache(racine); i++) {
+            gc.strokeText(df.format(date),position,10);
+            position += VueGantt.TailleJour;
+            date = new Date(date.getTime() + (1000 * 60 * 60 * 24));
+        }
+    }
+
 }
 

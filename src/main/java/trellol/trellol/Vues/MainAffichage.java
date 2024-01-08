@@ -107,27 +107,27 @@ public class MainAffichage extends Application {
     public static Modele creationModel(){
 
         Modele model = new Modele();
-        Tache racine = new Tache("racine", "13/12/2023", 8, "Ceci est la racine", 0);
+        Tache racine = new Tache("racine", "13/12/2023", 15, "Ceci est la racine", 0);
         try {
             model.ajouterTache(racine);
-            Tache racine2 = new Tache("racine2", "13/12/2023", 7, "Ceci est la racine 2 ", 0);
+            Tache racine2 = new Tache("racine2", "17/12/2023", 7, "Ceci est la racine 2 ", 0);
             racine2.setParent(racine);
             model.ajouterTache(racine2);
-            Tache luc = new Tache("tacheLuc", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
+            Tache luc = new Tache("tacheLuc", "14/12/2023", 2, "Ceci n'est pas la racine", 0);
             luc.setParent(racine);
             model.ajouterTache(luc);
 
-            Tache t2 = new Tache("tache2","13/12/2023", 2, "Ceci n'est pas la racine", 0);
+            Tache t2 = new Tache("tache2","18/12/2023", 2, "Ceci n'est pas la racine", 0);
             t2.setParent(luc);
             t2.setAntecedant(luc);
             model.ajouterTache(t2);
 
-            Tache t3 = new Tache("tache3","13/12/2023", 2, "Ceci n'est pas la racine", 0);
+            Tache t3 = new Tache("tache3","16/12/2023", 2, "Ceci n'est pas la racine", 0);
             t3.setParent(luc);
             t3.setAntecedant(luc);
             model.ajouterTache(t3);
 
-            Tache t4 = new Tache("tache4","13/12/2023", 2, "Ceci n'est pas la racine", 0);
+            Tache t4 = new Tache("tache4","17/12/2023", 2, "Ceci n'est pas la racine", 0);
             t4.setParent(t3);
             t4.setAntecedant(t3);
             model.ajouterTache(t4);
