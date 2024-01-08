@@ -242,18 +242,6 @@ public class Modele implements Sujet {
 	}
 
 	/**
-	 * Recupère la liste des tâches archivé, mais dans le diagramme c'est void alors jsp ce qu'on en fait
-	 */
-	public void ouvrirArchive() {
-		ArrayList<Tache> archive = new ArrayList<Tache>();
-		for (Tache enfant : this.ensTache) {
-			if (enfant.getEtat().equals(Tache.ETAT_ARCHIVE)) {
-				archive.add(enfant);
-			}
-		}
-	}
-
-	/**
 	 * Méthode de calcul de durée d'une tâche en prenant compte de ses sous-tâches (enfants)
 	 * @param tache tâche pour laquelle la durée va être calculée
 	 * @return int représentant la durée de la tâche
