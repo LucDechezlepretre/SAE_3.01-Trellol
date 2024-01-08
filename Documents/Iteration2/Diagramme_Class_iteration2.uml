@@ -1,0 +1,131 @@
+@startuml
+
+
+
+class Historique{
+  - actions : ArrayList<String>
+  + {static} DEPLACEMENT_ACTION : String
+  + {static} SUPRESSION_ACTION : String
+  + {static} ARCHIVAGE_ACTION : String
+  + {static} DESARCHIVAGE_ACTION : String
+  + {static} CREATION_TACHE_ACTION : String
+  + {static} CREATION_COLONNE : String
+  + {static} EXPORTER_TABLEAU : String
+  + addAction(String, Tache): void
+  + getActions() : ArrayList<String>
+  + toString(): void
+}
+
+class Importance{
+  +{static} BASSE: int 
+  +{static} MOYENNNE : int
+  +{static} HAUTE: int
+}
+
+interface Sujet{
+  + enregistrerObservateur(Obsevateur): void
+  + supprimerObservateur(Obsevateur): void
+  + notifierObservateur(): void
+}
+
+interface Obsevateur{
+  +actualiser(Sujet): void
+}
+
+class VuePrincipale{
+  + createTreeItem(Tache) : TreeItem<Tache>
+  + affichageListe() : TreeItem<Tache>
+  + createRecursiveGridPane(Tache) : GridPane
+  + actualiser(Sujet) void
+  + ajouterTacheRecursivement(TreeItem<Tache>, Tache) : void
+}
+
+class Model{
+  - observateurs : ArrayList<Observateur>
+  - historique : Historique
+  - ensTache : List<Tache>
+  - vueListe : boolean
+  - numColonneAffiche : int
+  
+  + Model()
+  + getEnfants(Tache): List<Tache>
+  + getRacine(): Tache
+  + enregistrerObservateur(Obsevateur): void
+  + supprimerObservateur(Obsevateur): void
+  + notifierObservateur(): void
+  + archiverTache(Tache): void
+  + desarchiverTache(Tache): void
+  + suppressionTache(Tache) : void
+  + deplacerTache(Tache, Tache): void
+  + mettreAJourParent(Tache): void
+  + afficherHistorique(Tache): void
+  + afficherTache(Tache, int): String
+  + ouvrirArchive(): void
+  + createTreeItem(Tache): TreeItem<Tache>
+  + affichageListe(): TreeView<Tache>
+}
+
+class Affichage{
+  + main(String[]) : void
+  + creationModel() : Model
+  + createNumericField : TextField
+  + start(Stage) : void
+  + afficherFormulaireTache(Model, String) : void
+}
+
+class ControleurAjouterTache{
+  + handle(ActionEvent) : void
+}
+class ControleurVuePrincipale{
+  + handle(ActionEvent) : void
+}
+
+class Tache{
+  +{static} pattern : String
+  +{static} dateFormat : SimpleDateFormat
+  +{static} ETAT_ARCHIVE : String
+  +{static} ETAT_NON_ARCHIVE : String
+  +{static} ETAT_SUPPRIME : String
+  - nom : String
+  - dateDebut : date
+  - duree : int 
+  - etat : String
+  - description : String
+  - importance : int
+  
+  + Tache(String, String, int, String, int)
+  + getNom(): String
+  + setNom(String): void
+  + getDateDebut(): Date 
+  + setDateDebut(String) : void 
+  + getDuree(): int 
+  + setDuree(int): void
+  + getEtat(): String 
+  + setEtat(String) : void
+  + getDescription(): String
+  + setDescription(String): void
+  + getImportance(): int 
+  + setImportance(int): void
+  + getParent(): Tache 
+  + setParent(Tache): void 
+  + getAntecedent(): Tache
+  + setAntecedent(Tache): void
+  + toString(): String 
+}
+
+'''Relations
+
+Model -up-.|> Sujet
+VuePrincipale -up-.|> Obsevateur
+
+Model "1" -> "*" Obsevateur : -observateurs
+Model "1" -> "*" Tache: -ensTache
+Model "1" -up-> "1" Historique: -historique
+Model "1"  <-- "1" ControleurVuePrincipale: -model
+Model "1"  <-- "1" ControleurAjouterTache: -model
+
+Tache "1" -left-> "1" Tache : -parent
+Tache "1" --> "1" Tache : -antecedent
+
+VuePrincipale "1" --> "1"  Model : model
+
