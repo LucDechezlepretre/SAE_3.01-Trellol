@@ -6,6 +6,8 @@ import trellol.trellol.Vues.Observateur;
 import trellol.trellol.Tache;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -216,6 +218,8 @@ public class Modele implements Sujet {
 	public void ajouterTache(Tache tache) throws AjoutTacheException {
 		if ((ensTache.size() == 0 && tache.getParent() == null) || tache.getParent() != null) {
 			if (this.verifierUniciteNom(tache.getNom())) {
+
+				this.generationDate(tache);
 				ensTache.add(tache);
 			} else {
 				throw new AjoutTacheException("Nom de tâche déjà existant");
@@ -317,5 +321,39 @@ public class Modele implements Sujet {
 	 */
 	public Historique getHistorique() {
 		return this.historique;
+	}
+
+	/**
+	 * Donne une date automatique valide à une tache ayant un antecedant et/ou un parent
+	 */
+	public void generationDate(Tache t){
+		Date dAntecedent=new Date(0);
+		if(t.getAntecedant()!=null){
+			Date dateDeb=t.getAntecedant().getDateDebut();
+			int duree=t.getAntecedant().getDuree();
+
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(dateDeb);
+
+			calendar.add(Calendar.DAY_OF_MONTH, duree);
+			dAntecedent = calendar.getTime();
+		}
+
+		Date dParent=new Date(0);
+		if(t.getParent()!=null){
+			dParent=t.getParent().getDateDebut();
+		}
+
+		//COMPARAISONS
+		Date dateActu=t.getDateDebut();
+		if(dateActu.compareTo(dParent)<0){
+			dateActu=dParent;
+		}
+
+		if(dateActu.compareTo(dAntecedent)<0){
+			dateActu=dAntecedent;
+		}
+
+		t.setDateDebut(dateActu);
 	}
 }
