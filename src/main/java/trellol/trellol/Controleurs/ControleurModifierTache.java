@@ -154,6 +154,7 @@ public class ControleurModifierTache implements EventHandler<ActionEvent> {
             this.erreur.setText(e.getMessage());
         }
         MainAffichage.affichageFormTache = false;
+        modele.notifierObservateurs();
     }
 
     /**

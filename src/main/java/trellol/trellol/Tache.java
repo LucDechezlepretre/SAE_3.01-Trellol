@@ -128,6 +128,15 @@ public class Tache implements Serializable{
             this.dateDebut = new Date();
         }
     }
+
+    /**
+     * Setter pour l'attribut dateDebut
+     * @param dateDebut nouvelle date en Date
+     */
+    public void setDateDebut(Date dateDebut) {
+        this.dateDebut=dateDebut;
+    }
+
     /**
      * Getter de l'attribut duree
      * @return la durée de la tâche
