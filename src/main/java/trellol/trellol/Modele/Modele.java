@@ -319,7 +319,8 @@ public class Modele implements Sujet {
 		}
 
 		Date dParent=new Date(0);
-		if(t.getParent()!=null){
+		if(t.getParent()!=null && t.getParent().equals(this.getRacine())==false){
+
 			dParent=t.getParent().getDateDebut();
 		}
 
