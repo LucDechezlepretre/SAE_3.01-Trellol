@@ -10,6 +10,7 @@ import javafx.scene.input.DataFormat;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import trellol.trellol.Exceptions.AjoutTacheException;
+import trellol.trellol.Importance;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
 
@@ -107,22 +108,22 @@ public class MainAffichage extends Application {
     public static Modele creationModel(){
 
         Modele model = new Modele();
-        Tache racine = new Tache("racine", "13/12/2023", 15, "Ceci est la racine", 0);
+        Tache racine = new Tache("racine", "13/12/2023", 15, "Ceci est la racine", Importance.FAIBLE);
         try {
             model.ajouterTache(racine);
-            Tache racine2 = new Tache("racine2", "17/12/2023", 7, "Ceci est la racine 2 ", 0);
+            Tache racine2 = new Tache("racine2", "14/12/2023", 3, "Ceci est la racine 2 ", Importance.MOYENNE);
             racine2.setParent(racine);
             model.ajouterTache(racine2);
 
-            Tache luc = new Tache("tacheLuc", "14/12/2023", 2, "Ceci n'est pas la racine", 0);
+            Tache luc = new Tache("tacheLuc", "14/12/2023", 2, "Ceci n'est pas la racine", Importance.FAIBLE);
             luc.setParent(racine);
             model.ajouterTache(luc);
 
-            Tache t2 = new Tache("tache2","18/12/2023", 2, "Ceci n'est pas la racine", 0);
+            Tache t2 = new Tache("tache2","18/12/2023", 2, "Ceci n'est pas la racine", Importance.ELEVEE);
             t2.setParent(luc);
-            t2.setAntecedant(luc);
+            t2.setAntecedant(racine2);
             model.ajouterTache(t2);
-
+            /**
             Tache t3 = new Tache("tache3","16/12/2023", 2, "Ceci n'est pas la racine", 0);
             t3.setParent(luc);
             t3.setAntecedant(luc);
@@ -132,6 +133,7 @@ public class MainAffichage extends Application {
             t4.setParent(t3);
             t4.setAntecedant(t3);
             model.ajouterTache(t4);
+             */
         }
         catch(AjoutTacheException e){
             e.getMessage();

@@ -24,7 +24,7 @@ public class VueGantt extends Tab implements Observateur {
 
     private static Modele model;
 
-    private static int TailleJour = 70;
+    private static int TailleJour = 60;
 
     private double y = 0.5;
 
@@ -34,20 +34,24 @@ public class VueGantt extends Tab implements Observateur {
 
     private static double decalage = 15;
 
+    private static List<String> couleurs = new ArrayList<>(Arrays.asList("green","orange","red"));;
+
     private HashMap<Tache, List<Double>> coordonneesParents;
     private Date debutProjet;
 
     public VueGantt(String nom, Sujet s) {
         super(nom);
+        coordonneesParents = new HashMap<>();
         VueGantt.model = (Modele)s;
         StackPane conteneur = new StackPane();
         this.setContent(conteneur);
-        //coordonneesParents = new HashMap<Tache, List<Integer>>();
+
     }
 
     @Override
     public void actualiser(Sujet s) {
         this.y = 1;
+        coordonneesParents = new HashMap<>();
         VueGantt.model =(Modele) s;
         this.debutProjet = this.model.getRacine().getDateDebut();
         StackPane content = (StackPane) this.getContent();
@@ -58,10 +62,11 @@ public class VueGantt extends Tab implements Observateur {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         content.getChildren().add(scrollPane);
         this.debutProjet = this.model.getRacine().getDateDebut();
+
     }
 
     public Canvas affichageGantt() {
-        Canvas canvas = new Canvas(10000,10000);
+        Canvas canvas = new Canvas(5000,5000);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         List<Tache> listeTache = model.getEnsTache();
         Collections.sort(listeTache);
@@ -76,23 +81,29 @@ public class VueGantt extends Tab implements Observateur {
     }
 
     public void DessinerTacheRecursivement(GraphicsContext gc, Tache t) {
-
-        //gc.setFill(new Color(Math.round(Math.random()*255),Math.round(Math.random()*255),Math.round(Math.random()*255),1.0));
-
-        gc.strokeRect(VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage,this.y*VueGantt.TailleJour,VueGantt.TailleJour*model.calculerDureeTache(t), VueGantt.TailleJour);
+        gc.setFill(Paint.valueOf(couleurs.get(t.getImportance())));
+        gc.fillRect(VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage,this.y*VueGantt.TailleJour,VueGantt.TailleJour*model.calculerDureeTache(t), VueGantt.TailleJour);
         gc.strokeText(t.getNom(),this.diffDatesProjet(t.getDateDebut())*VueGantt.TailleJour+VueGantt.decalage,this.y*VueGantt.TailleJour+10);
 
-        /**this.coordonneesParents.put(t, new ArrayList<>(Arrays.asList( VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage + VueGantt.TailleJour*model.calculerDureeTache(t),this.y*VueGantt.TailleJour + VueGantt.TailleJour/2 )));
+        ArrayList<Double> coordonnees = new ArrayList<Double>();
+        coordonnees.add(VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage + VueGantt.TailleJour*model.calculerDureeTache(t));
+        coordonnees.add(this.y*VueGantt.TailleJour + VueGantt.TailleJour/2);
+        this.coordonneesParents.put(t, coordonnees);
 
-        if (coordonneesParents.containsKey(t)) {
+        if (coordonneesParents.containsKey(t.getAntecedant())) {
+            Double parentX = this.coordonneesParents.get(t.getAntecedant()).get(0);
+            Double parentY = this.coordonneesParents.get(t.getAntecedant()).get(1);
+            Double enfantX = VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage;
+            Double enfantY = this.y*VueGantt.TailleJour + VueGantt.TailleJour/2;
 
+            gc.strokeLine(parentX,parentY,enfantX,enfantY);
         }
-         */
-
 
         this.y++;
-        for (Tache enfant: model.getEnfant(t)) {
-            this.DessinerTacheRecursivement(gc,enfant);
+        if (model.getSuccesseurs(t).size() != 0) {
+            for (Tache enfant : model.getSuccesseurs(t)) {
+                this.DessinerTacheRecursivement(gc, enfant);
+            }
         }
     }
 
