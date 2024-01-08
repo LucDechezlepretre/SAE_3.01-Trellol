@@ -187,6 +187,9 @@ public class Modele implements Sujet {
 				return parentNotAntecedent(tache, parent.getParent());
 			}
 		}
+		else if(parent.getParent() != this.getRacine()){
+			return parentNotAntecedent(tache, parent.getParent());
+		}
 		return false;
 	}
 	/**
