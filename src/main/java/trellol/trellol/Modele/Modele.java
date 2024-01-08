@@ -14,8 +14,6 @@ import java.util.List;
  * Classe correspondant au modele de l'architecture MVC
  */
 public class Modele implements Sujet {
-	private int numColonneAffiche;
-
 	/**
 	 * Attribut observateurs ArrayList représentant la liste des observateurs
 	 */
@@ -79,10 +77,6 @@ public class Modele implements Sujet {
 		return successeurs;
 	}
 
-	public int getNumColonneAffiche(){
-		return this.numColonneAffiche;
-	}
-
 	/**
 	 * Méthode renvoyant la tache racine, c-à-d la seule tâche sans parent
 	 * @return la tache racine
@@ -115,6 +109,7 @@ public class Modele implements Sujet {
 			this.observateurs.remove(i);
 		}
 	}
+
 
 
 	/**
@@ -175,12 +170,18 @@ public class Modele implements Sujet {
 	}
 
 	/**
-	 * Méthode permettant la suppression d'une tâche du modèle
+	 * Méthode recursive permettant la suppression d'une tâche et de ses enfants du modèle
 	 * @param tache tâche à supprimer
 	 */
 	public void suppressionTache(Tache tache) {
 		this.getHistorique().addAction(Historique.SUPRESSION_ACTION, tache.getNom());
 		this.ensTache.remove(tache);
+
+		ArrayList<Tache> enfants= (ArrayList)this.getEnfant(tache);
+
+		for(Tache t : enfants){
+			this.suppressionTache(t);
+		}
 		this.notifierObservateurs();
 	}
 
