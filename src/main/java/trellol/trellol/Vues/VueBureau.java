@@ -74,8 +74,8 @@ public class VueBureau extends Tab implements Observateur {
         gp.setPadding(new Insets(10));
 
         gp.setStyle("-fx-border-color: black;"); // Ajout d'une bordure pour mieux visualiser
-        Boolean rang2 = this.model.getEnfant(this.model.getRacine()).contains(tache);
-        Boolean racine = tache == this.model.getRacine();
+        boolean rang2 = this.model.getEnfant(this.model.getRacine()).contains(tache);
+        boolean racine = tache == this.model.getRacine();
         int nbColonne = 0;
         if (this.model.getEnfant(tache).size() > 0) {
             int colonne = 1;
@@ -85,7 +85,7 @@ public class VueBureau extends Tab implements Observateur {
             int ligne = 2;
             // Appel récursif pour le VBox interne
             for (Tache t : this.model.getEnfant(tache)) {
-                if (t.getEtat().equals(Tache.ETAT_INITIAL) && (!racine || (racine && (nbColonne <= this.model.getNumColonneAffiche()+5) && nbColonne >= this.model.getNumColonneAffiche()))) {
+                if (t.getEtat().equals(Tache.ETAT_INITIAL)){
                     GridPane gpt = createRecursiveGridPane(t);
                     gpt.setOnMouseClicked(mouseEvent -> {
                         FenetreTache.afficherFormulaireTache(VueBureau.model, t.getNom(), true);
@@ -100,15 +100,7 @@ public class VueBureau extends Tab implements Observateur {
                 nbColonne++;
             }
         }
-        if (racine) {
-            if (this.model.getNumColonneAffiche() > 0) {
-                gp.add(new Button("<-"), 1, gp.getRowCount());
-            }
-            if (nbColonne > this.model.getNumColonneAffiche() + 5) {
-                gp.add(new Button("->"), gp.getColumnCount(), gp.getRowCount() - 1);
-            }
-        }
-        if (rang2) {
+        if(rang2) {
             Button bAjoutTache = new Button("Ajouter Tache");
             gp.add(bAjoutTache,1,gp.getRowCount());
             bAjoutTache.setOnAction(new EventHandler<ActionEvent>() {
