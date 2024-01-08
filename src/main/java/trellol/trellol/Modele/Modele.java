@@ -14,6 +14,8 @@ import java.util.List;
  * Classe correspondant au modele de l'architecture MVC
  */
 public class Modele implements Sujet {
+	private int numColonneAffiche;
+
 	/**
 	 * Attribut observateurs ArrayList représentant la liste des observateurs
 	 */
@@ -75,6 +77,10 @@ public class Modele implements Sujet {
 			}
 		}
 		return successeurs;
+	}
+
+	public int getNumColonneAffiche(){
+		return this.numColonneAffiche;
 	}
 
 	/**
