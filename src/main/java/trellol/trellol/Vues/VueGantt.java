@@ -28,10 +28,13 @@ public class VueGantt extends Tab implements Observateur {
 
     private double y = 0.5;
 
-    private static double ecartVertical = 1.3;
+    private static double ecartVertical = 0.3;
+
+    private static double ecartHorizontal = 0.5;
 
     private static double decalage = 15;
 
+    private HashMap<Tache, List<Double>> coordonneesParents;
     private Date debutProjet;
 
     public VueGantt(String nom, Sujet s) {
@@ -40,6 +43,7 @@ public class VueGantt extends Tab implements Observateur {
         this.debutProjet = this.model.getRacine().getDateDebut();
         StackPane conteneur = new StackPane(this.affichageGantt());
         this.setContent(conteneur);
+        //coordonneesParents = new HashMap<Tache, List<Integer>>();
     }
 
     @Override
@@ -64,6 +68,7 @@ public class VueGantt extends Tab implements Observateur {
         for (Tache t: listeTache) {
                if (t.getAntecedant() == null && !t.equals(model.getRacine())) {
                    DessinerTacheRecursivement(gc, t);
+                   this.y += VueGantt.ecartVertical;
                }
         }
         this.creerTimeline(gc,model.getRacine());
@@ -71,10 +76,21 @@ public class VueGantt extends Tab implements Observateur {
     }
 
     public void DessinerTacheRecursivement(GraphicsContext gc, Tache t) {
+
         //gc.setFill(new Color(Math.round(Math.random()*255),Math.round(Math.random()*255),Math.round(Math.random()*255),1.0));
-        gc.strokeRect(VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage,this.y*VueGantt.TailleJour,VueGantt.TailleJour*t.getDuree(), VueGantt.TailleJour);
+
+        gc.strokeRect(VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage,this.y*VueGantt.TailleJour,VueGantt.TailleJour*model.calculerDureeTache(t), VueGantt.TailleJour);
         gc.strokeText(t.getNom(),this.diffDatesProjet(t.getDateDebut())*VueGantt.TailleJour+VueGantt.decalage,this.y*VueGantt.TailleJour+10);
-        this.y += VueGantt.ecartVertical;
+
+        /**this.coordonneesParents.put(t, new ArrayList<>(Arrays.asList( VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage + VueGantt.TailleJour*model.calculerDureeTache(t),this.y*VueGantt.TailleJour + VueGantt.TailleJour/2 )));
+
+        if (coordonneesParents.containsKey(t)) {
+
+        }
+         */
+
+
+        this.y++;
         for (Tache enfant: model.getEnfant(t)) {
             this.DessinerTacheRecursivement(gc,enfant);
         }
