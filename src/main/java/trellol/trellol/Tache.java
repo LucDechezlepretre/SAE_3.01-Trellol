@@ -35,17 +35,9 @@ public class Tache implements Serializable{
      */
     public static final String ETAT_ARCHIVE = "Archive";
     /**
-     * Attribut statique représentant l'état non-archivée pour une tâche
-     */
-    public static final String ETAT_NON_ARCHIVE = "Non-archive";
-    /**
      * Attribut statique représentant l'état initial pour une tâche
      */
     public static final String ETAT_INITIAL = "Initial";
-    /**
-     * Attribut statique représentant l'état suprimé pour une tâche
-     */
-    public static final String ETAT_SUPPRIME = "Supprime";
     /**
      * Attribut statique représentant l'état de la tache parent de toutes les tâches archivées
      */

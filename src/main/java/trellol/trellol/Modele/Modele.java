@@ -151,7 +151,6 @@ public class Modele implements Sujet {
 	 * @param tache tâche à desarchiver
 	 */
 	public void desarchiverTache(Tache tache) {
-		tache.setEtat(Tache.ETAT_NON_ARCHIVE);
 		tache.setEtat(Tache.ETAT_INITIAL);
 		this.desarchiverEnfants(tache);
 		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom());
@@ -203,13 +202,6 @@ public class Modele implements Sujet {
 	}
 
 	/**
-	 * Méthode permettant l'affichage de l'historique
-	 */
-	public void afficherHistorique() {
-		System.out.println(historique);
-	}
-
-	/**
 	 * Méthode permettant l'ajout d'une tache dans le modèle
 	 * @param tache tâche à ajouter
 	 * @throws AjoutTacheException si la tache n'a pas de parent dans un modèle avec une racine déjà présente ou si
@@ -251,18 +243,6 @@ public class Modele implements Sujet {
 			res.append(afficherTache(enfant, profondeur+1));
 		}
 		return res.toString();
-	}
-
-	/**
-	 * Recupère la liste des tâches archivé, mais dans le diagramme c'est void alors jsp ce qu'on en fait
-	 */
-	public void ouvrirArchive() {
-		ArrayList<Tache> archive = new ArrayList<Tache>();
-		for (Tache enfant : this.ensTache) {
-			if (enfant.getEtat().equals(Tache.ETAT_ARCHIVE)) {
-				archive.add(enfant);
-			}
-		}
 	}
 
 	/**
