@@ -55,7 +55,6 @@ public class VueListe extends Tab implements Observateur {
      */
     private TreeItem<Tache> createTreeItem(Tache tache) {
         TreeItem<Tache> treeItem = new TreeItem<>(tache);
-
         return treeItem;
     }
 
@@ -146,6 +145,11 @@ public class VueListe extends Tab implements Observateur {
                 event.consume();
             });
             //Fin de la création de la cellule
+            cell.setOnMouseClicked(mouseEvent -> {
+                if(!cell.getItem().equals(VueListe.model.getRacine())) {
+                    FenetreTache.afficherFormulaireTache(VueListe.model, cell.getItem().getNom(), true);
+                }
+            });
             return cell;
         });
         //Le TreeView est construit
