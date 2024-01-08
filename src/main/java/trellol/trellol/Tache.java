@@ -11,6 +11,12 @@ import java.util.Objects;
  * Tache implémente l'interface Serializable pour le transfert de données lors du DnD
  */
 public class Tache implements Serializable{
+
+    /**
+     * Numero de la tache créée
+     */
+    public static int NUMERO;
+
     /**
      * Format de la date souhaité
      */
