@@ -113,6 +113,7 @@ public class MainAffichage extends Application {
             Tache racine2 = new Tache("racine2", "17/12/2023", 7, "Ceci est la racine 2 ", 0);
             racine2.setParent(racine);
             model.ajouterTache(racine2);
+
             Tache luc = new Tache("tacheLuc", "14/12/2023", 2, "Ceci n'est pas la racine", 0);
             luc.setParent(racine);
             model.ajouterTache(luc);
