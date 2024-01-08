@@ -26,7 +26,6 @@ public class Modele implements Sujet {
 	 * Attribut ensTache, List représentant l'ensemble des tâches du projet
 	 */
 	private List<Tache> ensTache;
-	private int numColonneAffiche;
 
 	/**
 	 * Constructeur du modele, initialise la liste d'observateurs et de tâches
@@ -198,6 +197,8 @@ public class Modele implements Sujet {
 				this.getHistorique().addAction(Historique.DEPLACEMENT_ACTION, tache.getNom());
 				this.notifierObservateurs();
 			}
+
+			this.generationDate(tache);
 		}
 	}
 
@@ -270,14 +271,6 @@ public class Modele implements Sujet {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Getter de l'attribut numColonneAffiche
-	 * @return int numColonneAffiche
-	 */
-	public int getNumColonneAffiche() {
-		return numColonneAffiche;
 	}
 
 	/**
