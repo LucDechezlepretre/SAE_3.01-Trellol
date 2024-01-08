@@ -116,6 +116,21 @@ public class MainAffichage extends Application {
             Tache luc = new Tache("tacheLuc", "13/12/2023", 2, "Ceci n'est pas la racine", 0);
             luc.setParent(racine);
             model.ajouterTache(luc);
+
+            Tache t2 = new Tache("tache2","13/12/2023", 2, "Ceci n'est pas la racine", 0);
+            t2.setParent(luc);
+            t2.setAntecedant(luc);
+            model.ajouterTache(t2);
+
+            Tache t3 = new Tache("tache3","13/12/2023", 2, "Ceci n'est pas la racine", 0);
+            t3.setParent(luc);
+            t3.setAntecedant(luc);
+            model.ajouterTache(t3);
+
+            Tache t4 = new Tache("tache4","13/12/2023", 2, "Ceci n'est pas la racine", 0);
+            t4.setParent(t3);
+            t4.setAntecedant(t3);
+            model.ajouterTache(t4);
         }
         catch(AjoutTacheException e){
             e.getMessage();

@@ -18,11 +18,11 @@ public class VueGantt extends Tab implements Observateur {
 
     private static Modele model;
 
-    private static int TailleJour = 10;
+    private static int TailleJour = 50;
 
-    private int x = 0;
+    private int x = 1;
 
-    private int y = 0;
+    private int y = 1;
 
     public VueGantt(String nom, Sujet s) {
         super(nom);
@@ -33,10 +33,13 @@ public class VueGantt extends Tab implements Observateur {
 
     @Override
     public void actualiser(Sujet s) {
+        this.x = 1;
+        this.y = 1;
         VueGantt.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
         content.getChildren().add(this.affichageGantt());
+        System.out.println("--------");
     }
 
     public Canvas affichageGantt() {
@@ -45,25 +48,24 @@ public class VueGantt extends Tab implements Observateur {
         for (Tache t: model.getEnsTache()) {
             System.out.println(t.getNom()+" 1");
                List<Tache> listeSuccesseur = model.getSuccesseurs(t);
-               if (listeSuccesseur.size() != 0) {
-                   for (Tache tache: listeSuccesseur) {
-                       DessinerTacheRecursivement(gc,t);
-                   }
-               }
+               System.out.println(listeSuccesseur.size());
+               DessinerTacheRecursivement(gc,t);
         }
         return canvas;
     }
 
     public void DessinerTacheRecursivement(GraphicsContext gc, Tache t) {
+        System.out.println(t.getNom()+ " 2");
         for (Tache parent: model.getSuccesseurs(t)) {
-            gc.setFill(new Color(Math.random()*255,Math.random()*255,Math.random()*255,1));
-            gc.fillRect(this.x,this.y,this.TailleJour, this.TailleJour);
-            this.x++;
+            //gc.setFill(new Color(Math.round(Math.random()*255),Math.round(Math.random()*255),Math.round(Math.random()*255),1.0));
+            gc.strokeRect(this.x*this.TailleJour,this.y*this.TailleJour,this.TailleJour, this.TailleJour);
+            gc.strokeText(parent.getNom(),this.x*this.TailleJour,this.y*this.TailleJour);
+            this.y++;
             if (model.getSuccesseurs(parent).size() == 0) {
-                this.y = 0;
+                this.x = 1;
             } else {
                 for (Tache enfant: model.getEnfant(parent)) {
-                    this.y++;
+                    this.x++;
                     this.DessinerTacheRecursivement(gc,enfant);
                 }
             }
