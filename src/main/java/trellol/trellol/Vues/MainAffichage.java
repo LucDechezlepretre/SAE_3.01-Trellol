@@ -73,15 +73,17 @@ public class MainAffichage extends Application {
         VueBureau vueBureau = new VueBureau("Bureau", m);
         VueHistorique vueHistorique = new VueHistorique("Historique", m);
         VueArchive vueArchive = new VueArchive("Archive", m);
+        VueGantt vueGantt = new VueGantt("Gantt",m);
 
         //Enregistrement des observateurs auprès du modèle
         m.enregistrerObservateur(vueListe);
         m.enregistrerObservateur(vueHistorique);
         m.enregistrerObservateur(vueBureau);
         m.enregistrerObservateur(vueArchive);
+        m.enregistrerObservateur(vueGantt);
         m.notifierObservateurs();
 
-        tabPane.getTabs().addAll(vueListe, vueBureau, vueArchive, vueHistorique);
+        tabPane.getTabs().addAll(vueListe, vueBureau, vueArchive, vueHistorique, vueGantt);
         //On empêche la fermeture des onglets
         tabPane.tabClosingPolicyProperty().setValue(TabPane.TabClosingPolicy.UNAVAILABLE);
         racine.setCenter(tabPane);
