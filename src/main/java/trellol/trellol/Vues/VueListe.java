@@ -30,7 +30,7 @@ public class VueListe extends Tab implements Observateur {
     public VueListe(String nom, Sujet s) {
         super(nom);
         VueListe.model = (Modele)s;
-        StackPane conteneur = new StackPane(this.affichageListe());
+        StackPane conteneur = new StackPane();
         this.setContent(conteneur);
     }
     /**

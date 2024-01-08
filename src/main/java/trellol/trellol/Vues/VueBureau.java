@@ -33,8 +33,10 @@ public class VueBureau extends Tab implements Observateur {
     public VueBureau(String nom, Sujet s) {
         super(nom);
         VueBureau.model = (Modele) s;
-
-        StackPane conteneur = new StackPane(this.createRecursiveGridPane(model.getRacine()));
+        StackPane conteneur = new StackPane();
+        if(VueBureau.model.getEnsTache().size() > 0) {
+            conteneur = new StackPane(this.createRecursiveGridPane(model.getRacine()));
+        }
         this.setContent(conteneur);
     }
     /**
@@ -48,7 +50,9 @@ public class VueBureau extends Tab implements Observateur {
         // Créer une barre de défilement horizontal et vertical avec un ScrollPane
         content.getChildren().clear();
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(this.createRecursiveGridPane(VueBureau.model.getRacine()));
+        if(VueBureau.model.getEnsTache().size() > 0) {
+            scrollPane.setContent(this.createRecursiveGridPane(VueBureau.model.getRacine()));
+        }
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         content.getChildren().add(scrollPane);

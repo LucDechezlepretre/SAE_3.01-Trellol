@@ -128,7 +128,9 @@ public class FenetreTache {
             fieldParent.getSelectionModel().select(m.findTacheByName(nomParent).getParent().getNom());
         }
         else{ //par defaut
-            fieldParent.setValue(m.getRacine().getNom());
+            if(m.getEnsTache().size() > 0) {
+                fieldParent.setValue(m.getRacine().getNom());
+            }
         }
 
         ligneParent.getChildren().addAll(tParent, fieldParent);
