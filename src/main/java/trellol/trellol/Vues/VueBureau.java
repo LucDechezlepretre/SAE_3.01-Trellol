@@ -3,9 +3,8 @@ package trellol.trellol.Vues;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
+import javafx.geometry.Orientation;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -34,6 +33,7 @@ public class VueBureau extends Tab implements Observateur {
     public VueBureau(String nom, Sujet s) {
         super(nom);
         VueBureau.model = (Modele) s;
+
         StackPane conteneur = new StackPane(this.createRecursiveGridPane(model.getRacine()));
         this.setContent(conteneur);
     }
@@ -45,8 +45,13 @@ public class VueBureau extends Tab implements Observateur {
     public void actualiser(Sujet s) {
         VueBureau.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
+        // Créer une barre de défilement horizontal et vertical avec un ScrollPane
         content.getChildren().clear();
-        content.getChildren().add(this.createRecursiveGridPane(VueBureau.model.getRacine()));
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(this.createRecursiveGridPane(VueBureau.model.getRacine()));
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        content.getChildren().add(scrollPane);
     }
 
     /**
