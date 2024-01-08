@@ -2,6 +2,7 @@ package trellol.trellol.Vues;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -47,7 +48,11 @@ public class VueGantt extends Tab implements Observateur {
         VueGantt.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
-        content.getChildren().add(this.affichageGantt());
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(this.affichageGantt());
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        content.getChildren().add(scrollPane);
         this.debutProjet = this.model.getRacine().getDateDebut();
     }
 
