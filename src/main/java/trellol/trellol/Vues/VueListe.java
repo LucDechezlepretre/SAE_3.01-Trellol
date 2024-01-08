@@ -1,9 +1,6 @@
 package trellol.trellol.Vues;
 
-import javafx.scene.control.Tab;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -46,7 +43,13 @@ public class VueListe extends Tab implements Observateur {
         VueListe.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
-        content.getChildren().add(this.affichageListe());
+        // Créer une barre de défilement horizontal et vertical avec un ScrollPane
+        content.getChildren().clear();
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(this.affichageListe());
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        content.getChildren().add(scrollPane);
     }
 
     /**
@@ -152,6 +155,7 @@ public class VueListe extends Tab implements Observateur {
             });
             return cell;
         });
+        treeView.setPrefWidth(600);
         //Le TreeView est construit
         return treeView;
     }
