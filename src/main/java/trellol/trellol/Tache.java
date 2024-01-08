@@ -10,7 +10,7 @@ import java.util.Objects;
  * La classe Tache représent dans l'appication, une tâche et toutes ses informations.
  * Tache implémente l'interface Serializable pour le transfert de données lors du DnD
  */
-public class Tache implements Serializable{
+public class Tache implements Serializable, Comparable<Tache> {
 
     /**
      * Numero de la tache créée
@@ -245,6 +245,8 @@ public class Tache implements Serializable{
         return duree == tache.duree && importance == tache.importance && Objects.equals(nom, tache.nom) && Objects.equals(etat, tache.etat) && Objects.equals(dateDebut, tache.dateDebut) && Objects.equals(description, tache.description) && Objects.equals(parent, tache.parent) && Objects.equals(antecedant, tache.antecedant);
     }
 
+
+
     /**
      * Méthode retournant le hashCode de la Tache this
      * @return hash code de this
@@ -263,4 +265,16 @@ public class Tache implements Serializable{
         return "Tache{" + nom + ' '  + duree + '}';
     }
 
+    @Override
+    public int compareTo(Tache autreTache) {
+        if (this.dateDebut == null && autreTache.getDateDebut() == null) {
+            return 0;
+        } else if (this.dateDebut == null) {
+            return 1;
+        } else if (autreTache.getDateDebut() == null) {
+            return -1;
+        }
+
+        return this.dateDebut.compareTo(autreTache.getDateDebut());
+    }
 }

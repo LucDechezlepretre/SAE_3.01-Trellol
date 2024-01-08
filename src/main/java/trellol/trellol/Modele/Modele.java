@@ -185,6 +185,7 @@ public class Modele implements Sujet {
 	 * @param parent nouveau parent de la tâche
 	 */
 	public void deplacerTache(Tache tache, Tache parent) {
+		Tache rechercheSiLienParent = tache.getParent();
 		if (!tache.equals(this.getRacine())) {
 			if (!tache.getNom().equals(parent.getNom())) {
 				if (parent.getParent() != null && parent.getParent().equals(tache)) {
