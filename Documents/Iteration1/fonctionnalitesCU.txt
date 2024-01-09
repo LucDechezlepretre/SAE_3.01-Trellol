@@ -2,7 +2,7 @@ Nous avons premièrement revu certaines parties de notre conception, car de nouv
 parvenues concernant le cahier des charges de l'application.
 
 Nous avons ensuite mis en place le fonctionnement interne de l'application :
-- creation des classes : Tache, Model, Historique, Importance
+- création des classes : Tache, Model, Historique, Importance
 
 Puis, nous avons commencé la mise en place de l'interface de l'application
 
