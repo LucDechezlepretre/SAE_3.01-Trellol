@@ -98,7 +98,6 @@ public class MainAffichage extends Application {
         racine.setTop(menuBar);
 
         //Bouton ajouter tache gauche
-        StackPane conteneurBouton = new StackPane();
         VBox conteneur = new VBox(20);
         Button ajouterTache = new Button("Ajouter Tache");
         ajouterTache.setOnAction(new EventHandler<ActionEvent>() {

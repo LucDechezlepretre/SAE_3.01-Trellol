@@ -23,7 +23,14 @@ public class VueSelecteurGantt extends SplitMenuButton implements Observateur, S
         MenuItem mi;
         for (Tache t: m.getEnsTache()) {
             if (t.getEtat().equals(Tache.ETAT_INITIAL)) {
-                mi = new MenuItem(t.getNom());
+                String nomTache = t.getNom();
+                if (t.equals(m.getRacine())) {
+                    nomTache = "Afficher tout";
+                }
+                if (this.m.getTacheSelectGantt().contains(t)) {
+                    nomTache = "X " + nomTache;
+                }
+                mi = new MenuItem(nomTache);
                 mi.setOnAction(new ControleurSelectionGantt(m, t));
                 this.getItems().add(mi);
             }
