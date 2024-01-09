@@ -5,6 +5,7 @@ import trellol.trellol.Historique;
 import trellol.trellol.Vues.Observateur;
 import trellol.trellol.Tache;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Classe correspondant au modele de l'architecture MVC
  */
-public class Modele implements Sujet {
+public class Modele implements Sujet, Serializable {
 	/**
 	 * Attribut observateurs ArrayList représentant la liste des observateurs
 	 */
@@ -279,7 +280,9 @@ public class Modele implements Sujet {
 	public int calculerDureeTache(Tache tache){
 		int duree = tache.getDuree();
 		for(Tache t : this.getEnfant(tache)){
-			duree += 	calculerDureeTache(t);
+			if(t.getEtat() == Tache.ETAT_INITIAL) {
+				duree += calculerDureeTache(t);
+			}
 		}
 		return duree;
 	}
