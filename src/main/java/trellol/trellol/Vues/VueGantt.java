@@ -68,7 +68,7 @@ public class VueGantt extends Tab implements Observateur {
     public Canvas affichageGantt() {
         Canvas canvas = new Canvas(5000,5000);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        List<Tache> listeTache = model.getEnsTache();
+        List<Tache> listeTache = model.getTacheSelectGantt();
         Collections.sort(listeTache);
         for (Tache t: listeTache) {
                if (t.getAntecedant() == null && !t.equals(model.getRacine())) {

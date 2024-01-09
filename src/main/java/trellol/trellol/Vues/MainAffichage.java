@@ -4,11 +4,13 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.DataFormat;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import trellol.trellol.Controleurs.ControleurSelectionGantt;
 import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Importance;
 import trellol.trellol.Modele.Modele;
@@ -60,14 +62,28 @@ public class MainAffichage extends Application {
 
         //Bouton ajouter tache gauche
         StackPane conteneurBouton = new StackPane();
+        VBox conteneur = new VBox(20);
         Button ajouterTache = new Button("Ajouter Tache");
-        conteneurBouton.getChildren().add(ajouterTache);
         ajouterTache.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 FenetreTache.afficherFormulaireTache(m, null, false);
             }
         });
+
+        SplitMenuButton MenuSelectionGantt = new SplitMenuButton();
+        MenuItem mi;
+        for (Tache t: m.getEnsTache()) {
+            mi = new MenuItem(t.getNom());
+            mi.setOnAction(new ControleurSelectionGantt(m,t));
+            MenuSelectionGantt.getItems().add(mi);
+        }
+        conteneur.getChildren().addAll(MenuSelectionGantt,ajouterTache);
+        conteneur.setAlignment(Pos.CENTER);
+        conteneurBouton.getChildren().add(conteneur);
+
+
         racine.setLeft(conteneurBouton);
+
 
         //Vue avec des onglets
         TabPane tabPane = new TabPane();

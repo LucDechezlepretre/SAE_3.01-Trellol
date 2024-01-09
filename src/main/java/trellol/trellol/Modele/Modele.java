@@ -27,12 +27,15 @@ public class Modele implements Sujet {
 	 */
 	private List<Tache> ensTache;
 
+	private List<Tache> TacheSelectGantt;
+
 	/**
 	 * Constructeur du modele, initialise la liste d'observateurs et de tâches
 	 */
 	public Modele(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
+		this.TacheSelectGantt = new ArrayList<Tache>();
 		historique = new Historique();
 	}
 
@@ -364,5 +367,18 @@ public class Modele implements Sujet {
 		}
 		System.out.println(datefin);
 		return datefin;
+	}
+
+	public void modifierListeGantt(Tache t) {
+		if (this.TacheSelectGantt.contains(t)) {
+			this.TacheSelectGantt.remove(t);
+		} else {
+			this.TacheSelectGantt.add(t);
+		}
+		notifierObservateurs();
+	}
+
+	public List<Tache> getTacheSelectGantt() {
+		return TacheSelectGantt;
 	}
 }
