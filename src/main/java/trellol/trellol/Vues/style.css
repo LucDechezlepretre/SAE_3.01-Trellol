@@ -1,9 +1,24 @@
 /* style.css */
 
+.scene{
+    -fx-background-color: rgb(179, 189, 197);
+    -fx-font-family: "Roboto Light";
+}
+
+
 .button{
-    -fx-background-color: rgb(133,187,255);
+    -fx-background-color: rgb(146, 153, 229);
 }
 
 .button:hover{
-    -fx-background-color: rgb(195,220,255);
+    -fx-background-color: rgb(134, 141, 229);
+}
+
+.tache{
+    -fx-background-color: rgb(112, 119, 122);
+    -fx-text-fill: white;
+}
+
+.tache:hover{
+    -fx-background-color: rgb(131, 138, 141);
 }

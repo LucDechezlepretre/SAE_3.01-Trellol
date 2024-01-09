@@ -25,12 +25,15 @@ public class Modele implements Sujet, Serializable {
 	 */
 	private List<Tache> ensTache;
 
+	private List<Tache> TacheSelectGantt;
+
 	/**
 	 * Constructeur du modele, initialise la liste d'observateurs et de tâches
 	 */
 	public Modele(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
+		this.TacheSelectGantt = new ArrayList<Tache>();
 		historique = new Historique();
 	}
 
@@ -366,7 +369,6 @@ public class Modele implements Sujet, Serializable {
 				datefin = dateTacheT;
 			}
 		}
-		System.out.println(datefin);
 		return datefin;
 	}
 
@@ -420,5 +422,18 @@ public class Modele implements Sujet, Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(historique, ensTache);
+	}
+	public void supprimerListeGantt(Tache t) {
+		this.TacheSelectGantt.remove(t);
+		notifierObservateurs();
+	}
+
+	public void ajouterListeGantt(Tache t) {
+		this.TacheSelectGantt.add(t);
+		notifierObservateurs();
+	}
+
+	public List<Tache> getTacheSelectGantt() {
+		return TacheSelectGantt;
 	}
 }

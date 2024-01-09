@@ -93,6 +93,7 @@ public class VueBureau extends Tab implements Observateur, Serializable {
             for (Tache t : this.model.getEnfant(tache)) {
                 if (t.getEtat().equals(Tache.ETAT_INITIAL)){
                     GridPane gpt = createRecursiveGridPane(t);
+                    gpt.getStyleClass().add("tache");
                     gpt.setOnMouseClicked(mouseEvent -> {
                         FenetreTache.afficherFormulaireTache(this.model, t.getNom(), true);
                     });

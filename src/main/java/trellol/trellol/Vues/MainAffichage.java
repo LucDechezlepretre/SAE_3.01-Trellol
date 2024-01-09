@@ -4,11 +4,13 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.DataFormat;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import trellol.trellol.Controleurs.ControleurSelectionGantt;
 import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Importance;
 import trellol.trellol.Modele.Modele;
@@ -60,14 +62,18 @@ public class MainAffichage extends Application {
 
         //Bouton ajouter tache gauche
         StackPane conteneurBouton = new StackPane();
+        VBox conteneur = new VBox(20);
         Button ajouterTache = new Button("Ajouter Tache");
-        conteneurBouton.getChildren().add(ajouterTache);
         ajouterTache.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 FenetreTache.afficherFormulaireTache(m, null, false);
             }
         });
-        racine.setLeft(conteneurBouton);
+
+        VueSelecteurGantt vueSelecteurGantt = new VueSelecteurGantt(m, "Affichage Gantt");
+        conteneur.getChildren().addAll(vueSelecteurGantt,ajouterTache);
+        conteneur.setAlignment(Pos.CENTER);
+        racine.setLeft(conteneur);
 
         //Vue avec des onglets
         TabPane tabPane = new TabPane();
@@ -83,6 +89,7 @@ public class MainAffichage extends Application {
         m.enregistrerObservateur(vueBureau);
         m.enregistrerObservateur(vueArchive);
         m.enregistrerObservateur(vueGantt);
+        m.enregistrerObservateur(vueSelecteurGantt);
         m.notifierObservateurs();
 
         tabPane.getTabs().addAll(vueListe, vueBureau, vueArchive, vueHistorique, vueGantt);
@@ -94,6 +101,9 @@ public class MainAffichage extends Application {
 
         //CSS
         //scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
+        //style scene
+        scene.getRoot().getStyleClass().add("scene");
 
         stage.setTitle("Trellol");
         stage.setScene(scene);
