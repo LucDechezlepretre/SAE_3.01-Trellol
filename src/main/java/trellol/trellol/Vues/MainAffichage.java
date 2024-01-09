@@ -134,6 +134,7 @@ public class MainAffichage extends Application {
         stage.setTitle("Trellol");
         stage.setScene(scene);
         stage.show();
+        System.out.printf(m.toString());
     }
 
     public static void main(String[] args)

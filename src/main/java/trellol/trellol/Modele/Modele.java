@@ -284,7 +284,8 @@ public class Modele implements Sujet, Serializable {
 	public int calculerDureeTache(Tache tache){
 		int duree = tache.getDuree();
 		for(Tache t : this.getEnfant(tache)){
-			if(t.getEtat() == Tache.ETAT_INITIAL) {
+			if(t.getEtat().equals(Tache.ETAT_INITIAL)){
+
 				duree += calculerDureeTache(t);
 			}
 		}

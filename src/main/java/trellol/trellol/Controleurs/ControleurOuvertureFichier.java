@@ -36,6 +36,8 @@ public class ControleurOuvertureFichier implements EventHandler<ActionEvent> {
 
             this.modele.notifierObservateurs();
             System.out.println(this.modele);
+            System.out.println(this.modele.calculerDureeTache(this.modele.getRacine()));
+            System.out.println(this.modele.getEnfant(this.modele.getRacine()));
         }
 
     }

@@ -257,7 +257,7 @@ public class Tache implements Serializable, Comparable<Tache> {
      */
     @Override
     public String toString() {
-        return "Tache{" + nom + ' '  + duree + '}';
+        return "Tache{" + nom + ' '  + duree +' '+this.etat+'}';
     }
 
     @Override

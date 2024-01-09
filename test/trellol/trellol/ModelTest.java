@@ -320,10 +320,26 @@ class ModelTest {
 
     @Test
     public void testSauvergarderEtCharger() throws AjoutTacheException{
+        Modele test = new Modele();
         Tache racine = new Tache("racine", "13/12/2023", 2, "Bonjour", 1);
         //ajout racine
         m.ajouterTache(racine);
-        this.m.sauvegarder("./save/test.trellol");
-        assertEquals(this.m, Modele.charger("./save/test.trellol"), "le modèle devrait être correctement chargé");
+        this.m.sauvegarder("/home/lucoss/Documents/BUT/BUT2/SAE_3.01-Trellol/Documents/test.trellol");
+        test.setEnsTache(Modele.charger("/home/lucoss/Documents/BUT/BUT2/SAE_3.01-Trellol/Documents/test.trellol"));
+        assertEquals(this.m, test, "le modèle devrait être correctement chargé");
+    }
+    @Test
+    public void testSauvegardePuisCalcul() throws AjoutTacheException{
+        Modele test = new Modele();
+        Tache racine = new Tache("racine", "13/12/2023", 10, "Bonjour", 1);
+        Tache luc = new Tache("lcu", "19/01/2024", 2,"Bonjour", 1);
+        luc.setParent(racine);
+
+        //ajout racine
+        m.ajouterTache(racine);
+        m.ajouterTache(luc);
+        this.m.sauvegarder("/home/lucoss/Documents/BUT/BUT2/SAE_3.01-Trellol/Documents/test.trellol");
+        this.m.setEnsTache(Modele.charger("/home/lucoss/Documents/BUT/BUT2/SAE_3.01-Trellol/Documents/test.trellol"));
+        assertEquals(12, this.m.calculerDureeTache(this.m.getRacine()), "La durée de la racine devrait être 12");
     }
 }
