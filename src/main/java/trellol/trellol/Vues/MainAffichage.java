@@ -70,6 +70,7 @@ public class MainAffichage extends Application {
             if (selectedFile != null) {
                 System.out.println("Fichier choisi : " + selectedFile.getAbsolutePath());
                 Modele de = Modele.charger(selectedFile.getAbsolutePath());
+                System.out.println(de);
             }
         });
         MenuItem enregistrer = new MenuItem("Enregistrer sous...");
