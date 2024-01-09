@@ -212,6 +212,9 @@ public class FenetreTache {
             MainAffichage.affichageFormTache = false;
         });
 
+        //CSS
+        scene.getStylesheets().add(FenetreTache.class.getResource("style.css").toExternalForm());
+
 
         // Afficher la nouvelle fenêtre
         fenetreNomColonne.show();
