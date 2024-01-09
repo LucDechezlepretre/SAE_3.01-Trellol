@@ -192,6 +192,9 @@ public class Modele implements Sujet, Serializable {
 	 * @param parent tâche parent pour laquelle on veut faire la vérification
 	 */
 	public void parentNotAntecedent(Tache tache, Tache parent){
+		if (parent == null){
+			return;
+		}
 		if(parent.getAntecedant() != null){
 			if(parent.getAntecedant().equals(tache)){
 				parent.setAntecedant(null);

@@ -45,7 +45,7 @@ public class MainAffichage extends Application {
     @Override
     public void start(Stage stage){
         //CREATION DU MODELE
-        Modele m = new Modele();
+        Modele m = creationModel();
 
         BorderPane racine = new BorderPane();
         racine.setPadding(new Insets(10));
