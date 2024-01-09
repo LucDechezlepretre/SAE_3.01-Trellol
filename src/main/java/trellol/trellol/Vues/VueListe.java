@@ -1,10 +1,15 @@
 package trellol.trellol.Vues;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import trellol.trellol.Importance;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
@@ -60,6 +65,7 @@ public class VueListe extends Tab implements Observateur, Serializable {
      */
     private TreeItem<Tache> createTreeItem(Tache tache) {
         TreeItem<Tache> treeItem = new TreeItem<>(tache);
+
         return treeItem;
     }
 
@@ -102,6 +108,20 @@ public class VueListe extends Tab implements Observateur, Serializable {
                     // une TreeCell peut changer de tâche, donc changer de TreeItem
                     super.updateItem(tache, empty);
                     setText(empty ? null : tache.getNom()+" durée : "+model.calculerDureeTache(tache));
+
+                    if(tache!=null) {
+                        String cssClass;
+                        if (tache.getImportance() == Importance.FAIBLE) {
+                            cssClass = ".tacheFaible";
+                            System.out.println("faible");
+                        } else if (tache.getImportance() == Importance.MOYENNE) {
+                            cssClass = ".tacheMoyenne";
+                        } else {
+                            cssClass = ".tacheImportante";
+                        }
+
+                        getStyleClass().add(cssClass);
+                    }
                 }
             };
             //Gestion du DnD
