@@ -181,24 +181,23 @@ public class Modele implements Sujet {
 
 	/**
 	 * Méthode récursive permettant de vérifier entre toute l'arborescence d'une tache et de la racine
-	 * si il y a des antécédent de la tâche parmis l'arborescence
+	 * si il y a des antécédent de la tâche parmis l'arborescence. Si il y a un lien d'antériorité
+	 * avec une des tâches parent le lien est effacé.
 	 * @param tache tâche pour laquelle on veut vérifier qu'elle n'est pas antécédent parmis l'arborescence
 	 * @param parent tâche parent pour laquelle on veut faire la vérification
-	 * @return true si il y a un antécédent parmis l'arborescence, false sinon
 	 */
-	public boolean parentNotAntecedent(Tache tache, Tache parent){
+	public void parentNotAntecedent(Tache tache, Tache parent){
 		if(parent.getAntecedant() != null){
 			if(parent.getAntecedant().equals(tache)){
-				return true;
+				parent.setAntecedant(null);
 			}
 			else if(parent.getParent() != null){
-				return parentNotAntecedent(tache, parent.getParent());
+				parentNotAntecedent(tache, parent.getParent());
 			}
 		}
 		else if(parent.getParent() != this.getRacine()){
-			return parentNotAntecedent(tache, parent.getParent());
+			parentNotAntecedent(tache, parent.getParent());
 		}
-		return false;
 	}
 	/**
 	 * Méthode permettant le déplacement d'une tache, c-à-d le changement de parent
@@ -208,8 +207,8 @@ public class Modele implements Sujet {
 	public void deplacerTache(Tache tache, Tache parent) {
 		Tache rechercheSiLienParent = tache.getParent();
 		if (!tache.equals(this.getRacine())) {
-			if(!parentNotAntecedent(tache, parent)) {
 				if (!tache.getNom().equals(parent.getNom())) {
+					parentNotAntecedent(tache, parent);
 					if (parent.getParent() != null && parent.getParent().equals(tache)) {
 						Tache ancienParent = tache.getParent();
 						parent.setParent(ancienParent);
@@ -224,7 +223,6 @@ public class Modele implements Sujet {
 			}
 			this.generationDate(tache);
 		}
-	}
 
 	/**
 	 * Méthode permettant l'ajout d'une tache dans le modèle

@@ -103,7 +103,8 @@ class ModelTest {
     }
 
     /**
-     * Vérification du blocage lors du déplacement d'une tâche dans une tâche dont le parent
+     * Vérification du changement d'antériorité lors du déplacement
+     * d'une tâche dans une tâche dont le parent
      * est antécédent de la tâche déplacé
      * @throws AjoutTacheException
      */
@@ -120,11 +121,13 @@ class ModelTest {
         t3.setParent(t);
         m.ajouterTache(t3);
         m.deplacerTache(t3, t2);
-        assertEquals(t, t3.getParent(), "la tâche t3 devrait avoir la tâche t comme parent");
+        assertEquals(t2, t3.getParent(), "la tâche t3 devrait avoir la tâche t comme parent");
+        assertNull(t2.getAntecedant(), "la tâche t2 ne devrait plus avoir d'antécédent");
     }
 
     /**
-     * Vérification du blocage lors du déplacement d'une tâche dans une tâche dont l'un des parent
+     * Vérification du changement d'antériorité lors du déplacement d'une tâche
+     * dans une tâche dont l'un des parent
      * est antécédent de la tâche déplacé
      * @throws AjoutTacheException
      */
@@ -146,7 +149,8 @@ class ModelTest {
         t3.setParent(t);
         m.ajouterTache(t3);
         m.deplacerTache(t3, t2);
-        assertEquals(t, t3.getParent(), "la tâche t3 devrait avoir la tâche t comme parent");
+        assertEquals(t2, t3.getParent(), "la tâche t3 devrait avoir la tâche t comme parent");
+        assertNull(t4.getAntecedant(), "la tâche 4 ne devrait plus avoir d'antécédent");
     }
     /**
      * vérification de l'ajout d'une tache
