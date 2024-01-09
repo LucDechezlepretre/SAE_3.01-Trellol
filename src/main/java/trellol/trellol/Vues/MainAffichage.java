@@ -70,20 +70,10 @@ public class MainAffichage extends Application {
             }
         });
 
-        SplitMenuButton MenuSelectionGantt = new SplitMenuButton();
-        MenuItem mi;
-        for (Tache t: m.getEnsTache()) {
-            mi = new MenuItem(t.getNom());
-            mi.setOnAction(new ControleurSelectionGantt(m,t));
-            MenuSelectionGantt.getItems().add(mi);
-        }
-        conteneur.getChildren().addAll(MenuSelectionGantt,ajouterTache);
+        VueSelecteurGantt vueSelecteurGantt = new VueSelecteurGantt(m, "Affichage Gantt");
+        conteneur.getChildren().addAll(vueSelecteurGantt,ajouterTache);
         conteneur.setAlignment(Pos.CENTER);
-        conteneurBouton.getChildren().add(conteneur);
-
-
-        racine.setLeft(conteneurBouton);
-
+        racine.setLeft(conteneur);
 
         //Vue avec des onglets
         TabPane tabPane = new TabPane();
@@ -99,6 +89,7 @@ public class MainAffichage extends Application {
         m.enregistrerObservateur(vueBureau);
         m.enregistrerObservateur(vueArchive);
         m.enregistrerObservateur(vueGantt);
+        m.enregistrerObservateur(vueSelecteurGantt);
         m.notifierObservateurs();
 
         tabPane.getTabs().addAll(vueListe, vueBureau, vueArchive, vueHistorique, vueGantt);

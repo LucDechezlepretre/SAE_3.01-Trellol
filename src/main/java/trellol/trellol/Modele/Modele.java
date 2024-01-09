@@ -368,16 +368,16 @@ public class Modele implements Sujet, Serializable {
 				datefin = dateTacheT;
 			}
 		}
-		System.out.println(datefin);
 		return datefin;
 	}
 
-	public void modifierListeGantt(Tache t) {
-		if (this.TacheSelectGantt.contains(t)) {
-			this.TacheSelectGantt.remove(t);
-		} else {
-			this.TacheSelectGantt.add(t);
-		}
+	public void supprimerListeGantt(Tache t) {
+		this.TacheSelectGantt.remove(t);
+		notifierObservateurs();
+	}
+
+	public void ajouterListeGantt(Tache t) {
+		this.TacheSelectGantt.add(t);
 		notifierObservateurs();
 	}
 

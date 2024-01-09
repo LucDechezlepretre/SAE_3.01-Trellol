@@ -30,8 +30,6 @@ public class VueGantt extends Tab implements Observateur {
 
     private static double ecartVertical = 1.3;
 
-    private static double ecartHorizontal = 0.5;
-
     private static double decalage = 15;
 
     private static List<String> couleurs = new ArrayList<>(Arrays.asList("green","orange","red"));;
@@ -66,12 +64,15 @@ public class VueGantt extends Tab implements Observateur {
     }
 
     public Canvas affichageGantt() {
-        Canvas canvas = new Canvas(5000,5000);
+        double longueurCanva = TailleJour* this.diffDatesProjet(model.getDateFinProjet())+this.decalage*2;
+        double hauteurCanva = (model.getTacheSelectGantt().size()+VueGantt.ecartVertical)*(VueGantt.TailleJour+1);
+        System.out.println(longueurCanva + " " + hauteurCanva);
+        Canvas canvas = new Canvas(longueurCanva,hauteurCanva);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         List<Tache> listeTache = model.getTacheSelectGantt();
         Collections.sort(listeTache);
         for (Tache t: listeTache) {
-               if (t.getAntecedant() == null && !t.equals(model.getRacine())) {
+               if (!model.getTacheSelectGantt().contains(t.getAntecedant()) && !t.equals(model.getRacine())) {
                    DessinerTacheRecursivement(gc, t);
                }
         }
@@ -103,7 +104,7 @@ public class VueGantt extends Tab implements Observateur {
         }
         if (model.getSuccesseurs(t).size() != 0) {
             for (Tache enfant : model.getSuccesseurs(t)) {
-                if (enfant.getEtat().equals(Tache.ETAT_INITIAL)) {
+                if (model.getTacheSelectGantt().contains(enfant)) {
                     this.DessinerTacheRecursivement(gc, enfant);
                 }
             }

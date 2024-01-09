@@ -2,6 +2,7 @@ package trellol.trellol.Controleurs;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Tache;
@@ -20,6 +21,13 @@ public class ControleurSelectionGantt implements EventHandler {
 
     @Override
     public void handle(Event event) {
-        m.modifierListeGantt(tache);
+        if (m.getTacheSelectGantt().contains(tache)) {
+            m.supprimerListeGantt(tache);
+            ((MenuItem)event.getTarget()).setText(((MenuItem) event.getTarget()).getText().replace("X ",""));
+        } else {
+            m.ajouterListeGantt(tache);
+            ((MenuItem)event.getTarget()).setText("X " + ((MenuItem) event.getTarget()).getText());
+        }
+
     }
 }
