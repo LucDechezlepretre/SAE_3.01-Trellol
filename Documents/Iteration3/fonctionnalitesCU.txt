@@ -5,4 +5,4 @@ DECHEZLEPRETRE Luc a travaillé sur l'implémentation d'un tabPane pour naviguer
 aidé pour la modification d'une tache et le Drag and Drop de la vue bureau
 DESPAQUIS Liam a principalement travaillé sur l'implémentation du Drag and Drop de la vue Bureau
 FONTANEZ Antoine a travaillé sur l'archivage des tâches et leur affichage dans l'onglet de l'application qui leur est reservé
-SLIMANI Robin a travaillé sur la modification d'une tache ainsi qu'à la mise à jour de notre diagramme de classe
+SLIMANI Robin a travaillé sur la modification d'une tache ainsi qu'à la mise à jour de notre diagramme de classe et des diagrammes de séquence;
