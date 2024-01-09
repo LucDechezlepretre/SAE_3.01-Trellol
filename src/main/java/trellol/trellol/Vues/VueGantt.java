@@ -28,7 +28,7 @@ public class VueGantt extends Tab implements Observateur {
 
     private double y = 0.5;
 
-    private static double ecartVertical = 0.3;
+    private static double ecartVertical = 1.3;
 
     private static double ecartHorizontal = 0.5;
 
@@ -73,7 +73,6 @@ public class VueGantt extends Tab implements Observateur {
         for (Tache t: listeTache) {
                if (t.getAntecedant() == null && !t.equals(model.getRacine())) {
                    DessinerTacheRecursivement(gc, t);
-                   this.y += VueGantt.ecartVertical;
                }
         }
         this.creerTimeline(gc,model.getRacine());
@@ -81,28 +80,32 @@ public class VueGantt extends Tab implements Observateur {
     }
 
     public void DessinerTacheRecursivement(GraphicsContext gc, Tache t) {
-        gc.setFill(Paint.valueOf(couleurs.get(t.getImportance())));
-        gc.fillRect(VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage,this.y*VueGantt.TailleJour,VueGantt.TailleJour*model.calculerDureeTache(t), VueGantt.TailleJour);
-        gc.strokeText(t.getNom(),this.diffDatesProjet(t.getDateDebut())*VueGantt.TailleJour+VueGantt.decalage,this.y*VueGantt.TailleJour+10);
+        if (t.getEtat().equals(Tache.ETAT_INITIAL)) {
+            gc.setFill(Paint.valueOf(couleurs.get(t.getImportance())));
+            gc.fillRect(VueGantt.TailleJour * this.diffDatesProjet(t.getDateDebut()) + VueGantt.decalage, this.y * VueGantt.TailleJour, VueGantt.TailleJour * model.calculerDureeTache(t), VueGantt.TailleJour);
+            gc.strokeText(t.getNom(), this.diffDatesProjet(t.getDateDebut()) * VueGantt.TailleJour + VueGantt.decalage, this.y * VueGantt.TailleJour + 10);
 
-        ArrayList<Double> coordonnees = new ArrayList<Double>();
-        coordonnees.add(VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage + VueGantt.TailleJour*model.calculerDureeTache(t));
-        coordonnees.add(this.y*VueGantt.TailleJour + VueGantt.TailleJour/2);
-        this.coordonneesParents.put(t, coordonnees);
+            ArrayList<Double> coordonnees = new ArrayList<Double>();
+            coordonnees.add(VueGantt.TailleJour * this.diffDatesProjet(t.getDateDebut()) + VueGantt.decalage + VueGantt.TailleJour * model.calculerDureeTache(t));
+            coordonnees.add(this.y * VueGantt.TailleJour + VueGantt.TailleJour / 2);
+            this.coordonneesParents.put(t, coordonnees);
 
-        if (coordonneesParents.containsKey(t.getAntecedant())) {
-            Double parentX = this.coordonneesParents.get(t.getAntecedant()).get(0);
-            Double parentY = this.coordonneesParents.get(t.getAntecedant()).get(1);
-            Double enfantX = VueGantt.TailleJour*this.diffDatesProjet(t.getDateDebut())+VueGantt.decalage;
-            Double enfantY = this.y*VueGantt.TailleJour + VueGantt.TailleJour/2;
+            if (coordonneesParents.containsKey(t.getAntecedant())) {
+                Double parentX = this.coordonneesParents.get(t.getAntecedant()).get(0);
+                Double parentY = this.coordonneesParents.get(t.getAntecedant()).get(1);
+                Double enfantX = VueGantt.TailleJour * this.diffDatesProjet(t.getDateDebut()) + VueGantt.decalage;
+                Double enfantY = this.y * VueGantt.TailleJour + VueGantt.TailleJour / 2;
 
-            gc.strokeLine(parentX,parentY,enfantX,enfantY);
+                gc.strokeLine(parentX, parentY, enfantX, enfantY);
+            }
+
+            this.y += VueGantt.ecartVertical;
         }
-
-        this.y++;
         if (model.getSuccesseurs(t).size() != 0) {
             for (Tache enfant : model.getSuccesseurs(t)) {
-                this.DessinerTacheRecursivement(gc, enfant);
+                if (enfant.getEtat().equals(Tache.ETAT_INITIAL)) {
+                    this.DessinerTacheRecursivement(gc, enfant);
+                }
             }
         }
     }
@@ -117,7 +120,8 @@ public class VueGantt extends Tab implements Observateur {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM");
         Date date = racine.getDateDebut();
         int position = 0;
-        for(int i = 0; i<model.calculerDureeTache(racine); i++) {
+        int dureeProjet = diffDatesProjet(model.getDateFinProjet());
+        for(int i = 0; i<=dureeProjet; i++) {
             gc.strokeText(df.format(date),position,10);
             position += VueGantt.TailleJour;
             date = new Date(date.getTime() + (1000 * 60 * 60 * 24));
