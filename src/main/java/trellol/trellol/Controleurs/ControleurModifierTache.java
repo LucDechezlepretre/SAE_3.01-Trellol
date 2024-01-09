@@ -148,12 +148,16 @@ public class ControleurModifierTache implements EventHandler<ActionEvent> {
 
                 this.tacheMod.setParent(parent);
             }
+
+            modele.generationDate(tacheMod);
             this.fenetre.close();
         }
         catch(AjoutTacheException e){
             this.erreur.setText(e.getMessage());
         }
         MainAffichage.affichageFormTache = false;
+
+        modele.actualiserDates();
         modele.notifierObservateurs();
     }
 
