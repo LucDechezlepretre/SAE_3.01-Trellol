@@ -19,6 +19,7 @@ import trellol.trellol.Tache;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -69,8 +70,7 @@ public class FenetreTache {
                     .atZone(java.time.ZoneId.systemDefault()).toLocalDate());
         }
         else{ //par defaut date d'aujourd'hui
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.FRENCH);
-            fieldDate.setValue(LocalDate.now());
+            fieldDate.setValue(m.getRacine().getDateDebut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         }
 
         ///duree
