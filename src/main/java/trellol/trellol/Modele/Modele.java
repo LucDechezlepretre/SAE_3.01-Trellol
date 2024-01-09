@@ -371,10 +371,10 @@ public class Modele implements Sujet, Serializable {
 		return datefin;
 	}
 
-	public void sauvegarder(String chemin, String nom){
+	public void sauvegarder(String chemin){
 		try {
 			//Cree un flux de sortie (fichier puis flux d'objet)
-			FileOutputStream outputStream = new FileOutputStream(chemin+nom+".trellol");
+			FileOutputStream outputStream = new FileOutputStream(chemin);
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
 			objectOutputStream.writeObject(this);
 			objectOutputStream.close();
