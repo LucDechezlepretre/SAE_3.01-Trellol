@@ -50,15 +50,14 @@ public class MainAffichage extends Application {
 
         BorderPane racine = new BorderPane();
         racine.setPadding(new Insets(10));
-        //Vue avec des onglets
-        TabPane tabPane = new TabPane();
+
 
         //Barre d'outil
         MenuBar menuBar = new MenuBar();
         Menu menuFichier = new Menu("Fichier");
         MenuItem ouvrir = new MenuItem("Ouvrir un fichier...");
 
-        ControleurOuvertureFichier controleurOuvertureFichier = new ControleurOuvertureFichier(m, stage, tabPane);
+        ControleurOuvertureFichier controleurOuvertureFichier = new ControleurOuvertureFichier(m, stage);
 
         ouvrir.setOnAction(controleurOuvertureFichier);
         MenuItem enregistrer = new MenuItem("Enregistrer sous...");
@@ -102,6 +101,8 @@ public class MainAffichage extends Application {
         conteneur.setAlignment(Pos.CENTER);
         racine.setLeft(conteneur);
 
+        //Vue avec des onglets
+        TabPane tabPane = new TabPane();
         VueListe vueListe = new VueListe("Liste",m);
         VueBureau vueBureau = new VueBureau("Bureau", m);
         VueHistorique vueHistorique = new VueHistorique("Historique", m);
@@ -125,7 +126,7 @@ public class MainAffichage extends Application {
         Scene scene = new Scene(racine, 600, 400);
 
         //CSS
-        //scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         //style scene
         scene.getRoot().getStyleClass().add("scene");

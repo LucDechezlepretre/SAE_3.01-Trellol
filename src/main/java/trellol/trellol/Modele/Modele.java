@@ -45,6 +45,7 @@ public class Modele implements Sujet, Serializable {
 		return this.ensTache;
 	}
 
+
 	public void setEnsTache(List<Tache> ensTache) {
 		this.ensTache = ensTache;
 	}
@@ -379,7 +380,7 @@ public class Modele implements Sujet, Serializable {
 			//Cree un flux de sortie (fichier puis flux d'objet)
 			FileOutputStream outputStream = new FileOutputStream(chemin);
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-			objectOutputStream.writeObject(this);
+			objectOutputStream.writeObject(this.getEnsTache());
 			objectOutputStream.close();
 			System.out.println("Objet enregistré avec succès dans le fichier.");
 		}
@@ -392,13 +393,13 @@ public class Modele implements Sujet, Serializable {
 			System.out.println("Erreur hors d'E/S");
 		}
 	}
-	public static Modele charger(String chemin){
-		Modele modele = new Modele();
+	public static List<Tache> charger(String chemin){
+		List<Tache> ensTache = new ArrayList<Tache>();
 		try{
 			//Cree flux de lecture
 			FileInputStream in = new FileInputStream(chemin);
 			ObjectInputStream oin = new ObjectInputStream(in);
-			modele= (Modele) oin.readObject();
+			ensTache = (List<Tache>) oin.readObject();
 		}
 		catch (IOException e){
 			System.out.println("Erreur d'E/S");
@@ -410,7 +411,7 @@ public class Modele implements Sujet, Serializable {
 		catch (Exception e){
 			System.out.println("Erreur hors cast et E/S");
 		}
-		return modele;
+		return ensTache;
 	}
 
 	@Override
@@ -418,13 +419,14 @@ public class Modele implements Sujet, Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Modele modele = (Modele) o;
-		return Objects.equals(historique, modele.historique) && Objects.equals(ensTache, modele.ensTache);
+		return Objects.equals(ensTache, modele.ensTache);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(historique, ensTache);
+		return Objects.hash(ensTache);
 	}
+
 	public void supprimerListeGantt(Tache t) {
 		this.TacheSelectGantt.remove(t);
 		for (Tache tache: this.getEnfant(t)) {
