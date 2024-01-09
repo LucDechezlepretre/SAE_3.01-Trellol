@@ -90,6 +90,10 @@ public class MainAffichage extends Application {
         racine.setCenter(tabPane);
 
         Scene scene = new Scene(racine, 600, 400);
+
+        //CSS
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
         stage.setTitle("Trellol");
         stage.setScene(scene);
         stage.show();
