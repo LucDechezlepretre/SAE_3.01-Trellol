@@ -395,7 +395,7 @@ public class Modele implements Sujet, Serializable {
 			//Cree flux de lecture
 			FileInputStream in = new FileInputStream(chemin);
 			ObjectInputStream oin = new ObjectInputStream(in);
-			modele.setEnsTache((List<Tache>) oin.readObject());
+			modele= (Modele) oin.readObject();
 		}
 		catch (IOException e){
 			System.out.println("Erreur d'E/S");

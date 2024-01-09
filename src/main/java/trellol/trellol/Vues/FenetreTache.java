@@ -132,7 +132,7 @@ public class FenetreTache {
         }
         else{ //par defaut
             if(m.getEnsTache().size() > 0) {
-                fieldParent.setValue(m.getRacine().getNom());
+                fieldParent.setValue(nomParent);
             }
         }
 
