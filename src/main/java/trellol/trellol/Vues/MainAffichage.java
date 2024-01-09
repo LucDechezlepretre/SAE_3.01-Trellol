@@ -47,15 +47,16 @@ public class MainAffichage extends Application {
         BorderPane racine = new BorderPane();
         racine.setPadding(new Insets(10));
 
+        //Barre d'outil
+        MenuBar menuBar = new MenuBar();
+        Menu menuFichier = new Menu("Fichier");
+        MenuItem ouvrir = new MenuItem("Ouvrir un fichier...");
+        MenuItem enregistrer = new MenuItem("Enregistrer sous...");
 
-        //Bandeau nom appli
-        StackPane conteneurNomAppli = new StackPane();
-        conteneurNomAppli.setPadding(new Insets(5));
-        conteneurNomAppli.setStyle("-fx-background-color: #ff0099;");
-        Label nomAppli = new Label("Trellol");
-        nomAppli.setFont(javafx.scene.text.Font.font(18));
-        conteneurNomAppli.getChildren().add(nomAppli);
-        racine.setTop(conteneurNomAppli);
+        menuFichier.getItems().setAll(ouvrir, enregistrer);
+        menuBar.getMenus().add(menuFichier);
+
+        racine.setTop(menuBar);
 
         //Bouton ajouter tache gauche
         StackPane conteneurBouton = new StackPane();
