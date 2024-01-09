@@ -248,7 +248,6 @@ public class Modele implements Sujet, Serializable {
 			throw new AjoutTacheException("Parent manquant");
 		}
 
-		Tache.NUMERO+=1;
 		this.getHistorique().addAction(Historique.CREATION_TACHE_ACTION, tache.getNom());
 		this.notifierObservateurs();
 	}
