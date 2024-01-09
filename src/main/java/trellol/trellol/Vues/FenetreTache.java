@@ -70,7 +70,9 @@ public class FenetreTache {
                     .atZone(java.time.ZoneId.systemDefault()).toLocalDate());
         }
         else{ //par defaut date d'aujourd'hui
-            fieldDate.setValue(m.getRacine().getDateDebut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            if(m.getEnsTache().size() >0 ) {
+                fieldDate.setValue(m.getRacine().getDateDebut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            }
         }
 
         ///duree
@@ -213,7 +215,7 @@ public class FenetreTache {
         });
 
         //CSS
-        scene.getStylesheets().add(FenetreTache.class.getResource("style.css").toExternalForm());
+        //scene.getStylesheets().add(FenetreTache.class.getResource("style.css").toExternalForm());
 
         //style scene
         scene.getRoot().getStyleClass().add("scene");
