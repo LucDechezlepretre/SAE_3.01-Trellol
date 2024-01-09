@@ -14,23 +14,15 @@
     -fx-background-color: rgb(134, 141, 229);
 }
 
-.tache{
-    -fx-background-color: rgb(112, 119, 122);
-}
-
 .tache Label{
     -fx-text-fill: white;
 }
 
-.tache:hover{
-    -fx-background-color: rgb(131, 138, 141);
-}
-
 .tacheFaible{
-    -fx-background-color: green;
+    -fx-background-color: #1d8d1d;
 }
 .tacheFaible:hover{
-    -fx-background-color: #1d8d1d;
+    -fx-background-color: #36b036;
 }
 
 .tacheMoyenne{
@@ -49,6 +41,10 @@
 }
 
 .racine{
-    -fx-background-color: black;
+    -fx-background-color: #131313;
+}
+
+.racine > Label{
     -fx-text-fill: white;
+    -fx-font-weight: bold;
 }
