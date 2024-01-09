@@ -8,14 +8,33 @@ import javafx.stage.Stage;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Vues.*;
 
+/**
+ * Classe controleur permettant le controle lors de l'ouverture d'un fichier
+ */
 public class ControleurOuvertureFichier implements EventHandler<ActionEvent> {
+    /**
+     * Attribut modele que le controleur modifiera
+     */
     private Modele modele;
+    /**
+     * Attribut stage depuis lequel le contrôleur ouvrir l'explorateur de fichier
+     */
     private Stage stage;
 
+    /**
+     * Constructeur du controleur
+     * @param m Modele
+     * @param s Stage
+     */
     public ControleurOuvertureFichier(Modele m, Stage s){
         this.modele = m;
         this.stage = s;
     }
+
+    /**
+     * Redéfinition de la méthode handle
+     * @param actionEvent evenement
+     */
     @Override
     public void handle(ActionEvent actionEvent) {
         // Créer une boîte de dialogue de choix de fichier
@@ -32,12 +51,10 @@ public class ControleurOuvertureFichier implements EventHandler<ActionEvent> {
         // Si un fichier est choisi, afficher le chemin du fichier
         if (selectedFile != null) {
             System.out.println("Fichier choisi : " + selectedFile.getAbsolutePath());
+            //On change la liste de tâche du modèle actuel par la nouvelle
             this.modele.setEnsTache(Modele.charger(selectedFile.getAbsolutePath()));
 
             this.modele.notifierObservateurs();
-            System.out.println(this.modele);
-            System.out.println(this.modele.calculerDureeTache(this.modele.getRacine()));
-            System.out.println(this.modele.getEnfant(this.modele.getRacine()));
         }
 
     }
