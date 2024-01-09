@@ -82,7 +82,6 @@ public class VueBureau extends Tab implements Observateur, Serializable {
         gp.setStyle("-fx-border-color: black;"); // Ajout d'une bordure pour mieux visualiser
         boolean rang2 = this.model.getEnfant(this.model.getRacine()).contains(tache);
         boolean racine = tache == this.model.getRacine();
-        int nbColonne = 0;
         if (this.model.getEnfant(tache).size() > 0) {
             int colonne = 1;
             if (racine) {
@@ -104,7 +103,6 @@ public class VueBureau extends Tab implements Observateur, Serializable {
                         ligne++;
                     }
                 }
-                nbColonne++;
             }
         }
         if(rang2) {
