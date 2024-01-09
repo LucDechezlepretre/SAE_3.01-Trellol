@@ -432,6 +432,12 @@ public class Modele implements Sujet, Serializable {
 		notifierObservateurs();
 	}
 
+	public void actualiserDates(){
+		for(Tache t : this.ensTache){
+			this.generationDate(t);
+		}
+	}
+
 	public List<Tache> getTacheSelectGantt() {
 		return TacheSelectGantt;
 	}
