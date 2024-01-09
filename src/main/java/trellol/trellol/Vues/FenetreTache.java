@@ -56,7 +56,7 @@ public class FenetreTache {
             fieldNom.setText(nomParent);
         }
         else{
-            fieldNom.setText("Tache "+m.getEnsTache().size()+1);
+            fieldNom.setText("Tache "+(m.getEnsTache().size()+1));
         }
         ligneNom.getChildren().addAll(tNom, fieldNom);
 

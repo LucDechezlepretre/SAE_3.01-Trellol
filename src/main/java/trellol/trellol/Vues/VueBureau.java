@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import trellol.trellol.Importance;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
@@ -92,7 +93,18 @@ public class VueBureau extends Tab implements Observateur, Serializable {
             for (Tache t : this.model.getEnfant(tache)) {
                 if (t.getEtat().equals(Tache.ETAT_INITIAL)){
                     GridPane gpt = createRecursiveGridPane(t);
-                    gpt.getStyleClass().add("tache");
+
+                    String cssClass;
+                    if(t.getImportance()== Importance.FAIBLE){
+                        cssClass="tacheFaible";
+                    } else if (t.getImportance()== Importance.MOYENNE) {
+                        cssClass="tacheMoyenne";
+                    }
+                    else{
+                        cssClass="tacheImportante";
+                    }
+
+                    gpt.getStyleClass().add(cssClass);
                     gpt.setOnMouseClicked(mouseEvent -> {
                         FenetreTache.afficherFormulaireTache(this.model, t.getNom(), true);
                     });
