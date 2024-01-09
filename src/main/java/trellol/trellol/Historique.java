@@ -1,12 +1,14 @@
 package trellol.trellol;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Classe Historique permettant la gestion d'un historique des modifications
  * au sein d'un modèle
  */
-public class Historique {
+public class Historique implements Serializable {
     /**
      * Attribut liste représentant la totalité des actions
      */
@@ -75,5 +77,18 @@ public class Historique {
             affiche += action + "\n";
         }
         return affiche;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Historique that = (Historique) o;
+        return Objects.equals(actions, that.actions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(actions);
     }
 }

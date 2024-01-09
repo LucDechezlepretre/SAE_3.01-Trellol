@@ -12,18 +12,20 @@ import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
 
+import java.io.Serializable;
+
 /**
  * Classe VueBureau permettant la représentation des tâches sous forme d'un
  * affichage "Bureau" d'un modèle, héritant de la classe Tab pour permettre
  * un affichage sous la forme d'un onglet
  * et implémentant Observateur pour pouvoir être enregistrer auprès d'un Sujet
  */
-public class VueBureau extends Tab implements Observateur {
+public class VueBureau extends Tab implements Observateur, Serializable {
     /**
      * Attribut model, représentant le modèle sur lequel se basera la vue pour se
      * construire
      */
-    private static Modele model;
+    private Modele model;
 
     /**
      * Constructeur de la vue
@@ -32,9 +34,9 @@ public class VueBureau extends Tab implements Observateur {
      */
     public VueBureau(String nom, Sujet s) {
         super(nom);
-        VueBureau.model = (Modele) s;
+        model = (Modele) s;
         StackPane conteneur = new StackPane();
-        if(VueBureau.model.getEnsTache().size() > 0) {
+        if(model.getEnsTache().size() > 0) {
             conteneur = new StackPane(this.createRecursiveGridPane(model.getRacine()));
         }
         this.setContent(conteneur);
@@ -45,13 +47,13 @@ public class VueBureau extends Tab implements Observateur {
      */
     @Override
     public void actualiser(Sujet s) {
-        VueBureau.model =(Modele) s;
+        this.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
         // Créer une barre de défilement horizontal et vertical avec un ScrollPane
         content.getChildren().clear();
         ScrollPane scrollPane = new ScrollPane();
-        if(VueBureau.model.getEnsTache().size() > 0) {
-            scrollPane.setContent(this.createRecursiveGridPane(VueBureau.model.getRacine()));
+        if(this.model.getEnsTache().size() > 0) {
+            scrollPane.setContent(this.createRecursiveGridPane(this.model.getRacine()));
         }
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -92,7 +94,7 @@ public class VueBureau extends Tab implements Observateur {
                 if (t.getEtat().equals(Tache.ETAT_INITIAL)){
                     GridPane gpt = createRecursiveGridPane(t);
                     gpt.setOnMouseClicked(mouseEvent -> {
-                        FenetreTache.afficherFormulaireTache(VueBureau.model, t.getNom(), true);
+                        FenetreTache.afficherFormulaireTache(this.model, t.getNom(), true);
                     });
                     gp.add(gpt, colonne, ligne);
                     if (racine) {
@@ -109,7 +111,7 @@ public class VueBureau extends Tab implements Observateur {
             gp.add(bAjoutTache,1,gp.getRowCount());
             bAjoutTache.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
-                    FenetreTache.afficherFormulaireTache(VueBureau.model,tache.getNom(), false);
+                    FenetreTache.afficherFormulaireTache(model ,tache.getNom(), false);
                 }
             });
         }

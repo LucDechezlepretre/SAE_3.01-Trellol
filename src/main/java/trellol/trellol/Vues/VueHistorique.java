@@ -7,18 +7,21 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
+
+import java.io.Serializable;
+
 /**
  * Classe VueBureau permettant la représentation de l'historique
  * d'un modèle, héritant de la classe Tab pour permettre
  * un affichage sous la forme d'un onglet
  * et implémentant Observateur pour pouvoir être enregistrer auprès d'un Sujet
  */
-public class VueHistorique extends Tab implements Observateur{
+public class VueHistorique extends Tab implements Observateur, Serializable {
     /**
      * Attribut model, représentant le modèle sur lequel se basera la vue pour se
      * construire
      */
-    private static Modele model;
+    private Modele model;
     /**
      * Constructeur de la vue
      * @param nom nom de l'onglet
@@ -27,7 +30,7 @@ public class VueHistorique extends Tab implements Observateur{
 
     public VueHistorique(String nom, Sujet s) {
         super(nom);
-        VueHistorique.model = (Modele) s;
+        this.model = (Modele) s;
         StackPane conteneur = new StackPane(this.affichageHistorique());
         this.setContent(conteneur);
     }
@@ -39,7 +42,7 @@ public class VueHistorique extends Tab implements Observateur{
      */
     @Override
     public void actualiser(Sujet s) {
-        VueHistorique.model =(Modele) s;
+        this.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
         content.getChildren().add(this.affichageHistorique());

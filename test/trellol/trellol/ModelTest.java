@@ -317,4 +317,13 @@ class ModelTest {
         m.ajouterTache(tache);
         assertEquals(tache, m.findTacheByName("tache1"), "La tache devrait etre trouvée");
     }
+
+    @Test
+    public void testSauvergarderEtCharger() throws AjoutTacheException{
+        Tache racine = new Tache("racine", "13/12/2023", 2, "Bonjour", 1);
+        //ajout racine
+        m.ajouterTache(racine);
+        this.m.sauvegarder("/home/lucoss/Documents/BUT/BUT2/Qualite_de_Dev/SAE_3.01-Trellol/Documents", "test");
+        assertEquals(this.m, Modele.charger("test.bin"), "le modèle devrait être correctement chargé");
+    }
 }

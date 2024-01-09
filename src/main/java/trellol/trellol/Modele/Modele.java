@@ -5,11 +5,8 @@ import trellol.trellol.Historique;
 import trellol.trellol.Vues.Observateur;
 import trellol.trellol.Tache;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * Classe correspondant au modele de l'architecture MVC
@@ -43,6 +40,10 @@ public class Modele implements Sujet, Serializable {
 	 */
 	public List<Tache> getEnsTache() {
 		return this.ensTache;
+	}
+
+	public void setEnsTache(List<Tache> ensTache) {
+		this.ensTache = ensTache;
 	}
 
 	/**
@@ -367,5 +368,57 @@ public class Modele implements Sujet, Serializable {
 		}
 		System.out.println(datefin);
 		return datefin;
+	}
+
+	public void sauvegarder(String chemin, String nom){
+		try {
+			//Cree un flux de sortie (fichier puis flux d'objet)
+			FileOutputStream outputStream = new FileOutputStream(chemin+nom+".trellol");
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+			objectOutputStream.writeObject(this);
+			objectOutputStream.close();
+			System.out.println("Objet enregistré avec succès dans le fichier.");
+		}
+		catch (IOException e){
+			System.out.println("Erreur d'E/S");
+			//System.out.println(e);
+
+		}
+		catch (Exception e){
+			System.out.println("Erreur hors d'E/S");
+		}
+	}
+	public static Modele charger(String chemin){
+		Modele modele = new Modele();
+		try{
+			//Cree flux de lecture
+			FileInputStream in = new FileInputStream(chemin);
+			ObjectInputStream oin = new ObjectInputStream(in);
+			modele.setEnsTache((List<Tache>) oin.readObject());
+		}
+		catch (IOException e){
+			System.out.println("Erreur d'E/S");
+			System.out.println(e.getMessage());
+		}
+		catch (ClassCastException e){
+			System.out.println("Erreur de cast");
+		}
+		catch (Exception e){
+			System.out.println("Erreur hors cast et E/S");
+		}
+		return modele;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Modele modele = (Modele) o;
+		return Objects.equals(historique, modele.historique) && Objects.equals(ensTache, modele.ensTache);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(historique, ensTache);
 	}
 }

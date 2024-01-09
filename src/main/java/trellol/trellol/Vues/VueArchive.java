@@ -13,6 +13,7 @@ import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -20,12 +21,12 @@ import java.util.ArrayList;
  * héritant de la classe Tab pour permettre un affichage sous la forme d'un onglet
  * et implémentant Observateur pour pouvoir être enregistrer auprès d'un Sujet
  */
-public class VueArchive extends Tab implements Observateur{
+public class VueArchive extends Tab implements Observateur, Serializable {
     /**
      * Attribut model, représentant le modèle sur lequel se basera la vue pour se
      * construire
      */
-    private static Modele model;
+    private Modele model;
 
     /**
      * Constructeur de la vue
@@ -34,7 +35,7 @@ public class VueArchive extends Tab implements Observateur{
      */
     public VueArchive(String nom, Sujet s) {
         super(nom);
-        VueArchive.model = (Modele) s;
+        this.model = (Modele) s;
         StackPane conteneur = new StackPane(this.affichageArchive());
         this.setContent(conteneur);
     }
@@ -45,7 +46,7 @@ public class VueArchive extends Tab implements Observateur{
      */
     @Override
     public void actualiser(Sujet s) {
-        VueArchive.model =(Modele) s;
+        this.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
         content.getChildren().add(this.affichageArchive());

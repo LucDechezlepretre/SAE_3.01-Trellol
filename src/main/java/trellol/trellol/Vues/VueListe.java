@@ -9,18 +9,20 @@ import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
 
+import java.io.Serializable;
+
 /**
  * Classe VueBureau permettant la représentation des tâches sous forme d'un
  * affichage "Liste" d'un modèle, héritant de la classe Tab pour permettre
  * un affichage sous la forme d'un onglet
  * et implémentant Observateur pour pouvoir être enregistrer auprès d'un Sujet
  */
-public class VueListe extends Tab implements Observateur {
+public class VueListe extends Tab implements Observateur, Serializable {
     /**
      * Attribut model, représentant le modèle sur lequel se basera la vue pour se
      * construire
      */
-    private static Modele model;
+    private Modele model;
 
     /**
      * Constructeur de la vue
@@ -29,7 +31,7 @@ public class VueListe extends Tab implements Observateur {
      */
     public VueListe(String nom, Sujet s) {
         super(nom);
-        VueListe.model = (Modele)s;
+        this.model = (Modele)s;
         StackPane conteneur = new StackPane();
         this.setContent(conteneur);
     }
@@ -40,7 +42,7 @@ public class VueListe extends Tab implements Observateur {
      */
     @Override
     public void actualiser(Sujet s) {
-        VueListe.model =(Modele) s;
+        this.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
         // Créer une barre de défilement horizontal et vertical avec un ScrollPane
@@ -69,10 +71,10 @@ public class VueListe extends Tab implements Observateur {
      * @param tache tâche pour laquelle on veut construire un TreeItem
      */
     private void ajouterTacheRecursivement(TreeItem<Tache> parentItem, Tache tache){
-        if(VueListe.model.getEnfant(tache).size() == 0){
+        if(this.model.getEnfant(tache).size() == 0){
             return;
         }
-        for(Tache enfant : VueListe.model.getEnfant(tache)){
+        for(Tache enfant : this.model.getEnfant(tache)){
             if(enfant.getEtat()!=Tache.ETAT_ARCHIVE) {
                 // Crée un nouvel élément de TreeItem pour la tâche
                 TreeItem<Tache> childItem = createTreeItem(enfant);
@@ -87,8 +89,8 @@ public class VueListe extends Tab implements Observateur {
     }
     public TreeView<Tache> affichageListe(){
         // Crée le TreeView avec l'élément racine
-        TreeItem<Tache> racine = createTreeItem(VueListe.model.getRacine());
-        this.ajouterTacheRecursivement(racine, VueListe.model.getRacine());
+        TreeItem<Tache> racine = createTreeItem(this.model.getRacine());
+        this.ajouterTacheRecursivement(racine, this.model.getRacine());
         //Création du TreeView à partir du TreeItem racine
         TreeView<Tache> treeView = new TreeView<>(racine);
         treeView.setEditable(true);
@@ -140,7 +142,7 @@ public class VueListe extends Tab implements Observateur {
                     Tache draggedItem = (Tache) dragboard.getContent(MainAffichage.customFormatListe);
                     //On déplace la tache draggé dans celle sur laquelle elle a été droppé
                     //on récupère la tâche visé avec cell.getItem()
-                    VueListe.model.deplacerTache(draggedItem, cell.getItem());
+                    this.model.deplacerTache(draggedItem, cell.getItem());
                     //System.out.println(model);
                 } else {
                     event.setDropCompleted(false);
@@ -149,8 +151,8 @@ public class VueListe extends Tab implements Observateur {
             });
             //Fin de la création de la cellule
             cell.setOnMouseClicked(mouseEvent -> {
-                if(!cell.getItem().equals(VueListe.model.getRacine())) {
-                    FenetreTache.afficherFormulaireTache(VueListe.model, cell.getItem().getNom(), true);
+                if(!cell.getItem().equals(this.model.getRacine())) {
+                    FenetreTache.afficherFormulaireTache(this.model, cell.getItem().getNom(), true);
                 }
             });
             return cell;

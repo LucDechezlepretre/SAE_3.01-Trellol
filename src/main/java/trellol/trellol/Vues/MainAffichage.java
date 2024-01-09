@@ -93,7 +93,7 @@ public class MainAffichage extends Application {
         Scene scene = new Scene(racine, 600, 400);
 
         //CSS
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        //scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         stage.setTitle("Trellol");
         stage.setScene(scene);

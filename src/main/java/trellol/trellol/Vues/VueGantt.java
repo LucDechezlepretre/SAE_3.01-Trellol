@@ -12,6 +12,7 @@ import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -20,9 +21,9 @@ import java.util.concurrent.TimeUnit;
 
 import static trellol.trellol.Tache.dateFormat;
 
-public class VueGantt extends Tab implements Observateur {
+public class VueGantt extends Tab implements Observateur, Serializable {
 
-    private static Modele model;
+    private Modele model;
 
     private static int TailleJour = 60;
 
@@ -42,7 +43,7 @@ public class VueGantt extends Tab implements Observateur {
     public VueGantt(String nom, Sujet s) {
         super(nom);
         coordonneesParents = new HashMap<>();
-        VueGantt.model = (Modele)s;
+        this.model = (Modele)s;
         StackPane conteneur = new StackPane();
         this.setContent(conteneur);
 
@@ -52,7 +53,7 @@ public class VueGantt extends Tab implements Observateur {
     public void actualiser(Sujet s) {
         this.y = 1;
         coordonneesParents = new HashMap<>();
-        VueGantt.model =(Modele) s;
+        this.model =(Modele) s;
         this.debutProjet = this.model.getRacine().getDateDebut();
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
