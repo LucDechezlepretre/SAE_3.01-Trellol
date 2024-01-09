@@ -70,7 +70,9 @@ public class FenetreTache {
                     .atZone(java.time.ZoneId.systemDefault()).toLocalDate());
         }
         else{ //par defaut date d'aujourd'hui
-            fieldDate.setValue(m.getRacine().getDateDebut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            if(m.getEnsTache().size() >0 ) {
+                fieldDate.setValue(m.getRacine().getDateDebut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            }
         }
 
         ///duree
