@@ -25,7 +25,7 @@ public class Modele implements Sujet, Serializable {
 	 */
 	private List<Tache> ensTache;
 
-	private List<Tache> TacheSelectGantt;
+	private Set<Tache> TacheSelectGantt;
 
 	/**
 	 * Constructeur du modele, initialise la liste d'observateurs et de tâches
@@ -33,7 +33,7 @@ public class Modele implements Sujet, Serializable {
 	public Modele(){
 		this.observateurs = new ArrayList<Observateur> ();
 		this.ensTache = new ArrayList<Tache>();
-		this.TacheSelectGantt = new ArrayList<Tache>();
+		this.TacheSelectGantt = new HashSet<Tache>();
 		historique = new Historique();
 	}
 
@@ -192,6 +192,9 @@ public class Modele implements Sujet, Serializable {
 	 * @param parent tâche parent pour laquelle on veut faire la vérification
 	 */
 	public void parentNotAntecedent(Tache tache, Tache parent){
+		if (parent == null){
+			return;
+		}
 		if(parent.getAntecedant() != null){
 			if(parent.getAntecedant().equals(tache)){
 				parent.setAntecedant(null);
@@ -424,11 +427,17 @@ public class Modele implements Sujet, Serializable {
 	}
 	public void supprimerListeGantt(Tache t) {
 		this.TacheSelectGantt.remove(t);
+		for (Tache tache: this.getEnfant(t)) {
+			this.supprimerListeGantt(tache);
+		}
 		notifierObservateurs();
 	}
 
 	public void ajouterListeGantt(Tache t) {
 		this.TacheSelectGantt.add(t);
+		for (Tache tache: this.getEnfant(t)) {
+			this.ajouterListeGantt(tache);
+		}
 		notifierObservateurs();
 	}
 
@@ -438,7 +447,7 @@ public class Modele implements Sujet, Serializable {
 		}
 	}
 
-	public List<Tache> getTacheSelectGantt() {
+	public Set<Tache> getTacheSelectGantt() {
 		return TacheSelectGantt;
 	}
 }

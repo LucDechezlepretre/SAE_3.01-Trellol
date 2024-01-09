@@ -1,0 +1,7 @@
+Pour cette itération nous avons fait la sauvegarde d’un projet trellol en fichier et la possibilité de le recharger.
+Nous avons aussi corriger le Gantt le plus possible et enfin nous avons travaillé sur l’interface graphique.
+
+DECHEZLEPRETRE Luc a travaillé sur la sauvegarde et le chargement de projet trellol en fichier.
+DESPAQUIS Liam a travaillé sur la correction du Gantt.
+FONTANEZ Antoine a travaillé sur l’interface graphique.
+SLIMANI Robin a testé et corrigé le projet avec le scenario proposé et a commencé le support de la soutenance.

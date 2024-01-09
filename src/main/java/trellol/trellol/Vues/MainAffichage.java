@@ -45,7 +45,7 @@ public class MainAffichage extends Application {
     @Override
     public void start(Stage stage){
         //CREATION DU MODELE
-        Modele m = new Modele();
+        Modele m = creationModel();
 
         BorderPane racine = new BorderPane();
         racine.setPadding(new Insets(10));
@@ -98,7 +98,6 @@ public class MainAffichage extends Application {
         racine.setTop(menuBar);
 
         //Bouton ajouter tache gauche
-        StackPane conteneurBouton = new StackPane();
         VBox conteneur = new VBox(20);
         Button ajouterTache = new Button("Ajouter Tache");
         ajouterTache.setOnAction(new EventHandler<ActionEvent>() {
