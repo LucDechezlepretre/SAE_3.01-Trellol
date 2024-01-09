@@ -26,6 +26,28 @@
     -fx-background-color: rgb(131, 138, 141);
 }
 
+.tacheFaible{
+    -fx-background-color: green;
+}
+.tacheFaible:hover{
+    -fx-background-color: #1d8d1d;
+}
+
+.tacheMoyenne{
+    -fx-background-color: orange;
+}
+.tacheMoyenne:hover{
+    -fx-background-color: #FFD700;
+}
+
+.tacheImportante{
+    -fx-background-color: red;
+}
+
+.tacheImportante:hover{
+    -fx-background-color: #FF6347;
+}
+
 .racine{
     -fx-background-color: black;
     -fx-text-fill: white;
