@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import trellol.trellol.Controleurs.ControleurOuvertureFichier;
 import trellol.trellol.Exceptions.AjoutTacheException;
 import trellol.trellol.Importance;
 import trellol.trellol.Modele.Modele;
@@ -45,7 +46,7 @@ public class MainAffichage extends Application {
     @Override
     public void start(Stage stage){
         //CREATION DU MODELE
-        Modele m = new Modele();
+        Modele m = creationModel();
 
         BorderPane racine = new BorderPane();
         racine.setPadding(new Insets(10));
@@ -54,42 +55,30 @@ public class MainAffichage extends Application {
         MenuBar menuBar = new MenuBar();
         Menu menuFichier = new Menu("Fichier");
         MenuItem ouvrir = new MenuItem("Ouvrir un fichier...");
-        ouvrir.setOnAction(e -> {
-            // Créer une boîte de dialogue de choix de fichier
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Choisir un fichier");
 
-            // Définir l'extension de fichier obligatoire
-            ExtensionFilter extFilter = new ExtensionFilter("Fichiers trellol (*.trellol)", "*.trellol");
-            fileChooser.getExtensionFilters().add(extFilter);
+        ControleurOuvertureFichier controleurOuvertureFichier = new ControleurOuvertureFichier(m, stage);
 
-            // Afficher la boîte de dialogue et attendre que l'utilisateur choisisse un fichier
-            java.io.File selectedFile = fileChooser.showOpenDialog(stage);
-
-            // Si un fichier est choisi, afficher le chemin du fichier
-            if (selectedFile != null) {
-                System.out.println("Fichier choisi : " + selectedFile.getAbsolutePath());
-                Modele de = Modele.charger(selectedFile.getAbsolutePath());
-                System.out.println(de);
-            }
-        });
+        ouvrir.setOnAction(controleurOuvertureFichier);
         MenuItem enregistrer = new MenuItem("Enregistrer sous...");
-        enregistrer.setOnAction(e -> {
-            // Créer une boîte de dialogue de choix de fichier pour enregistrer
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Enregistrer le fichier");
+        enregistrer.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                // Créer une boîte de dialogue de choix de fichier pour enregistrer
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Enregistrer le fichier");
 
-            // Définir l'extension de fichier obligatoire
-            ExtensionFilter extFilter = new ExtensionFilter("Fichiers trellol (*.trellol)", "*.trellol");
-            fileChooser.getExtensionFilters().add(extFilter);
+                // Définir l'extension de fichier obligatoire
+                ExtensionFilter extFilter = new ExtensionFilter("Fichiers trellol (*.trellol)", "*.trellol");
+                fileChooser.getExtensionFilters().add(extFilter);
 
-            // Afficher la boîte de dialogue et attendre que l'utilisateur choisisse l'emplacement et le nom du fichier
-            java.io.File selectedFile = fileChooser.showSaveDialog(stage);
+                // Afficher la boîte de dialogue et attendre que l'utilisateur choisisse l'emplacement et le nom du fichier
+                java.io.File selectedFile = fileChooser.showSaveDialog(stage);
 
-            // Si un fichier est choisi, afficher le chemin du fichier
-            if (selectedFile != null) {
-                System.out.println("Fichier enregistré à : " + selectedFile.getAbsolutePath());
-                m.sauvegarder(selectedFile.getAbsolutePath());
+                // Si un fichier est choisi, afficher le chemin du fichier
+                if (selectedFile != null) {
+                    System.out.println("Fichier enregistré à : " + selectedFile.getAbsolutePath());
+                    m.sauvegarder(selectedFile.getAbsolutePath());
+                }
             }
         });
         menuFichier.getItems().setAll(ouvrir, enregistrer);
@@ -127,7 +116,7 @@ public class MainAffichage extends Application {
         m.enregistrerObservateur(vueArchive);
         m.enregistrerObservateur(vueGantt);
         m.enregistrerObservateur(vueSelecteurGantt);
-        //m.notifierObservateurs();
+        m.notifierObservateurs();
 
         tabPane.getTabs().addAll(vueListe, vueBureau, vueArchive, vueHistorique, vueGantt);
         //On empêche la fermeture des onglets
