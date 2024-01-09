@@ -13,11 +13,6 @@ import java.util.Objects;
 public class Tache implements Serializable, Comparable<Tache> {
 
     /**
-     * Numero de la tache créée
-     */
-    public static int NUMERO;
-
-    /**
      * Format de la date souhaité
      */
     public final static String pattern = "dd/MM/yyyy";

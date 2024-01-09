@@ -16,9 +16,17 @@
 
 .tache{
     -fx-background-color: rgb(112, 119, 122);
+}
+
+.tache Label{
     -fx-text-fill: white;
 }
 
 .tache:hover{
     -fx-background-color: rgb(131, 138, 141);
+}
+
+.racine{
+    -fx-background-color: black;
+    -fx-text-fill: white;
 }

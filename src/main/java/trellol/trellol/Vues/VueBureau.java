@@ -72,7 +72,7 @@ public class VueBureau extends Tab implements Observateur, Serializable {
         GridPane gp = new GridPane();
 
         String nomTache = tache.getNom();
-        this.model.getEnfant(this.model.getRacine());
+        //this.model.getEnfant(this.model.getRacine());
         gp.add(new Label(tache.getNom()),1,1);
 
         gp.setHgap(5);
