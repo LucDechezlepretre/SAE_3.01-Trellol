@@ -1,8 +1,8 @@
-Cette itéation nous a permis de continuer nos fonctionnalités liées a l'interface, ainsi que d'en
+Cette itération nous a permis de continuer nos fonctionnalités liées à l'interface, ainsi que d'en
 commencer d'autres plutôt liées au code :
 
 DECHEZLEPRETRE Luc a travaillé sur l'implémentation d'un tabPane pour naviguer dans l'application, a également
 aidé pour la modification d'une tache et le Drag and Drop de la vue bureau
 DESPAQUIS Liam a principalement travaillé sur l'implémentation du Drag and Drop de la vue Bureau
 FONTANEZ Antoine a travaillé sur l'archivage des tâches et leur affichage dans l'onglet de l'application qui leur est reservé
-SLIMANI Robin a travaillé sur la modification d'une tache ainsi qu'à la mise à jour de notre diagramme de classe
+SLIMANI Robin a travaillé sur la modification d'une tache ainsi qu'à la mise à jour de notre diagramme de classe et des diagrammes de séquence;

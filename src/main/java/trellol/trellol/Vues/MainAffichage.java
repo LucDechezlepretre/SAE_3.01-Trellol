@@ -111,7 +111,7 @@ public class MainAffichage extends Application {
         Tache racine = new Tache("racine", "13/12/2023", 15, "Ceci est la racine", Importance.FAIBLE);
         try {
             model.ajouterTache(racine);
-            Tache racine2 = new Tache("racine2", "14/12/2023", 3, "Ceci est la racine 2 ", Importance.MOYENNE);
+            Tache racine2 = new Tache("racine2", "14/12/2023", 2, "Ceci est la racine 2 ", Importance.MOYENNE);
             racine2.setParent(racine);
             model.ajouterTache(racine2);
 
@@ -123,17 +123,17 @@ public class MainAffichage extends Application {
             t2.setParent(luc);
             t2.setAntecedant(racine2);
             model.ajouterTache(t2);
-            /**
-            Tache t3 = new Tache("tache3","16/12/2023", 2, "Ceci n'est pas la racine", 0);
+
+            Tache t3 = new Tache("tache3","17/12/2023", 2, "Ceci n'est pas la racine", 0);
             t3.setParent(luc);
-            t3.setAntecedant(luc);
+            t3.setAntecedant(racine2);
             model.ajouterTache(t3);
 
             Tache t4 = new Tache("tache4","17/12/2023", 2, "Ceci n'est pas la racine", 0);
             t4.setParent(t3);
-            t4.setAntecedant(t3);
+            t4.setAntecedant(racine2);
             model.ajouterTache(t4);
-             */
+
         }
         catch(AjoutTacheException e){
             e.getMessage();

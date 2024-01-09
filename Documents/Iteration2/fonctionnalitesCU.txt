@@ -1,6 +1,6 @@
 Dans cette itération nous avons travaillé sur la complétion du patron MVC ainsi que l'affichage
 du modèle selon les différents formats demandé :
-- DECHEZLEPRETRE Luc a travaillé sur la vue liste ainsi que l'implémentation sur celle-ci du système de Drang and Drop.
+- DECHEZLEPRETRE Luc a travaillé sur la vue liste ainsi que l'implémentation sur celle-ci du système de Drag and Drop.
 - DESPAQUIS Liam a travaillé sur la création de la vue Bureau récursivement.
 - FONTANEZ Antoine a travaillé sur le formulaire permettant d'ajouter des tâches depuis l'interface JavaFX.
 - SLIMANI Robin a travaillé sur la mise à jour du diagramme de classe et sur la vue Bureau.
