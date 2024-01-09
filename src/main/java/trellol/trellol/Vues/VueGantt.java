@@ -5,17 +5,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 import trellol.trellol.Tache;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -65,17 +61,17 @@ public class VueGantt extends Tab implements Observateur, Serializable {
 
     public Canvas affichageGantt() {
         double longueurCanva = TailleJour* this.diffDatesProjet(model.getDateFinProjet())+this.decalage*2;
-        double hauteurCanva = (model.getTacheSelectGantt().size()+this.ecartVertical)*(this.TailleJour+1);
+        double hauteurCanva = (model.getTacheSelectGantt().size()+3)*(this.TailleJour+this.ecartVertical*10);
         Canvas canvas = new Canvas(longueurCanva,hauteurCanva);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        List<Tache> listeTache = model.getTacheSelectGantt();
+        List<Tache> listeTache = new ArrayList<>(model.getTacheSelectGantt());
         Collections.sort(listeTache);
+        this.creerTimeline(gc,model.getRacine());
         for (Tache t: listeTache) {
                if (!model.getTacheSelectGantt().contains(t.getAntecedant()) && !t.equals(model.getRacine())) {
                    DessinerTacheRecursivement(gc, t);
                }
         }
-        this.creerTimeline(gc,model.getRacine());
         return canvas;
     }
 

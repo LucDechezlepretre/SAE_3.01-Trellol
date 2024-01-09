@@ -125,7 +125,9 @@ public class FenetreTache {
                 optionsTache.add(t.getNom());
             }
         }
-        optionsTache.add(null);
+        if (m.getEnsTache().size() == 0) {
+            optionsTache.add(null);
+        }
         Text tParent=new Text("Tache parent : ");
         ComboBox<String> fieldParent=new ComboBox<>(optionsTache);
         fieldParent.getSelectionModel().select(nomParent);
@@ -134,7 +136,11 @@ public class FenetreTache {
         }
         else{ //par defaut
             if(m.getEnsTache().size() > 0) {
-                fieldParent.setValue(nomParent);
+                if (m.findTacheByName(nomParent) != null) {
+                    fieldParent.setValue(nomParent);
+                } else {
+                    fieldParent.setValue(m.getRacine().getNom());
+                }
             }
         }
 
