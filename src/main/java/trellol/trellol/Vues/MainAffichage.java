@@ -111,6 +111,9 @@ public class MainAffichage extends Application {
         //CSS
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
+        //style scene
+        scene.getRoot().getStyleClass().add("scene");
+
         stage.setTitle("Trellol");
         stage.setScene(scene);
         stage.show();
