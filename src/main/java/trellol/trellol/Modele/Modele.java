@@ -45,7 +45,10 @@ public class Modele implements Sujet, Serializable {
 		return this.ensTache;
 	}
 
-
+	/**
+	 * Setter de l'attribut ensTache
+	 * @param ensTache la nouvelle liste de tache
+	 */
 	public void setEnsTache(List<Tache> ensTache) {
 		this.ensTache = ensTache;
 	}
@@ -376,6 +379,10 @@ public class Modele implements Sujet, Serializable {
 		return datefin;
 	}
 
+	/**
+	 * Méthode permettant la sauvegarde de la liste des tâches dans un fichier
+	 * @param chemin chemin absolue ou relatif vers lequel on veut enregistrer la liste des tâches
+	 */
 	public void sauvegarder(String chemin){
 		try {
 			//Cree un flux de sortie (fichier puis flux d'objet)
@@ -394,6 +401,12 @@ public class Modele implements Sujet, Serializable {
 			System.out.println("Erreur hors d'E/S");
 		}
 	}
+
+	/**
+	 * Méthode permettant le chargement d'une liste de tâches depuis un fichier
+	 * @param chemin chemin du fichier à charger
+	 * @return la liste des tâches chargées
+	 */
 	public static List<Tache> charger(String chemin){
 		List<Tache> ensTache = new ArrayList<Tache>();
 		try{
@@ -415,6 +428,11 @@ public class Modele implements Sujet, Serializable {
 		return ensTache;
 	}
 
+	/**
+	 * Méthode equals pour vérifier l'égalité entre this et un autre objet modele
+	 * @param o objet avec lequel comparer this
+	 * @return true si les objets sont égaux, false sinon
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
