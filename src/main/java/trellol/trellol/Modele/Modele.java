@@ -354,4 +354,17 @@ public class Modele implements Sujet {
 
 		t.setDateDebut(dateActu);
 	}
+
+	public Date getDateFinProjet() {
+		Date datefin = this.getRacine().getDateDebut();
+		Date dateTacheT;
+		for (Tache t : this.ensTache) {
+			dateTacheT = new Date(t.getDateDebut().getTime() + (1000 * 60 * 60 * 24 * this.calculerDureeTache(t)));
+			if (datefin.before(dateTacheT)) {
+				datefin = dateTacheT;
+			}
+		}
+		System.out.println(datefin);
+		return datefin;
+	}
 }
