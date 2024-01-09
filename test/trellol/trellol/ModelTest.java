@@ -323,7 +323,7 @@ class ModelTest {
         Tache racine = new Tache("racine", "13/12/2023", 2, "Bonjour", 1);
         //ajout racine
         m.ajouterTache(racine);
-        this.m.sauvegarder("/home/lucoss/Documents/BUT/BUT2/Qualite_de_Dev/SAE_3.01-Trellol/Documents", "test");
-        assertEquals(this.m, Modele.charger("test.bin"), "le modèle devrait être correctement chargé");
+        this.m.sauvegarder("/home/lucoss/Documents/BUT/BUT2/Qualite_de_Dev/SAE_3.01-Trellol/Documents/", "test");
+        assertEquals(this.m, Modele.charger("/home/lucoss/Documents/BUT/BUT2/Qualite_de_Dev/SAE_3.01-Trellol/Documents/test.trellol"), "le modèle devrait être correctement chargé");
     }
 }
