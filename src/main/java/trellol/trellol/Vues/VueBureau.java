@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -69,6 +70,11 @@ public class VueBureau extends Tab implements Observateur{
      * @return GridPane représentation de toutes les tâches
      */
     private GridPane createRecursiveGridPane(Tache tache) {
+        DropShadow ombre = new DropShadow();
+        ombre.setRadius(3.0);
+        ombre.setOffsetX(2.0);
+        ombre.setOffsetY(2.0);
+        ombre.setColor(javafx.scene.paint.Color.BLACK);
 
         GridPane gp = new GridPane();
 
@@ -76,8 +82,11 @@ public class VueBureau extends Tab implements Observateur{
             gp.getStyleClass().add("racine");
         }
 
-        String nomTache = tache.getNom();
-        gp.add(new Label(tache.getNom()),1,1);
+        String nomTache=tache.getNom();
+        Label label=new Label(nomTache);
+
+        label.setEffect(ombre);
+        gp.add(label,1,1);
 
         gp.setHgap(5);
         gp.setVgap(5);

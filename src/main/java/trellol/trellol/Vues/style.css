@@ -14,9 +14,6 @@
     -fx-background-color: rgb(134, 141, 229);
 }
 
-.tache Label{
-    -fx-text-fill: white;
-}
 
 .tacheFaible{
     -fx-background-color: #1d8d1d;
@@ -41,10 +38,13 @@
 }
 
 .racine{
-    -fx-background-color: #131313;
+    -fx-background-color: #706f6f;
+}
+
+.racine Label{
+    -fx-text-fill: white;
 }
 
 .racine > Label{
-    -fx-text-fill: white;
     -fx-font-weight: bold;
 }
