@@ -367,6 +367,10 @@ public class Modele implements Sujet, Serializable {
 		t.setDateDebut(dateActu);
 	}
 
+	/**
+	 * Calcule la date à laquelle la dernière tache du projet finira
+	 * @return la date de fin du projet
+	 */
 	public Date getDateFinProjet() {
 		Date datefin = this.getRacine().getDateDebut();
 		Date dateTacheT;
@@ -446,6 +450,10 @@ public class Modele implements Sujet, Serializable {
 		return Objects.hash(ensTache);
 	}
 
+	/**
+	 * Retire une tache et ses enfants de la liste des tâches à afficher dans le diagramme de Gantt
+	 * @param t la tâche à supprimer du diagramme (ainsi que ses enfants)
+	 */
 	public void supprimerListeGantt(Tache t) {
 		this.TacheSelectGantt.remove(t);
 		for (Tache tache: this.getEnfant(t)) {
@@ -454,6 +462,10 @@ public class Modele implements Sujet, Serializable {
 		notifierObservateurs();
 	}
 
+	/**
+	 * Ajoute une tache et ses enfants de la liste des tâches à afficher dans le diagramme de Gantt
+	 * @param t la tâche à ajouter du diagramme (ainsi que ses enfants)
+	 */
 	public void ajouterListeGantt(Tache t) {
 		this.TacheSelectGantt.add(t);
 		for (Tache tache: this.getEnfant(t)) {
@@ -462,6 +474,9 @@ public class Modele implements Sujet, Serializable {
 		notifierObservateurs();
 	}
 
+	/**
+	 * Retire les tâches en double et archivée de la liste des tâches à afficher dans le diagramme de Gantt
+	 */
 	public void filtrerGantt() {
 		HashSet<Tache> nouvTacheSelectGannt = new HashSet();
 		for (Tache t: this.TacheSelectGantt) {
@@ -472,12 +487,19 @@ public class Modele implements Sujet, Serializable {
 		this.TacheSelectGantt = nouvTacheSelectGannt;
 	}
 
+	/**
+	 * Met à jour les dates des tâches du modèle
+	 */
 	public void actualiserDates(){
 		for(Tache t : this.ensTache){
 			this.generationDate(t);
 		}
 	}
 
+	/**
+	 * Getter de la liste des tâches à afficher dans le diagramme de Gantt
+	 * @return
+	 */
 	public Set<Tache> getTacheSelectGantt() {
 		return TacheSelectGantt;
 	}

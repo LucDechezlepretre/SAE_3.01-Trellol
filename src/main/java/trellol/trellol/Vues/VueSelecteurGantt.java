@@ -12,10 +12,20 @@ import java.io.Serializable;
 public class VueSelecteurGantt extends SplitMenuButton implements Observateur{
     private Modele m;
 
+    /**
+     * Constructeur du Menu
+     * @param s Modèle
+     * @param nom Titre du Menu
+     */
     public VueSelecteurGantt(Sujet s, String nom) {
         this.setText(nom);
         this.actualiser(s);
     }
+
+    /**
+     * Redéfinition de la méthode reçu de l'interface Observateur
+     * @param s sujet qui servira à la modélisation des données
+     */
     @Override
     public void actualiser(Sujet s) {
         this.m = (Modele) s;
