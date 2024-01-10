@@ -75,6 +75,7 @@ class Modele{
   - ensTache : List<Tache>
   - vueListe : boolean
   - numColonneAffiche : int
+  - TacheSelectGantt : Set<Tache>
   
   + Modele()
   + getSuccesseurs(Tache): List<Tache>
@@ -85,7 +86,7 @@ class Modele{
   + getRacine(): Tache
   +ajouterTache(Tache): void
   +enregistrerObservateur(Observateur) : void
-  +fficherTache(Tache, int) : String
+  +afficherTache(Tache, int) : String
   +desarchiverTache(Tache) : void
   +suppressionTache(Tache): void
   -archiverEnfant(Tache) : void
@@ -98,6 +99,11 @@ class Modele{
   +notifierObservateur() : void
   + charger(String) : void
   +sauvegarder(String): void
+  +supprimerListeGantt(Tache): void
+  +ajouterListeGantt(Tache): void
+  +filtrerGantt(): void
+  +actualiserDates():void
+  +getTacheSelectGantt(): Set<Taches>
 }
 
 class MainAffichage{
@@ -120,6 +126,18 @@ class ControleurModifierTache{
   + handle(ActionEvent) : void
 }
 class ControleurArchivage{
+  + handle(ActionEvent) : void
+}
+class ControleurDesarchivage{
+  + handle(ActionEvent) : void
+}
+class ControleurOuvertureFichier{
+  + handle(ActionEvent) : void
+}
+class ControleurSelectionGantt{
+  + handle(ActionEvent) : void
+}
+class ControleurSuppression{
   + handle(ActionEvent) : void
 }
 
@@ -171,6 +189,10 @@ Modele "1" -up-> "1" Historique: -historique
 Modele "1"  <-- "1" ControleurModifierTache: -modele
 Modele "1"  <-- "1" ControleurArchivage: -modele
 Modele "1"  <-- "1" ControleurAjouterTache: -modele
+Modele "1"  <-- "1" ControleurOuvertureFichier: -modele
+Modele "1"  <-- "1" ControleurDesarchivage: -modele
+Modele "1"  <-- "1" ControleurSelectionGantt: -modele
+Modele "1"  <-- "1" ControleurSuppression: -modele
 
 Tache "1" -left-> "1" Tache : -parent
 Tache "1" --> "1" Tache : -antecedent
@@ -179,3 +201,4 @@ VueBureau "1" --> "1"  Modele : modele
 VueListe "1" --> "1"  Modele : modele
 VueHistorique "1" --> "1"  Modele : modele
 VueGantt "1" --> "1"  Modele : modele
+@enduml
