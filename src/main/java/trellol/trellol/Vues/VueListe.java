@@ -23,7 +23,7 @@ import java.io.Serializable;
  * un affichage sous la forme d'un onglet
  * et implémentant Observateur pour pouvoir être enregistrer auprès d'un Sujet
  */
-public class VueListe extends Tab implements Observateur{
+public class VueListe extends Tab implements Observateur, Serializable {
     /**
      * Attribut model, représentant le modèle sur lequel se basera la vue pour se
      * construire
@@ -130,7 +130,6 @@ public class VueListe extends Tab implements Observateur{
                         getStyleClass().remove("tacheMoyenne");
                     }
                 }
-
             };
             //Gestion du DnD
             //Détection du Drag
@@ -171,7 +170,6 @@ public class VueListe extends Tab implements Observateur{
                     //On déplace la tache draggé dans celle sur laquelle elle a été droppé
                     //on récupère la tâche visé avec cell.getItem()
                     this.model.deplacerTache(draggedItem, cell.getItem());
-                    //System.out.println(model);
                 } else {
                     event.setDropCompleted(false);
                 }

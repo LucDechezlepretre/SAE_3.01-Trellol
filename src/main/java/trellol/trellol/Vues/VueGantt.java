@@ -42,12 +42,14 @@ public class VueGantt extends Tab implements Observateur{
 
     }
 
+    
     @Override
     public void actualiser(Sujet s) {
         this.y = 1;
         coordonneesParents = new HashMap<>();
         this.model =(Modele) s;
         this.debutProjet = this.model.getRacine().getDateDebut();
+        model.filtrerGantt();
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
         ScrollPane scrollPane = new ScrollPane();
@@ -76,7 +78,6 @@ public class VueGantt extends Tab implements Observateur{
     }
 
     public void DessinerTacheRecursivement(GraphicsContext gc, Tache t) {
-        if (t.getEtat().equals(Tache.ETAT_INITIAL)) {
             gc.setFill(Paint.valueOf(couleurs.get(t.getImportance())));
             gc.fillRect(this.TailleJour * this.diffDatesProjet(t.getDateDebut()) + this.decalage, this.y * this.TailleJour, this.TailleJour * model.calculerDureeTache(t), this.TailleJour);
             gc.strokeText(t.getNom(), this.diffDatesProjet(t.getDateDebut()) * this.TailleJour + this.decalage, this.y * this.TailleJour + 10);
@@ -96,7 +97,6 @@ public class VueGantt extends Tab implements Observateur{
             }
 
             this.y += this.ecartVertical;
-        }
         if (model.getSuccesseurs(t).size() != 0) {
             for (Tache enfant : model.getSuccesseurs(t)) {
                 if (model.getTacheSelectGantt().contains(enfant)) {

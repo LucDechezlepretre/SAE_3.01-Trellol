@@ -462,6 +462,16 @@ public class Modele implements Sujet, Serializable {
 		notifierObservateurs();
 	}
 
+	public void filtrerGantt() {
+		HashSet<Tache> nouvTacheSelectGannt = new HashSet();
+		for (Tache t: this.TacheSelectGantt) {
+			if (t.getEtat().equals(Tache.ETAT_INITIAL) && this.ensTache.contains(t)) {
+				nouvTacheSelectGannt.add(t);
+			}
+		}
+		this.TacheSelectGantt = nouvTacheSelectGannt;
+	}
+
 	public void actualiserDates(){
 		for(Tache t : this.ensTache){
 			this.generationDate(t);
