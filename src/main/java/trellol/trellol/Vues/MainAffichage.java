@@ -104,10 +104,20 @@ public class MainAffichage extends Application {
         //Vue avec des onglets
         TabPane tabPane = new TabPane();
         VueListe vueListe = new VueListe("Liste",m);
+        vueListe.getStyleClass().add("tab");
+
         VueBureau vueBureau = new VueBureau("Bureau", m);
+        vueBureau.getStyleClass().add("tab");
+
         VueHistorique vueHistorique = new VueHistorique("Historique", m);
+        vueHistorique.getStyleClass().add("tab");
+
         VueArchive vueArchive = new VueArchive("Archive", m);
+        vueArchive.getStyleClass().add("tab");
+
         VueGantt vueGantt = new VueGantt("Gantt",m);
+        vueGantt.getStyleClass().add("tab");
+
 
         //Enregistrement des observateurs auprès du modèle
         m.enregistrerObservateur(vueListe);

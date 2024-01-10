@@ -1,5 +1,6 @@
 package trellol.trellol.Vues;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -54,7 +55,9 @@ public class VueHistorique extends Tab implements Observateur{
      * @return Vbox représentant l'historique
      */
     private VBox affichageHistorique() {
-        VBox vb = new VBox(5);
+        VBox vb = new VBox(10);
+        vb.getStyleClass().add("boiteTexte");
+        vb.setPadding(new Insets(10,10,10,20));
         for (String action : model.getHistorique().getActions()) {
             Label label = new Label(action);
             vb.getChildren().add(0,label);
