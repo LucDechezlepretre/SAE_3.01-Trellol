@@ -7,6 +7,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import trellol.trellol.Importance;
@@ -112,12 +113,11 @@ public class VueListe extends Tab implements Observateur, Serializable {
                     if(tache!=null) {
                         String cssClass;
                         if (tache.getImportance() == Importance.FAIBLE) {
-                            cssClass = ".tacheFaible";
-                            System.out.println("faible");
+                            cssClass = "tacheFaible";
                         } else if (tache.getImportance() == Importance.MOYENNE) {
-                            cssClass = ".tacheMoyenne";
+                            cssClass = "tacheMoyenne";
                         } else {
-                            cssClass = ".tacheImportante";
+                            cssClass = "tacheImportante";
                         }
 
                         getStyleClass().add(cssClass);
