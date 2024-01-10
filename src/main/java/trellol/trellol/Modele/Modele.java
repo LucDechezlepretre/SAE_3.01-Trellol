@@ -160,6 +160,8 @@ public class Modele implements Sujet, Serializable {
 	 * @param tache tâche à desarchiver
 	 */
 	public void desarchiverTache(Tache tache) {
+		boolean premierAppel=tache.getEtat().equals(Tache.ETAT_ARCHIVE);
+
 		tache.setEtat(Tache.ETAT_INITIAL);
 
 		ArrayList<Tache> enfants= (ArrayList)this.getEnfant(tache);
@@ -168,7 +170,10 @@ public class Modele implements Sujet, Serializable {
 		}
 
 		this.getHistorique().addAction(Historique.DESARCHIVAGE_ACTION, tache.getNom());
-		this.notifierObservateurs();
+
+		if(premierAppel) {
+			this.notifierObservateurs();
+		}
 
 	}
 
