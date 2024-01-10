@@ -5,12 +5,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import trellol.trellol.Modele.Modele;
 import trellol.trellol.Modele.Sujet;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Classe VueBureau permettant la représentation de l'historique
@@ -68,9 +70,16 @@ public class VueHistorique extends Tab implements Observateur{
         VBox vb = new VBox(10);
         vb.getStyleClass().add("boiteTexte");
         vb.setPadding(new Insets(10,10,10,20));
-        for (String action : model.getHistorique().getActions()) {
-            Label label = new Label(action);
-            vb.getChildren().add(0,label);
+
+        for (Map.Entry<String, String> entry : model.getHistorique().getActions().entrySet()) {
+            HBox ligne=new HBox(5);
+            Label lAction = new Label(entry.getValue());
+            Label lDate=new Label(entry.getKey());
+
+            lDate.getStyleClass().add(("date"));
+
+            ligne.getChildren().addAll(lDate, lAction);
+            vb.getChildren().add(0,ligne);
         }
         return vb;
 
