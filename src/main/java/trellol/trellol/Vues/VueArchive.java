@@ -3,6 +3,7 @@ package trellol.trellol.Vues;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -38,6 +39,8 @@ public class VueArchive extends Tab implements Observateur{
         this.model = (Modele) s;
         StackPane conteneur = new StackPane(this.affichageArchive());
         this.setContent(conteneur);
+
+
     }
 
     /**
@@ -49,7 +52,16 @@ public class VueArchive extends Tab implements Observateur{
         this.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
-        content.getChildren().add(this.affichageArchive());
+
+        VBox affichage=this.affichageArchive();
+        content.getChildren().add(affichage);
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(affichage);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
+        content.getChildren().addAll(affichage, scrollPane);
     }
 
     /**

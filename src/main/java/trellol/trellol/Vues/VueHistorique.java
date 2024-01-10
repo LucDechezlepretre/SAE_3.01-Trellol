@@ -3,6 +3,7 @@ package trellol.trellol.Vues;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -46,7 +47,15 @@ public class VueHistorique extends Tab implements Observateur{
         this.model =(Modele) s;
         StackPane content = (StackPane) this.getContent();
         content.getChildren().clear();
-        content.getChildren().add(this.affichageHistorique());
+
+        VBox affichage=this.affichageHistorique();
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(affichage);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
+        content.getChildren().addAll(affichage, scrollPane);
     }
 
     /**
@@ -55,6 +64,7 @@ public class VueHistorique extends Tab implements Observateur{
      * @return Vbox représentant l'historique
      */
     private VBox affichageHistorique() {
+
         VBox vb = new VBox(10);
         vb.getStyleClass().add("boiteTexte");
         vb.setPadding(new Insets(10,10,10,20));
