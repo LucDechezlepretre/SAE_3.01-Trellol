@@ -339,7 +339,7 @@ public class Modele implements Sujet, Serializable {
 		Date dAntecedent=new Date(0);
 		if(t.getAntecedant()!=null){
 			Date dateDeb=t.getAntecedant().getDateDebut();
-			int duree=t.getAntecedant().getDuree();
+			int duree= this.calculerDureeTache(t.getAntecedant());
 
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(dateDeb);
