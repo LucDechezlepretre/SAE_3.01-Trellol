@@ -8,7 +8,7 @@ import java.util.Objects;
  * Classe Historique permettant la gestion d'un historique des modifications
  * au sein d'un modèle
  */
-public class Historique implements Serializable {
+public class Historique {
     /**
      * Attribut liste représentant la totalité des actions
      */

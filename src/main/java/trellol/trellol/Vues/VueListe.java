@@ -23,7 +23,7 @@ import java.io.Serializable;
  * un affichage sous la forme d'un onglet
  * et implémentant Observateur pour pouvoir être enregistrer auprès d'un Sujet
  */
-public class VueListe extends Tab implements Observateur, Serializable {
+public class VueListe extends Tab implements Observateur{
     /**
      * Attribut model, représentant le modèle sur lequel se basera la vue pour se
      * construire

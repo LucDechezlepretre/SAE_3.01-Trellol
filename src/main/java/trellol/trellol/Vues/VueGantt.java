@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
-public class VueGantt extends Tab implements Observateur, Serializable {
+public class VueGantt extends Tab implements Observateur{
 
     private Modele model;
 
