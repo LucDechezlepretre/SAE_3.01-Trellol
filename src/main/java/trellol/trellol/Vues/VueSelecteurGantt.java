@@ -9,7 +9,7 @@ import trellol.trellol.Tache;
 
 import java.io.Serializable;
 
-public class VueSelecteurGantt extends SplitMenuButton implements Observateur, Serializable {
+public class VueSelecteurGantt extends SplitMenuButton implements Observateur{
     private Modele m;
 
     public VueSelecteurGantt(Sujet s, String nom) {
