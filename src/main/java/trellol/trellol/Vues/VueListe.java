@@ -111,18 +111,26 @@ public class VueListe extends Tab implements Observateur{
                     setText(empty ? null : tache.getNom()+" durée : "+model.calculerDureeTache(tache));
 
                     if(tache!=null) {
-                        String cssClass;
-                        if (tache.getImportance() == Importance.FAIBLE) {
-                            cssClass = "tacheFaible";
-                        } else if (tache.getImportance() == Importance.MOYENNE) {
-                            cssClass = "tacheMoyenne";
-                        } else {
-                            cssClass = "tacheImportante";
-                        }
+                        if(tache.equals(model.getRacine())==false) {
+                            String cssClass;
+                            if (tache.getImportance() == Importance.FAIBLE) {
+                                cssClass = "tacheFaible";
+                            } else if (tache.getImportance() == Importance.MOYENNE) {
+                                cssClass = "tacheMoyenne";
+                            } else {
+                                cssClass = "tacheImportante";
+                            }
 
-                        getStyleClass().add(cssClass);
+                            getStyleClass().add(cssClass);
+                        }
+                    }
+                    else{
+                        getStyleClass().remove("tacheFaible");
+                        getStyleClass().remove("tacheImportante");
+                        getStyleClass().remove("tacheMoyenne");
                     }
                 }
+
             };
             //Gestion du DnD
             //Détection du Drag
