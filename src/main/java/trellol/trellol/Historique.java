@@ -1,8 +1,11 @@
 package trellol.trellol;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.lang.reflect.Array;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * Classe Historique permettant la gestion d'un historique des modifications
@@ -12,7 +15,7 @@ public class Historique {
     /**
      * Attribut liste représentant la totalité des actions
      */
-    private ArrayList<String> actions;
+    private LinkedHashMap<String, String> actions;
 
     /**
      * Attribut String représentant l'action de modification d'une tâche
@@ -43,11 +46,14 @@ public class Historique {
      */
     public static String EXPORTER_TABLEAU = "Le tableau {objet} a été exportée";
 
+
+    private static final DateTimeFormatter FORMATTER= DateTimeFormatter.ofPattern("HH:mm:ss");
+
     /**
      * Constructeur de l'historique
      */
     public Historique(){
-        this.actions = new ArrayList<String>();
+        this.actions = new LinkedHashMap<>();
     }
 
     /**
@@ -56,14 +62,15 @@ public class Historique {
      * @param objet nom de l'objet qui subit l'action
      */
     public void addAction(String action,String objet){
-        this.actions.add(action.replace("{objet}",objet));
+        LocalDateTime now=LocalDateTime.now();
+        this.actions.put(FORMATTER.format(now), action.replace("{objet}",objet));
     }
 
     /**
      * Getter de l'attribut qui contient toutes les actions
      * @return la liste des actions commises
      */
-    public ArrayList<String> getActions(){
+    public Map<String,String> getActions(){
         return this.actions;
     }
 
@@ -73,8 +80,12 @@ public class Historique {
      */
     public String toString(){
         String affiche = "";
-        for (String action : this.actions) {
-            affiche += action + "\n";
+
+        Set<String> dates=this.actions.keySet();
+
+
+        for (Map.Entry<String, String> entry : this.actions.entrySet()) {
+            affiche+=entry.getKey()+" "+entry.getValue()+"\n";
         }
         return affiche;
     }
