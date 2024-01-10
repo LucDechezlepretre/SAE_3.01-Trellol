@@ -58,6 +58,8 @@ public class VueArchive extends Tab implements Observateur{
      */
     private VBox affichageArchive() {
         VBox vb = new VBox(10);
+        vb.getStyleClass().add("boiteTexte");
+
         vb.setPadding(new Insets(20,0,0,10));
 
         for (Tache t : model.getEnsTache()) {
@@ -81,7 +83,7 @@ public class VueArchive extends Tab implements Observateur{
 
                 //Affichage des sous taches de la tache archivée (s'il y en a)
                 if(model.getEnfant(t).size()>0){
-                    VBox sousTaches=new VBox();
+                    VBox sousTaches=new VBox(4);
                     sousTaches=afficherSousTaches(sousTaches, t);
 
                     vb.getChildren().add(0, sousTaches);

@@ -21,7 +21,7 @@ public class VueGantt extends Tab implements Observateur{
 
     private int tailleJour = 60;
 
-    private int hauteurTache = 40;
+    private int hauteurTache = 25;
 
     private double y = 0.5;
 

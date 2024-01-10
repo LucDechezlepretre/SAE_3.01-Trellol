@@ -3,6 +3,7 @@
 .scene{
     -fx-background-color: rgb(179, 189, 197);
     -fx-font-family: "Roboto Light";
+    -fx-font-size: 14px;
 }
 
 
@@ -47,4 +48,16 @@
 
 .racine > Label{
     -fx-font-weight: bold;
+}
+
+.tab{
+    -fx-tab-pref-width: 800px;
+}
+
+.boiteTexte{
+    -fx-background-color:white;
+}
+
+.boiteTexte Label{
+    -fx-text-fill: black;
 }
