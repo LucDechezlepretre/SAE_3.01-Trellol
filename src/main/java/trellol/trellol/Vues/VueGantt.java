@@ -34,6 +34,11 @@ public class VueGantt extends Tab implements Observateur{
     private HashMap<Tache, List<Double>> coordonneesParents;
     private Date debutProjet;
 
+    /**
+     * Constructeur de la vue
+     * @param nom Nom de l'onglet
+     * @param s Modèle a représenter
+     */
     public VueGantt(String nom, Sujet s) {
         super(nom);
         coordonneesParents = new HashMap<>();
@@ -43,7 +48,10 @@ public class VueGantt extends Tab implements Observateur{
 
     }
 
-    
+    /**
+     * Redéfinition de la méthode reçu de l'interface Observateur
+     * @param s sujet qui servira à la modélisation des données
+     */
     @Override
     public void actualiser(Sujet s) {
         this.y = 1;
@@ -62,6 +70,10 @@ public class VueGantt extends Tab implements Observateur{
 
     }
 
+    /**
+     * Créé le canvas du Gantt en fonction des tâches à mettre dedans
+     * @return le canvas du diagramme de Gantt
+     */
     public Canvas affichageGantt() {
         double longueurCanva = tailleJour * this.diffDatesProjet(model.getDateFinProjet())+this.decalage*2;
         double hauteurCanva = (model.getTacheSelectGantt().size()+3)*(this.hauteurTache +this.ecartVertical*10);
@@ -78,6 +90,11 @@ public class VueGantt extends Tab implements Observateur{
         return canvas;
     }
 
+    /**
+     * Methode récursive dessinant une tache dans le canvas et s'appelle pour dessiner ses antecedents
+     * @param gc le GraphicContext du Canva qui permet de dessiner dans le canvas
+     * @param t la tâche qui doit être dessiné dans le canvas
+     */
     public void DessinerTacheRecursivement(GraphicsContext gc, Tache t) {
             gc.setFill(Paint.valueOf(couleurs.get(t.getImportance())));
             gc.fillRect(this.tailleJour * this.diffDatesProjet(t.getDateDebut()) + this.decalage, this.y * this.hauteurTache, this.tailleJour * model.calculerDureeTache(t), this.hauteurTache);
@@ -107,12 +124,22 @@ public class VueGantt extends Tab implements Observateur{
         }
     }
 
+    /**
+     * Calcule le nombre écoulé entre la date fournie et la date de début du projet
+     * @param date date à comparer avec le début du projet
+     * @return écart entre les dates en jour
+     */
     public int diffDatesProjet(Date date) {
         long diffInMillies = Math.abs(date.getTime() - this.debutProjet.getTime());
         long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
         return (int) diff;
     }
 
+    /**
+     * Créé la liste des dates du projet a afficher en haut du diagramme de Gantt
+     * @param gc
+     * @param racine
+     */
     public void creerTimeline(GraphicsContext gc, Tache racine) {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM");
         Date date = racine.getDateDebut();
