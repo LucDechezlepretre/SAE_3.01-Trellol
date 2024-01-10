@@ -159,6 +159,7 @@ public class MainAffichage extends Application {
     public static Modele creationModel(){
 
         Modele model = new Modele();
+        /**
         Tache racine = new Tache("racine", "13/12/2023", 0, "Ceci est la racine", Importance.FAIBLE);
         try {
             model.ajouterTache(racine);
@@ -301,6 +302,7 @@ public class MainAffichage extends Application {
         catch(AjoutTacheException e){
             e.getMessage();
         }
+         */
         return model;
     }
 

@@ -108,26 +108,27 @@ public class VueListe extends Tab implements Observateur, Serializable {
                 protected void updateItem(Tache tache, boolean empty) {
                     // une TreeCell peut changer de tâche, donc changer de TreeItem
                     super.updateItem(tache, empty);
-                    setText(empty ? null : tache.getNom()+" durée : "+model.calculerDureeTache(tache));
+                    if (tache != null) {
+                        setText(empty ? null : tache.getNom() + " durée : " + model.calculerDureeTache(tache));
 
-                    if(tache!=null) {
-                        if(tache.equals(model.getRacine())==false) {
-                            String cssClass;
-                            if (tache.getImportance() == Importance.FAIBLE) {
-                                cssClass = "tacheFaible";
-                            } else if (tache.getImportance() == Importance.MOYENNE) {
-                                cssClass = "tacheMoyenne";
-                            } else {
-                                cssClass = "tacheImportante";
+                        if (tache != null) {
+                            if (tache.equals(model.getRacine()) == false) {
+                                String cssClass;
+                                if (tache.getImportance() == Importance.FAIBLE) {
+                                    cssClass = "tacheFaible";
+                                } else if (tache.getImportance() == Importance.MOYENNE) {
+                                    cssClass = "tacheMoyenne";
+                                } else {
+                                    cssClass = "tacheImportante";
+                                }
+
+                                getStyleClass().add(cssClass);
                             }
-
-                            getStyleClass().add(cssClass);
+                        } else {
+                            getStyleClass().remove("tacheFaible");
+                            getStyleClass().remove("tacheImportante");
+                            getStyleClass().remove("tacheMoyenne");
                         }
-                    }
-                    else{
-                        getStyleClass().remove("tacheFaible");
-                        getStyleClass().remove("tacheImportante");
-                        getStyleClass().remove("tacheMoyenne");
                     }
                 }
             };
