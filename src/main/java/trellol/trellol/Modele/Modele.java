@@ -172,6 +172,7 @@ public class Modele implements Sujet, Serializable {
 
 	}
 
+
 	/**
 	 * Méthode recursive permettant la suppression d'une tâche et de ses enfants du modèle
 	 * @param tache tâche à supprimer

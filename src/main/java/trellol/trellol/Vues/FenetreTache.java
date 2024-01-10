@@ -221,7 +221,7 @@ public class FenetreTache {
         });
 
         //CSS
-        //scene.getStylesheets().add(FenetreTache.class.getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(FenetreTache.class.getResource("style.css").toExternalForm());
 
         //style scene
         scene.getRoot().getStyleClass().add("scene");
