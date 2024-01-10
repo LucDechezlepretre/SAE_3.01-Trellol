@@ -54,7 +54,6 @@ public class VueArchive extends Tab implements Observateur{
         content.getChildren().clear();
 
         VBox affichage=this.affichageArchive();
-        content.getChildren().add(affichage);
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(affichage);
