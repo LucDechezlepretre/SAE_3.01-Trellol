@@ -157,7 +157,7 @@ public class ControleurModifierTache implements EventHandler<ActionEvent> {
         }
         MainAffichage.affichageFormTache = false;
 
-        modele.actualiserDates();
+        modele.actualiserDates(modele.getRacine());
         modele.notifierObservateurs();
     }
 

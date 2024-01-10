@@ -490,9 +490,11 @@ public class Modele implements Sujet, Serializable {
 	/**
 	 * Met à jour les dates des tâches du modèle
 	 */
-	public void actualiserDates(){
-		for(Tache t : this.ensTache){
-			this.generationDate(t);
+	public void actualiserDates(Tache racine){
+		this.generationDate(racine);
+
+		for(Tache t : this.getEnfant(racine)){
+			this.actualiserDates(t);
 		}
 	}
 
