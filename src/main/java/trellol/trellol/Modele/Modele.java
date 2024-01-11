@@ -7,6 +7,7 @@ import trellol.trellol.Tache;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Classe correspondant au modele de l'architecture MVC
@@ -377,14 +378,19 @@ public class Modele implements Sujet, Serializable {
 	 * Calcule la date à laquelle la dernière tache du projet finira
 	 * @return la date de fin du projet
 	 */
-	public Date getDateFinProjet() {
+	public Date getDateFinTache(Tache tache) {
 		Date datefin = this.getRacine().getDateDebut();
-		Date dateTacheT;
-		for (Tache t : this.ensTache) {
-			dateTacheT = new Date(t.getDateDebut().getTime() + (1000 * 60 * 60 * 24 * this.calculerDureeTache(t)));
-			if (datefin.before(dateTacheT)) {
-				datefin = dateTacheT;
-			}
+        if (this.getEnfant(tache).size() == 0) {
+            datefin = new Date(tache.getDateDebut().getTime() + (1000 * 60 * 60 * 24 * this.calculerDureeTache(tache)));
+        } else {
+            for (Tache t : this.getEnfant(tache)) {
+                if (datefin.before(getDateFinTache(t))) {
+                    datefin = getDateFinTache(t);
+                }
+            }
+        }
+		if (TimeUnit.DAYS.convert(Math.abs(datefin.getTime() - tache.getDateDebut().getTime()), TimeUnit.MILLISECONDS) < this.calculerDureeTache(tache)) {
+			datefin = new Date(tache.getDateDebut().getTime() + (1000 * 60 * 60 * 24 * this.calculerDureeTache(tache)));
 		}
 		return datefin;
 	}

@@ -116,8 +116,10 @@ public class VueArchive extends Tab implements Observateur{
         bloc.setPadding(new Insets(0,0,0,  30));
         bloc.setStyle("-fx-border-color: black; -fx-border-width: 0 0 0 1;");
         for(Tache t : enfants){
-            HBox ligneSousTache=new HBox(10);
+            HBox ligneSousTache=new HBox(12);
             Label nomSousTache=new Label("- "+t.getNom());
+
+            nomSousTache.getStyleClass().add("sousTache");
 
             Button bSup=new Button("Supprimer");
             ControleurSuppression cSup=new ControleurSuppression(model, t);
