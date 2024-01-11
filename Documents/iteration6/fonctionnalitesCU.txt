@@ -1,0 +1,6 @@
+Cette itération était assez courte, car le projet touche à sa fin et nous devions passer notre soutenance.
+
+DECHEZLEPRETRE Luc a travaillé sur le graphe de scène représentant l'entièreté de l'application.
+DESPAQUIS Liam a travaillé sur des corrections de bug ainsi que des optimisations.
+FONTANEZ Antoine a travaillé sur les tests
+SLIMANI Robin a travaillé sur les tests ainsi qu'une bonne partie de la préparation de la soutenance.
