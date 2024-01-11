@@ -35,7 +35,7 @@ public class ControleurSelectionGantt implements EventHandler {
             m.supprimerListeGantt(tache);
             ((MenuItem)event.getTarget()).setText(((MenuItem) event.getTarget()).getText().replace("X ",""));
         } else {
-            m.ajouterListeGantt(tache);
+            m.ajouterListeGantt(tache, 0);
             ((MenuItem)event.getTarget()).setText("X " + ((MenuItem) event.getTarget()).getText());
         }
 

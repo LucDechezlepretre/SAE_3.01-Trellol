@@ -64,6 +64,7 @@ public class VueGantt extends Tab implements Observateur{
             content.getChildren().clear();
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setContent(this.affichageGantt());
+            System.out.println("Génération Gantt...");
             scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             content.getChildren().add(scrollPane);
@@ -76,7 +77,7 @@ public class VueGantt extends Tab implements Observateur{
      * @return le canvas du diagramme de Gantt
      */
     public Canvas affichageGantt() {
-        double longueurCanva = 5000; //tailleJour * this.diffDatesProjet(model.getDateFinTache(this.model.getRacine()))+this.decalage*2;
+        double longueurCanva = tailleJour * this.diffDatesProjet(model.getDateFinTache(this.model.getRacine()))+this.decalage*2;
         double hauteurCanva = (model.getTacheSelectGantt().size()+3)*(this.hauteurTache +this.ecartVertical*10);
         Canvas canvas = new Canvas(longueurCanva,hauteurCanva);
         GraphicsContext gc = canvas.getGraphicsContext2D();

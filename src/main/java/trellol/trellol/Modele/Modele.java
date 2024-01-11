@@ -192,7 +192,9 @@ public class Modele implements Sujet, Serializable {
 		for(Tache t : enfants){
 			this.suppressionTache(t);
 		}
-		this.notifierObservateurs();
+		if (this.ensTache.contains(tache.getParent())) {
+			this.notifierObservateurs();
+		}
 	}
 
 	/**
@@ -224,7 +226,6 @@ public class Modele implements Sujet, Serializable {
 	 * @param parent nouveau parent de la tâche
 	 */
 	public void deplacerTache(Tache tache, Tache parent) {
-		Tache rechercheSiLienParent = tache.getParent();
 		if (!tache.equals(this.getRacine())) {
 				if (!tache.getNom().equals(parent.getNom())) {
 					parentNotAntecedent(tache, parent);
@@ -389,7 +390,7 @@ public class Modele implements Sujet, Serializable {
                 }
             }
         }
-		if (TimeUnit.DAYS.convert(Math.abs(datefin.getTime() - tache.getDateDebut().getTime()), TimeUnit.MILLISECONDS) < this.calculerDureeTache(tache)) {
+		if (TimeUnit.DAYS.convert(Math.abs(datefin.getTime() - tache.getDateDebut().getTime()), TimeUnit.MILLISECONDS) > this.calculerDureeTache(tache)) {
 			datefin = new Date(tache.getDateDebut().getTime() + (1000 * 60 * 60 * 24 * this.calculerDureeTache(tache)));
 		}
 		return datefin;
@@ -471,19 +472,24 @@ public class Modele implements Sujet, Serializable {
 		for (Tache tache: this.getEnfant(t)) {
 			this.supprimerListeGantt(tache);
 		}
-		notifierObservateurs();
+		if (this.TacheSelectGantt.contains(t.getParent()) || t.equals(this.getRacine())) {
+			notifierObservateurs();
+		}
 	}
 
 	/**
 	 * Ajoute une tache et ses enfants de la liste des tâches à afficher dans le diagramme de Gantt
 	 * @param t la tâche à ajouter du diagramme (ainsi que ses enfants)
+	 * @param rang le rang de la tâche en train d'être ajouté (la toute première tâche étant le rang 0), sert à savoir quand notifier les observateurs
 	 */
-	public void ajouterListeGantt(Tache t) {
+	public void ajouterListeGantt(Tache t, int rang) {
 		this.TacheSelectGantt.add(t);
 		for (Tache tache: this.getEnfant(t)) {
-			this.ajouterListeGantt(tache);
+			this.ajouterListeGantt(tache, rang + 1);
 		}
-		notifierObservateurs();
+		if (rang == 0) {
+			notifierObservateurs();
+		}
 	}
 
 	/**
