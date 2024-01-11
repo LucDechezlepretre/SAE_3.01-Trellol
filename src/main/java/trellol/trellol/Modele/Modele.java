@@ -392,7 +392,6 @@ public class Modele implements Sujet, Serializable {
 		if (TimeUnit.DAYS.convert(Math.abs(datefin.getTime() - tache.getDateDebut().getTime()), TimeUnit.MILLISECONDS) < this.calculerDureeTache(tache)) {
 			datefin = new Date(tache.getDateDebut().getTime() + (1000 * 60 * 60 * 24 * this.calculerDureeTache(tache)));
 		}
-		System.out.println(tache.getNom()+ " "+ datefin);
 		return datefin;
 	}
 

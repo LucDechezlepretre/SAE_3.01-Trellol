@@ -76,7 +76,7 @@ public class VueGantt extends Tab implements Observateur{
      * @return le canvas du diagramme de Gantt
      */
     public Canvas affichageGantt() {
-        double longueurCanva = tailleJour * this.diffDatesProjet(model.getDateFinTache(this.model.getRacine()))+this.decalage*2;
+        double longueurCanva = 5000; //tailleJour * this.diffDatesProjet(model.getDateFinTache(this.model.getRacine()))+this.decalage*2;
         double hauteurCanva = (model.getTacheSelectGantt().size()+3)*(this.hauteurTache +this.ecartVertical*10);
         Canvas canvas = new Canvas(longueurCanva,hauteurCanva);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -147,7 +147,7 @@ public class VueGantt extends Tab implements Observateur{
         Date date = racine.getDateDebut();
         int position = 0;
         int dureeProjet = diffDatesProjet(model.getDateFinTache(racine));
-        for(int i = 0; i<=dureeProjet; i++) {
+        for(int i = 0; i<=dureeProjet+30; i++) {
             gc.strokeText(df.format(date),position,10);
             position += this.tailleJour;
             date = new Date(date.getTime() + (1000 * 60 * 60 * 24));
