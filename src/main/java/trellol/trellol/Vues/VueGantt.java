@@ -64,7 +64,7 @@ public class VueGantt extends Tab implements Observateur{
             content.getChildren().clear();
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setContent(this.affichageGantt());
-            System.out.println("Génération Gantt...");
+            //System.out.println("Génération Gantt...");
             scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             content.getChildren().add(scrollPane);
